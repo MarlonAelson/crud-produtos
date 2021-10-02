@@ -18,6 +18,16 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        //chama o evento responsável por criar o banco de dados.
+        'App\Events\TenantCreated' => [
+            'App\Listeners\TenantCreateDatabase'
+        ],
+        
+        //chama o evento responsável por criar as tabelas no banco de dados.
+        'App\Events\TenantDatabaseCreated' => [
+            'App\Listeners\TenantRunMigrations',
+        ],
     ];
 
     /**
@@ -28,5 +38,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        parent::boot();
     }
 }

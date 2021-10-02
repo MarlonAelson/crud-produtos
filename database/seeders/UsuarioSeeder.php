@@ -17,6 +17,7 @@ class UsuarioSeeder extends Seeder
     public function run()
     {
         Pessoa::create([
+            'id'       => 1, 
             'nome'     => 'Administrador',
             'email'    => 'admin@sistema.com',
             'password' => Hash::make('admin123'),
@@ -26,6 +27,7 @@ class UsuarioSeeder extends Seeder
         ]);
 
         Pessoa::create([
+            'id'       => 2,
             'nome'     => 'Usuário Comum',
             'email'    => 'usuario@sistema.com',
             'password' => Hash::make('usuario123'),
