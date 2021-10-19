@@ -24,7 +24,7 @@ class TenantMiddleware
         
         if(!$tenant && ($request->url() != route('404'))){
             return redirect()->route('404');
-        }else if($request->url() != route('404') && !TenantRepository::domainIsMain()) {           
+        }elseif($request->url() != route('404') && !TenantRepository::domainIsMain()) {           
             TenantRepository::setConnection($tenant);
             TenantRepository::setSession($tenant->only(['identification']));
         }      

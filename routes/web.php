@@ -17,8 +17,12 @@ Route::get('/404', function () {
     return view('404');
 })->name('404');
 
-Route::get('tenant/store', [ TenantController::class, 'store'] )->name('tenant.store');
+Route::get('/tenant/store', [ TenantController::class, 'store'] )->name('tenant.store');
 Route::redirect('/', '/login');
+
+Route::get('{domain}/teste', function(){
+    return 'login';
+});
 
 Route::get('/login',  [ LoginController::class, 'login' ])->name('login');
 Route::post('/login', [ LoginController::class, 'autenticarUsuario' ])->name('autenticarUsuario');
