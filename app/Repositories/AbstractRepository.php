@@ -19,7 +19,9 @@ abstract class AbstractRepository
         DB::beginTransaction();
         try
         {
-            return $this->model::create($data);
+            $this->model::create($data);
+            DB::commit();
+            return true;
         }
         catch(\Exception $e)
         {

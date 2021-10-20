@@ -16,7 +16,7 @@ class Categoria extends Model
         'nome',
         'categoria_pessoa',
         'categoria_produto_servico',
-        'categoria_objeto_assistencia',
+        'categoria_objeto_manutencao',
         'ativo'
     ];
 }

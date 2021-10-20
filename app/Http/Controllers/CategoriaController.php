@@ -3,17 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\CategoriaRepository;
 
 class CategoriaController extends Controller
 {
+    private $repository;
+
+    public function __construct(CategoriaRepository $repository)
+    {
+        $this->repository = $repository;
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
+    {   
+        return $this->repository->all($request);      
+    }
+
+    public function form(Request $request)
     {
-        return 'método index'; //consultar objetos
+        return $this->repository->form($request);
     }
 
     /**
@@ -21,9 +33,9 @@ class CategoriaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return 'método create'; //criar objetos
+        return $this->repository->form($request); //criar objetos
     }
 
     /**
@@ -34,7 +46,7 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        return 'método store'; //criar objetos
+        return $this->repository->store($request->all()); //criar objetos
     }
 
     /**

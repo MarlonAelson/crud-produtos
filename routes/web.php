@@ -30,12 +30,11 @@ Route::get('/logout', [ LoginController::class, 'logout' ])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     Route::name('categorias.')->group(function(){//utilizado para definir prefixos nos nomes as rotas (EX: categorias.index)
-        Route::get('/categoria/index', [ CategoriaController::class, 'index' ])->middleware(['permission:categoria_consultar']);
-        Route::get('/categoria/show', [ CategoriaController::class, 'show'])->middleware(['permission:categoria_detalhar']);
-        Route::get('/categoria/create', [ CategoriaController::class, 'create' ])->middleware(['permission:categoria_cadastrar']);
-        Route::post('/categoria/store', [ CategoriaController::class, 'store' ])->middleware(['permission:categoria_cadastrar']);
-        Route::put('/categoria/edit', [ CategoriaController::class, 'edit'])->middleware(['permission:categoria_editar']);
-        Route::put('/categoria/update', [ CategoriaController::class, 'update'])->middleware(['permission:categoria_editar']);
+        Route::get('/categorias-list', [ CategoriaController::class, 'index' ])->middleware(['permission:categoria_consultar'])->name('list');
+        Route::get('/categorias-form', [ CategoriaController::class, 'form'])->middleware(['permission:categoria_cadastrar'])->name('form');
+        Route::post('/categorias-store', [ CategoriaController::class, 'store' ])->middleware(['permission:categoria_cadastrar'])->name('store');
+        Route::put('/categorias-edit', [ CategoriaController::class, 'edit'])->middleware(['permission:categoria_editar'])->name('edit');
+        Route::put('/categorias-update', [ CategoriaController::class, 'update'])->middleware(['permission:categoria_editar'])->name('update');
     });
 
     Route::name('usuarios.')->group(function(){

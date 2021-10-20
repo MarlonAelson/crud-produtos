@@ -244,6 +244,12 @@ return [
                     'url'  => '/usuarios-list',
                 ],
             ],
+            'submenu' => [
+                [
+                    'text' => 'Categorias',
+                    'url'  => '/categorias-list',
+                ],
+            ],
         ],
     ],
 

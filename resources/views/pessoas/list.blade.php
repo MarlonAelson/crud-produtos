@@ -1,1 +1,1 @@
-@include('components.nome')
+@include('components.')
