@@ -19,4 +19,5 @@ class Categoria extends Model
         'categoria_objeto_manutencao',
         'ativo'
     ];
+    
 }
