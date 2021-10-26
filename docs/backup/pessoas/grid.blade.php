@@ -14,7 +14,7 @@
         </td>
     </tr>
 @empty
-    Nenhuma categoria cadastrada
+    Nenhuma pessoa cadastrada
 @endforelse
 
 

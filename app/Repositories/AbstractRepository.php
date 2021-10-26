@@ -55,6 +55,18 @@ abstract class AbstractRepository
 
     public function allObject()
     {
-        return $this->model::all();
+        try
+        {
+            return $this->model::all();
+        }
+        catch(\Exception $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }catch(QueryException $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
     }
 }

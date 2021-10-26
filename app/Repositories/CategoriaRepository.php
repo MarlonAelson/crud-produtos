@@ -15,17 +15,7 @@ class CategoriaRepository extends AbstractRepository
 
     public function getDataCommomViews($data = null)
     {
-        $this->personaliteView['informativo_pesquisa'] = "Pesquise por ...";
-        $this->personaliteView['simbolo_obrigatoriedade_inputs'] = '*';
-        $this->personaliteView['obrigatoriedade_inputs'] = true;
-        /*$colunasDaTabelaDoGrid = ['', '',''];
-        $tamanhoColunaDosCampos = [4,4,4];*/
-        $this->personaliteView['qtd_max_caracteres_inputs'][20]   = 20;
-        $this->personaliteView['qtd_max_caracteres_inputs'][45]   = 45;
-        $this->personaliteView['qtd_max_caracteres_inputs'][60]   = 60;
-        $this->personaliteView['qtd_max_caracteres_inputs'][120]  = 120;
-        //$this->personaliteView['required'] =  true; Vou deixar para o validator do laravel mesmo;
-        
+        $this->personaliteView['informativo_pesquisa'] = "Pesquise digitando o nome da categoria desejada";
         $this->personaliteView['label_card_form'] = "Cadastrar Categoria";
         $this->personaliteView['label_card_edit'] = "Alterar Categoria";
         $this->personaliteView['label_card_list'] = "Consultar Categorias";
@@ -35,24 +25,38 @@ class CategoriaRepository extends AbstractRepository
     }
 
     public function all($request = null)
-    {        
-        $objetos = $this->allObject();
+    {                 
+        $objects = $this->allObject();
+        $result;
+
+        if($objects)
+        {
+            $this->result = ['data'=> $objects, 'mensagem' =>'Registros carregados com sucesso.', 'errors'=> null];
+        }
+        else
+        {
+            $this->result = ['data'=> null, 'mensagem' =>'Não foi possivel carregar os registros.', 'errors'=> true];
+        }          
         
         if(env('FRONTEND_BLADE'))
         {
-            return view('list',[
-                'objetos' => $objetos, 
+            return view("{$this->getDataCommomViews()['route_name_view']}.list",[
+                'objetos' => $this->result, 
                 'qtdRegistros' => 10,
                 'informacoesComunsViews' => $this->getDataCommomViews()
             ]);
         } 
+        else
+        {
+            return response()->json($this->result, 200);
+        }
     }
 
-    public function form($request)
+    public function create($request)
     {
         if(env('FRONTEND_BLADE'))
         {
-            return view('form',[
+            return view("{$this->getDataCommomViews()['route_name_view']}.form",[
                 'informacoesComunsViews' => $this->getDataCommomViews()
             ]);
         }

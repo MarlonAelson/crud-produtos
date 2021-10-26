@@ -247,7 +247,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Categorias',
-                    'url'  => '/categorias-list',
+                    'url'  => '/categorias/listagem',
                 ],
             ],
         ],

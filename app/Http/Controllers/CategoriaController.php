@@ -13,84 +13,76 @@ class CategoriaController extends Controller
     {
         $this->repository = $repository;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    /*
+    ** Método responsável por retornar a listagem
+    ** de objetos. Também será utilizado para rea-
+    ** lizar buscas.
+    */
     public function index(Request $request)
     {   
         return $this->repository->all($request);      
     }
 
-    public function form(Request $request)
-    {
-        return $this->repository->form($request);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    /* 
+    ** Método para retornar o form de cadastro se
+    ** estiver usando blade.
+    */
     public function create(Request $request)
     {
-        return $this->repository->form($request); //criar objetos
+        return $this->repository->create($request);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    /*
+    ** Método responsável por criar objeto no BD.
+    */
     public function store(Request $request)
     {
-        return $this->repository->store($request->all()); //criar objetos
+        return $this->repository->store($request->all()); 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    /*
+    * Método responsável por exibir detalhes do objeto.
+    */
+    public function show(Request $request)
     {
-        return 'método show'; //exibir detalhes do objeto
+        return $this->repository->show($request->id);
     }
-
+    
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Método responsável por retornar o form de edição 
+     * se estiver usando blade.
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        return 'método edit'; //editar objetos
+        return $this->repository->show($request->id);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Método responsável por salvar as alteraçõesdo obje-
+    * to no BD.
+    */
     public function update(Request $request, $id)
     {
-        return 'método update'; //editar objetos
+        return $this->repository->update($request->all(), $request->id);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Método responsável por excluir o objeto no BD. 
+    * Prefiro usar o softdelete do Laravel para evi-
+    * tar problemas.
+    */
     public function destroy($id)
     {
-        return 'método destroy'; //destruir objetos
+        return $this->repository->update($request->all(), $request->id);
+    }
+
+    /**
+    * Método responsável por inativar/ativar um objeto
+    * no BD.
+    */
+    public function inactiveOrActive(Request $request)
+    {       
+        return $this->repository->inactiveOrActive($request->id);
     }
 }

@@ -21,7 +21,7 @@
                         <label for="nome">
                             Nome:*
                         </label>
-                        <input type="text" class="form-control" id="nome" name="nome" value="{{ $objeto->nome ?? old('nome') }}" maxlength="{{ $informacoesComunsViews['qtd_max_caracteres_inputs'][120] }}">
+                        <input type="text" class="form-control" id="nome" name="nome" value="{{ $objeto->nome ?? old('nome') }}" maxlength="45">
                     </div>
                 </div>
 
@@ -85,7 +85,6 @@
                 </div>
 
             </div>
-            
             
         </div>
     </div>
