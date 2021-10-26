@@ -26,16 +26,16 @@ class CategoriaRepository extends AbstractRepository
 
     public function all($request = null)
     {                 
-        $objects = $this->allObject();
+        $retorno = $this->allObject();
         $result;
 
-        if($objects)
+        if($retorno)
         {
-            $this->result = ['data'=> $objects, 'mensagem' =>'Registros carregados com sucesso.', 'errors'=> null];
+            $this->result = ['data'=> $retorno, 'mensagem' =>'Registros carregados com sucesso.', 'errors'=> null];
         }
         else
         {
-            $this->result = ['data'=> null, 'mensagem' =>'Não foi possivel carregar os registros.', 'errors'=> true];
+            $this->result = ['data'=> null, 'mensagem' =>'Não foi possivel carregar os registros. Entre em contato com o suporte do sistema.', 'errors'=> true];
         }          
         
         if(env('FRONTEND_BLADE'))
@@ -62,11 +62,43 @@ class CategoriaRepository extends AbstractRepository
         }
     }
     
-    public function store($data)
+    public function store($request)
     {
-        if($this->createObject($data))
+        $result;
+
+        $validacao = $this->model->validator($request->all());
+
+        if($validacao === true)
         {
-           return $this->all();
+            $dadosTratados = $this->model->tratament($request->all());
+            $retorno = $this->createObject($dadosTratados);
+
+            if($retorno)
+            {
+                $this->result = ['data'=> $retorno, 'mensagem' =>'Registros carregados com sucesso.', 'errors'=> null];
+            }
+            else
+            {
+                $this->result = ['data'=> null, 'mensagem' =>'Não foi possivel salvar o registro no banco  de dados. Entre em contato com o suporte do sistema.', 'errors'=> true];
+            }
+
+            if(env('FRONTEND_BLADE'))
+            {
+                /*return view("{$this->getDataCommomViews()['route_name_view']}.list",[
+                    'objetos' => $this->result, 
+                    'qtdRegistros' => 10,
+                    'informacoesComunsViews' => $this->getDataCommomViews()
+                ]);*/
+                return $this->all();
+            } 
+            else
+            {
+                return response()->json($this->result, 200);
+            }
+        }
+        else
+        {
+            $this->result = ['data'=> null, 'mensagem' => $validacao, 'errors'=> true];
         }
     }
 }

@@ -109,7 +109,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td> Nenhuma categoria cadastrada!</td>
+                                    <td colspan="7"> Nenhuma categoria cadastrada!</td>
                                 </tr>
                                 @endforelse
                             @endif                              

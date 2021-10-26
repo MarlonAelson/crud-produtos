@@ -14,23 +14,39 @@ abstract class AbstractRepository
     {
     }
 
-    public function createObject($data)
+    public function allObject()
     {
-        DB::beginTransaction();
         try
         {
-            $this->model::create($data);
-            DB::commit();
-            return true;
+            return $this->model::all();
         }
         catch(\Exception $e)
         {
-            DB::rollBack();
             \Log::error('Error '.$e->getMessage());
             return false;
         }catch(QueryException $e)
         {
-            DB::rollBack();
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+    }
+
+    public function createObject($data)
+    {
+        //DB::beginTransaction();
+        try
+        {
+            return $this->model::create($data);
+            //DB::commit();
+        }
+        catch(\Exception $e)
+        {
+            //DB::rollBack();
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }catch(QueryException $e)
+        {
+            //DB::rollBack();
             \Log::error('Error '.$e->getMessage());
             return false;
         }   
@@ -51,22 +67,5 @@ abstract class AbstractRepository
             \Log::error('Error '.$e->getMessage());
             return false;
         }   
-    }
-
-    public function allObject()
-    {
-        try
-        {
-            return $this->model::all();
-        }
-        catch(\Exception $e)
-        {
-            \Log::error('Error '.$e->getMessage());
-            return false;
-        }catch(QueryException $e)
-        {
-            \Log::error('Error '.$e->getMessage());
-            return false;
-        }
     }
 }
