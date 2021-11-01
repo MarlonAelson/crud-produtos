@@ -8,5 +8,6 @@ Configurado para utilizar o controle de permissões pelo Spatie: https://spatie.
 Criado uma seeder para inserir algumas permissões para ficar de modelo e exemplo;
 Criado uma seeder para inserir dois usuários para que seja testado as permissões: usuario: admin123, senha: admin123, email: admin@sistema.com | usuário: usuario123, senha: usuario123, usuario@sistema.com; <br/>
 Criado uma seeder para inserir categorias (que serão centralizadas numa única tabela e model) de pessoas, objetos de assistência e/ou produtos e serviços; <br/>
+Adicionado SoftDeletes (migrations e models) ao projeto; <br/>
 Adicionado "Route::pattern('id', '[0-9]+')" no método "boot()" do arquivo "App\Providers\RouteServiceProvider.php" para certificar que todo id passado serão números inteiros; <br/>
 Adicionado no método "boot()" a configuração de rota do arquivo "tenant";
