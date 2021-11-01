@@ -5,7 +5,7 @@ Integrado com AdminLte 3.7: https://github.com/jeroennoten/Laravel-AdminLTE. Mas
 Mudado a autenticação do Laravel para a model/tabela Pessoa e, com isso, centralizar todos os cadastros definindo se é empresa do grupo e/ou cliente e/ou fornecedor e/ou colocaborador e/ou outros com possbilidade de acesso ou não ao sistema (pasta docs tem o passo a passo de como realizar a mudança); <br/>
 Traduzido a aplicação do laravel colocando manualmente uma pasta pt-BR dentro de resources/lang; <br/>
 Configurado para utilizar o controle de permissões pelo Spatie: https://spatie.be/docs/laravel-permission/v5/introduction; <br/>
-Criado uma seeder para inserir algumas permissões para ficar de modelo e exemplo;
+Criado uma seeder para inserir algumas permissões para ficar de modelo e exemplo; <br/>
 Criado uma seeder para inserir dois usuários para que seja testado as permissões: usuario: admin123, senha: admin123, email: admin@sistema.com | usuário: usuario123, senha: usuario123, usuario@sistema.com; <br/>
 Criado uma seeder para inserir categorias (que serão centralizadas numa única tabela e model) de pessoas, objetos de assistência e/ou produtos e serviços; <br/>
 Adicionado SoftDeletes (migrations e models) ao projeto; <br/>
