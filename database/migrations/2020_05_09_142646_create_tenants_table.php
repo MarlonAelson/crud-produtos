@@ -23,6 +23,7 @@ class CreateTenantsTable extends Migration
             $table->string('bd_drive')->nullable();
             $table->string('bd_port')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -7,14 +7,13 @@ use Illuminate\Support\Facades\DB;
 
 abstract class AbstractRepository
 {
-
     protected $model;
 
     public function __construct()
     {
     }
 
-    public function allObject()
+    public function allObject($params = null)
     {
         try
         {
@@ -24,7 +23,8 @@ abstract class AbstractRepository
         {
             \Log::error('Error '.$e->getMessage());
             return false;
-        }catch(QueryException $e)
+        }
+        catch(QueryException $e)
         {
             \Log::error('Error '.$e->getMessage());
             return false;
@@ -44,7 +44,8 @@ abstract class AbstractRepository
             //DB::rollBack();
             \Log::error('Error '.$e->getMessage());
             return false;
-        }catch(QueryException $e)
+        }
+        catch(QueryException $e)
         {
             //DB::rollBack();
             \Log::error('Error '.$e->getMessage());
@@ -62,10 +63,76 @@ abstract class AbstractRepository
         {
             \Log::error('Error '.$e->getMessage());
             return false;
-        }catch(QueryException $e)
+        }
+        catch(QueryException $e)
         {
             \Log::error('Error '.$e->getMessage());
             return false;
         }   
+    }
+
+    public function updateObject($id, $data)
+    {
+        try
+        {
+            $objectFind = $this->model::find($id);
+            /*if(!$obj){//testar depois
+                throw new \Exception("Nenhum registro encontrado com o ID {$id}");
+            }*/
+    
+            return $this->model->update($data);
+        }
+        catch(\Exception $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+        catch(QueryException $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }   
+    }
+
+    public function inactiveOrActiveObject($id){
+
+        try{
+
+            $objectFind = $this->model::find($id);
+            
+            /*if(!$objectFind){
+                return false;
+            }*/
+
+            $objectFind->ativo = $objectFind->ativo == "1" ? "0":"1";
+
+            return $objectFind->save();
+
+        }catch(\Exception $e){
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }catch(QueryException $e){
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+    }
+
+    public function deleteObject($id){
+
+        try{
+
+            $objectFind = $this->model::find($id);
+            /*if(!$objectFind){
+                return false;
+            }*/
+            return $objectFind->delete();
+            
+        }catch(\Exception $e){
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }catch(QueryException $e){
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
     }
 }

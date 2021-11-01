@@ -21,6 +21,7 @@ class CreateCategoriasTable extends Migration
             $table->char('categoria_objeto_manutencao', 1);
             $table->char('ativo', 1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

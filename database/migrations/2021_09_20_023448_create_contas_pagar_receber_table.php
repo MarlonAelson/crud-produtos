@@ -70,6 +70,7 @@ class CreateContasPagarReceberTable extends Migration
             //$table->datetime('data_processamento_arquivo')->nullable();
             
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -24,6 +24,7 @@ class CreatePessoasTable extends Migration
             $table->char('ativo', 1)->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

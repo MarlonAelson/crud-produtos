@@ -8,13 +8,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pessoa extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles, SoftDeletes;
 
     protected $table = 'pessoas';
     protected $guarded = ['id'];
+    //necessário para o softdelete
+    protected $dates = ['deleted_at'];
 
     /**
      * The attributes that are mass assignable.

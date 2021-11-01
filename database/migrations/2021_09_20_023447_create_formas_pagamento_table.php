@@ -35,6 +35,7 @@ class CreateFormasPagamentoTable extends Migration
             $table->unsignedBigInteger('usuario_alteracao_id');
             $table->foreign('usuario_alteracao_id')->references('id')->on('pessoas');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
