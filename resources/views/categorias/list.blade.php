@@ -104,8 +104,27 @@
                                         {{$objeto->ativo}}
                                     </td>
                                     <td>
-                                        <a href="{{ route($informacoesComunsViews['route_name_view'].'.edit', $objeto->id) }}" class="btn btn-outline-primary"><i class="fas fa-list-ol"></i> Editar</a>
+
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default">Ações</button>
+                                            <button type="button" class="btn btn-default dropdown-toggle dropdown-hover dropdown-icon" data-toggle="dropdown">
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <div class="dropdown-menu" role="menu">
+                                                <a class="btn btn-app bg-primary" href="{{ route($informacoesComunsViews['route_name_view'].'.edit', $objeto->id) }}">
+                                                    <i class="fas fa-edit"></i> Alterar
+                                                </a>
+                                                <a class="btn btn-app bg-info" href="{{ route($informacoesComunsViews['route_name_view'].'.edit', $objeto->id) }}">
+                                                    <i class="fas fa-search-plus"></i> Detalhar
+                                                </a>
+                                                <a class="btn btn-app bg-secondary" href="{{ route($informacoesComunsViews['route_name_view'].'.edit', $objeto->id) }}">
+                                                    <i class="fas fa-adjust"></i> Inativar/Ativar
+                                                </a>
+                                            </div>
+                                        </div>
+                                        
                                     </td>
+                  
                                 </tr>
                                 @empty
                                 <tr>

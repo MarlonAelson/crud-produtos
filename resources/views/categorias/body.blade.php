@@ -33,11 +33,11 @@
 
                     <div class="form-group">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="ativo" id="sim" value="S">
+                            <input class="form-check-input" type="radio" name="ativo" id="sim" value="1">
                             <label class="form-check-label" for="sim">Sim</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="ativo" id="nao" value="N">
+                            <input class="form-check-input" type="radio" name="ativo" id="nao" value="0">
                             <label class="form-check-label" for="nao">Não</label>        
                         </div>
                     </div>
@@ -48,11 +48,11 @@
                     <label for="">Categoria de Pessoa:</label>
                     <div class="form-group">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="categoria_pessoa" id="categoria_pessoa_sim" value="S">
+                            <input class="form-check-input" type="radio" name="categoria_pessoa" id="categoria_pessoa_sim" value="1">
                             <label class="form-check-label" for="categoria_pessoa_sim">Sim</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="categoria_pessoa" id="categoria_pessoa_nao" value="N">
+                            <input class="form-check-input" type="radio" name="categoria_pessoa" id="categoria_pessoa_nao" value="0">
                             <label class="form-check-label" for="categoria_pessoa_nao">Não</label>
                         </div>
                     </div>
@@ -61,11 +61,11 @@
                     <label for="">Categoria de Produto e Serviço:*</label>
                     <div class="form-group">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="categoria_produto_servico" id="categoria_produto_servico_sim" value="S">
+                            <input class="form-check-input" type="radio" name="categoria_produto_servico" id="categoria_produto_servico_sim" value="1">
                             <label class="form-check-label" for="categoria_produto_servico_sim">Sim</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="categoria_produto_servico" id="categoria_produto_servico_nao" value="N">
+                            <input class="form-check-input" type="radio" name="categoria_produto_servico" id="categoria_produto_servico_nao" value="0">
                             <label class="form-check-label" for="categoria_produto_servico_nao">Não</label>
                         </div>
                     </div>
@@ -74,11 +74,11 @@
                     <label for="">Categoria de Objeto de Manutenção:</label>
                     <div class="form-group">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="categoria_objeto_manutencao" id="categoria_objeto_manutencao_sim" value="S">
+                            <input class="form-check-input" type="radio" name="categoria_objeto_manutencao" id="categoria_objeto_manutencao_sim" value="1">
                             <label class="form-check-label" for="categoria_objeto_manutencao_sim">Sim</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="categoria_objeto_manutencao" id="categoria_objeto_manutencao_nao" value="N">
+                            <input class="form-check-input" type="radio" name="categoria_objeto_manutencao" id="categoria_objeto_manutencao_nao" value="0">
                             <label class="form-check-label" for="categoria_objeto_manutencao_nao">Não</label>
                         </div>
                     </div>

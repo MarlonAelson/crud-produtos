@@ -21,7 +21,6 @@ class CreateCondicoesPagamentoTable extends Migration
             $table->decimal('valor_minimo_condicao', 18,2)->nullable();
             $table->string('indicador_pagamento',45)->nullable();
             $table->char('ativo', 1);           
-            $table->softDeletes();
             $table->unsignedBigInteger('usuario_cadastro_id');
             $table->unsignedBigInteger('usuario_alteracao_id');
             $table->timestamps();
