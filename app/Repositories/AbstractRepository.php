@@ -96,7 +96,8 @@ abstract class AbstractRepository
 
     public function inactiveOrActiveObject($id){
 
-        try{
+        try
+        {
 
             $objectFind = $this->model::find($id);
             
@@ -108,29 +109,36 @@ abstract class AbstractRepository
 
             return $objectFind->save();
 
-        }catch(\Exception $e){
+        }
+        catch(\Exception $e)
+        {
             \Log::error('Error '.$e->getMessage());
             return false;
-        }catch(QueryException $e){
+        }
+        catch(QueryException $e)
+        {
             \Log::error('Error '.$e->getMessage());
             return false;
         }
     }
 
-    public function deleteObject($id){
-
-        try{
-
-            $objectFind = $this->model::find($id);
-            /*if(!$objectFind){
-                return false;
-            }*/
-            return $objectFind->delete();
-            
-        }catch(\Exception $e){
+    public function deleteObject($id)
+    {
+        try
+        {
+            /*
+            ** caso id não exista irá cair no catch. se usasse o método find dá 
+            ** problema informando que não pode deletar um dado null e não caía no catch
+            */
+            return $this->model::findOrFail($id)->delete();       
+        }
+        catch(\Exception $e)
+        {
             \Log::error('Error '.$e->getMessage());
             return false;
-        }catch(QueryException $e){
+        }
+        catch(QueryException $e)
+        {
             \Log::error('Error '.$e->getMessage());
             return false;
         }

@@ -46,7 +46,7 @@ class CategoriaController extends Controller
     */
     public function show(Request $request)
     {
-        return $this->repository->show($request->id);
+        return $this->repository->show($request);
     }
     
     /**
@@ -55,26 +55,26 @@ class CategoriaController extends Controller
      */
     public function edit(Request $request)
     {
-        return $this->repository->show($request->id);
+        return $this->repository->show($request);
     }
 
     /**
-    * Método responsável por salvar as alteraçõesdo obje-
+    * Método responsável por salvar as alterações do obje-
     * to no BD.
     */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         return $this->repository->update($request->all(), $request->id);
     }
 
     /**
     * Método responsável por excluir o objeto no BD. 
-    * Prefiro usar o softdelete do Laravel para evi-
+    * Está usando o softdelete do Laravel para evi-
     * tar problemas.
     */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        return $this->repository->update($request->all(), $request->id);
+        return $this->repository->delete($request);
     }
 
     /**
@@ -83,6 +83,6 @@ class CategoriaController extends Controller
     */
     public function inactiveOrActive(Request $request)
     {       
-        return $this->repository->inactiveOrActive($request->id);
+        return $this->repository->inactiveOrActive($request);
     }
 }

@@ -75,6 +75,13 @@
                                     </th>
                                 </tr>
                             </thead>
+                            @if($errors->any())
+                            <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+                                {{ $errors }}
+                            </div>
+                            @endif
                             <tbody>
                             @if(!$objetos['data'] && $objetos['errors'])
                                 <tr>
@@ -117,8 +124,11 @@
                                                 <a class="btn btn-app bg-info" href="{{ route($informacoesComunsViews['route_name_view'].'.edit', $objeto->id) }}">
                                                     <i class="fas fa-search-plus"></i> Detalhar
                                                 </a>
-                                                <a class="btn btn-app bg-secondary" href="{{ route($informacoesComunsViews['route_name_view'].'.edit', $objeto->id) }}">
+                                                <a class="btn btn-app bg-secondary" href="{{ route($informacoesComunsViews['route_name_view'].'.inactiveOrActive', $objeto->id) }}">
                                                     <i class="fas fa-adjust"></i> Inativar/Ativar
+                                                </a>
+                                                <a class="btn btn-app bg-danger" href="{{ route($informacoesComunsViews['route_name_view'].'.destroy', $objeto->id) }}">
+                                                    <i class="fas fa-trash"></i> Excluir
                                                 </a>
                                             </div>
                                         </div>

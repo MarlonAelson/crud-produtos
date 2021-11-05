@@ -35,7 +35,7 @@ class CategoriaRepository extends AbstractRepository
         }
         else
         {
-            $this->result = ['data'=> null, 'mensagem' =>'Não foi possivel carregar os registros. Entre em contato com o suporte do sistema.', 'errors'=> true];
+            $this->result = ['data'=> null, 'mensagem' =>'Não foi possível carregar os registros. Saia da tela e entre novamente nela para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
         }          
         
         if(env('FRONTEND_BLADE'))
@@ -100,5 +100,40 @@ class CategoriaRepository extends AbstractRepository
         {
             $this->result = ['data'=> null, 'mensagem' => $validacao, 'errors'=> true];
         }
+    }
+
+    public function delete($request)
+    {
+        $result;
+        $status;
+        $retorno = $this->deleteObject($request->id);
+        
+        if($retorno)
+        {
+            $this->result = ['data'=> $retorno, 'mensagem' =>'Registro excluído com sucesso.', 'errors'=> null];
+            $this->status = 200;
+        }
+        else
+        {
+            $this->result = ['data'=> null, 'mensagem' =>'Não foi possível excluir o registro. Saia da tela e entre novamente nela para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $this->status = 400;
+        }          
+
+        if( env('FRONTEND_BLADE') &&  $this->status == 200 )
+        {   
+            return redirect()->route('categorias.index');
+        }
+        elseif( env('FRONTEND_BLADE') &&  $this->status == 400 )
+        {
+            return redirect()
+                    ->route('categorias.index')
+                    ->withErrors( $this->result['mensagem'] );
+            //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
+        }
+        elseif(!env('FRONTEND_BLADE'))
+        {
+            return response()->json($this->result, $this->status);
+        }    
+
     }
 }
