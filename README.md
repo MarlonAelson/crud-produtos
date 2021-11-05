@@ -10,4 +10,5 @@ Criado uma seeder para inserir dois usuários para que seja testado as permissõ
 Criado uma seeder para inserir categorias (que serão centralizadas numa única tabela e model) de pessoas, objetos de manutenção e/ou produtos e serviços; <br/>
 Adicionado SoftDeletes (migrations e models) ao projeto; <br/>
 Adicionado "Route::pattern('id', '[0-9]+')" no método "boot()" do arquivo "App\Providers\RouteServiceProvider.php" para certificar que todo id passado serão números inteiros; <br/>
+Adicioando o pacote de email através do comando php artisan:mail "nome_da_classe" e colocado dentro da pasta App\Services (pasta responsável por centralizar todas as classes de serviços);
 Adicionado no método "boot()" a configuração de rota do arquivo "tenant";
