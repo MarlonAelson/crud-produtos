@@ -76,6 +76,16 @@ class CategoriaRepository extends AbstractRepository
             ]);
         }
     }
+
+    public function edit($request)
+    {
+        if(env('FRONTEND_BLADE'))
+        {
+            return view("{$this->getDataCommomViews()['route_name_view']}.edit",[
+                'informacoesComunsViews' => $this->getDataCommomViews()
+            ]);
+        }
+    }
     
     public function store($request)
     {
