@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/categorias/alteracao', [ CategoriaController::class, 'edit'])->middleware(['permission:categoria_alterar'])->name('edit');
         Route::put('/categorias/alterar'  , [ CategoriaController::class, 'update'])->middleware(['permission:categoria_alterar'])->name('update');
         Route::get('/categorias/excluir/{id}'  , [ CategoriaController::class, 'destroy'])->middleware(['permission:categoria_excluir'])->name('destroy');
-        Route::get('/categorias/inativar-ativar/{id}' , [ CategoriaController::class, 'inactiveOrActive' ])->middleware(['permission:categoria_consultar'])->name('inactiveOrActive');
+        Route::get('/categorias/inativar-ativar/{id}' , [ CategoriaController::class, 'inactiveOrActive' ])->middleware(['permission:categoria_inativar_ativar'])->name('inactiveOrActive');
     });
 });
 
