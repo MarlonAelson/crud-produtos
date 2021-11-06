@@ -37,7 +37,7 @@ class CategoriaRepository extends AbstractRepository
         }
         else
         {
-            $this->result = ['data'=> null, 'mensagem' =>'Não foi possível carregar os registros. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $this->result = ['data'=> null, 'mensagem' =>'Não foi possível carregar os registros do banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
             $this->status = 400;
         }
         
@@ -104,7 +104,7 @@ class CategoriaRepository extends AbstractRepository
             }
             else
             {
-                $this->result = ['data'=> null, 'mensagem' =>'Não foi possivel salvar o registro no banco  de dados. Entre em contato com o suporte do sistema.', 'errors'=> true];
+                $this->result = ['data'=> null, 'mensagem' =>'Não foi possivel salvar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
             }
 
             if(env('FRONTEND_BLADE'))
