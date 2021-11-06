@@ -151,7 +151,7 @@ class CategoriaRepository extends AbstractRepository
         elseif( env('FRONTEND_BLADE') && $this->status == 400 )
         {
             return redirect()
-                    ->route('categorias.index')
+                    ->route("{$this->getDataCommomViews()['route_name_view']}.index")
                     ->withErrors( $this->result['mensagem'] );
             //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
         }
