@@ -94,16 +94,16 @@ abstract class AbstractRepository
         }   
     }
 
-    public function inactiveOrActiveObject($id){
+    public function inactiveOrActiveObject($id)
+    {
 
         try
         {
-
-            $objectFind = $this->model::find($id);
-            
-            /*if(!$objectFind){
-                return false;
-            }*/
+            /*
+            ** caso id não exista irá cair no catch. se usasse o método find dá 
+            ** problema informando que não pode deletar um dado null e não caía no catch
+            */
+            $objectFind = $this->model::findOrFail($id);
 
             $objectFind->ativo = $objectFind->ativo == "1" ? "0":"1";
 
