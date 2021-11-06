@@ -25,30 +25,45 @@ class CategoriaRepository extends AbstractRepository
     }
 
     public function all($request = null)
-    {                 
-        $retorno = $this->allObject();
+    {  
         $result;
+        $status;               
+        $retorno = $this->allObject();
 
         if($retorno)
         {
             $this->result = ['data'=> $retorno, 'mensagem' =>'Registros carregados com sucesso.', 'errors'=> null];
+            $this->status = 200;
         }
         else
         {
-            $this->result = ['data'=> null, 'mensagem' =>'Não foi possível carregar os registros. Saia da tela e entre novamente nela para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
-        }          
+            $this->result = ['data'=> null, 'mensagem' =>'Não foi possível carregar os registros. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $this->status = 400;
+        }
         
-        if(env('FRONTEND_BLADE'))
-        {
+        /*
+        **analisar se a condição de status vai permanecer
+        **pois nada muda praticamente
+        */
+        if( env('FRONTEND_BLADE') && $this->status == 200 )
+        {   
             return view("{$this->getDataCommomViews()['route_name_view']}.list",[
                 'objetos' => $this->result, 
                 'qtdRegistros' => 10,
                 'informacoesComunsViews' => $this->getDataCommomViews()
             ]);
-        } 
-        else
+        }
+        elseif( env('FRONTEND_BLADE') && $this->status == 400 )
         {
-            return response()->json($this->result, 200);
+            return view("{$this->getDataCommomViews()['route_name_view']}.list",[
+                'objetos' => $this->result, 
+                'qtdRegistros' => 0,
+                'informacoesComunsViews' => $this->getDataCommomViews()
+            ])->withErrors( $this->result );
+        }
+        elseif(!env('FRONTEND_BLADE'))
+        {
+            return response()->json($this->result, $this->status);
         }
     }
 
@@ -115,15 +130,15 @@ class CategoriaRepository extends AbstractRepository
         }
         else
         {
-            $this->result = ['data'=> null, 'mensagem' =>'Não foi possível excluir o registro. Saia da tela e entre novamente nela para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $this->result = ['data'=> null, 'mensagem' =>'Não foi possível excluir o registro. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
             $this->status = 400;
         }          
 
-        if( env('FRONTEND_BLADE') &&  $this->status == 200 )
+        if( env('FRONTEND_BLADE') && $this->status == 200 )
         {   
-            return redirect()->route('categorias.index');
+            return redirect()->route("{$this->getDataCommomViews()['route_name_view']}.index");
         }
-        elseif( env('FRONTEND_BLADE') &&  $this->status == 400 )
+        elseif( env('FRONTEND_BLADE') && $this->status == 400 )
         {
             return redirect()
                     ->route('categorias.index')
@@ -133,7 +148,6 @@ class CategoriaRepository extends AbstractRepository
         elseif(!env('FRONTEND_BLADE'))
         {
             return response()->json($this->result, $this->status);
-        }    
-
+        }
     }
 }

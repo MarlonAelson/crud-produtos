@@ -77,13 +77,7 @@
                             </thead>
                             @include('layouts.errors')
                             <tbody>
-                            @if(!$objetos['data'] && $objetos['errors'])
-                                <tr>
-                                    <td colspan="7">
-                                        {{$objetos['mensagem']}}
-                                    </td>
-                                </tr>
-                            @elseif($objetos['data'] && !$objetos['errors'])
+                            @if($objetos['data'] && !$objetos['errors'])
                                 @forelse ($objetos['data'] as $objeto)
                                 <tr>
                                     <td>
