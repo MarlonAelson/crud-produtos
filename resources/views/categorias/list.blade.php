@@ -75,13 +75,7 @@
                                     </th>
                                 </tr>
                             </thead>
-                            @if($errors->any())
-                            <div class="alert alert-danger alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h5><i class="icon fas fa-ban"></i> Alert!</h5>
-                                {{ $errors }}
-                            </div>
-                            @endif
+                            @include('layouts.errors')
                             <tbody>
                             @if(!$objetos['data'] && $objetos['errors'])
                                 <tr>
