@@ -28,6 +28,7 @@ Route::get('{domain}/teste', function(){
     return 'login';
 });
 
+
 Route::get('/login',  [ LoginController::class, 'login' ])->name('login');
 Route::post('/login', [ LoginController::class, 'autenticarUsuario' ])->name('autenticarUsuario');
 Route::get('/logout', [ LoginController::class, 'logout' ])->name('logout');
@@ -36,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::name('categorias.')->group(function(){
         Route::get('/categorias/listagem' , [ CategoriaController::class, 'index' ])->middleware(['permission:categoria_consultar'])->name('index');
-        Route::get('/categorias/detalhar' , [ CategoriaController::class, 'show' ])->middleware(['permission:categoria_detalhar'])->name('show');
+        Route::get('/categorias/detalhar/{id}' , [ CategoriaController::class, 'show' ])->middleware(['permission:categoria_detalhar'])->name('show');
         Route::get('/categorias/cadastro' , [ CategoriaController::class, 'create'])->middleware(['permission:categoria_cadastrar'])->name('create');
         Route::post('/categorias/salvar'  , [ CategoriaController::class, 'store' ])->middleware(['permission:categoria_cadastrar'])->name('store');
         Route::get('/categorias/alteracao', [ CategoriaController::class, 'edit'])->middleware(['permission:categoria_alterar'])->name('edit');

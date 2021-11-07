@@ -91,17 +91,7 @@ class CategoriaRepository extends AbstractRepository
     {
         $result;
         $status;
-        $validacao;
-
-        if(env('FRONTEND_BLADE'))
-        {
-            $request->validate($this->model->validator());
-            $validacao = true;
-        }
-        else
-        {
-            $validacao = $this->model->validator($request->all());
-        }
+        $validacao = $this->model->validator($request->all());
 
         if($validacao === true)
         {
@@ -135,7 +125,17 @@ class CategoriaRepository extends AbstractRepository
         }
         else
         {
-            return response()->json(['data'=> null, 'mensagem' => $validacao, 'errors'=> true], 201);//$this->result e $this->status
+            if(env('FRONTEND_BLADE'))
+            {
+                return redirect()
+                       ->back()
+                       ->withErrors( $validacao );
+            
+            } 
+            else
+            {
+                return response()->json(['data'=> null, 'mensagem' => $validacao, 'errors'=> true], 201);//$this->result e $this->status
+            }
         }
     }
 

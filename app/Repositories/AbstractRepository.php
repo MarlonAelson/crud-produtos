@@ -143,4 +143,26 @@ abstract class AbstractRepository
             return false;
         }
     }
+
+    public function showObject($id)
+    {
+        try
+        {
+            /*
+            ** caso id não exista irá cair no catch. se usasse o método find dá 
+            ** problema informando que não pode deletar um dado null e não caía no catch
+            */
+            return $this->model::findOrFail($id);       
+        }
+        catch(\Exception $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+        catch(QueryException $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+    }
 }

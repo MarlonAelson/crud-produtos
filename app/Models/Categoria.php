@@ -32,17 +32,27 @@ class Categoria extends Model
 		'ativo'                         => ['required', 'string', 'max:1'],
 	];
 
-	public function validator($data){
-        $validator = Validator::make($data, $this->regraValidacao);
+	public function validator($data = null)
+    {
+        if($data)
+        {   
+            $validator = Validator::make($data, $this->regraValidacao);
 
-        if($validator->passes()){
-            return true;
-        }else{
-            return $validator->errors();
+            if($validator->passes())
+            {
+                return true;
+            }else{
+                return $validator->errors();
+            }
+        }
+        else
+        {
+            return $this->regraValidacao;
         }
     }
 
-    public function tratament($data){
+    public function tratament($data)
+    {
         return $data;
     }
     
