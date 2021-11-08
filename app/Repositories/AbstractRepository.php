@@ -79,10 +79,7 @@ abstract class AbstractRepository
     {
         try
         {
-            $objectFind = $this->model::find($id);
-            /*if(!$obj){//testar depois
-                throw new \Exception("Nenhum registro encontrado com o ID {$id}");
-            }*/
+            $objectFind = $this->model::findOrFail($id);
     
             return $this->model->update($data);
         }
