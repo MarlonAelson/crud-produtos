@@ -161,6 +161,13 @@ abstract class AbstractRepository
             */
             $newObjetc = $this->model::findOrFail($id)->replicate();
             $newObjetc->nome = $newObjetc->nome . ' - COPIA';
+
+            if(isset($newObjetc->estoque))
+                $newObjetc->estoque = 0;
+            
+            if(isset($newObjetc->preco))
+                $newObjetc->preco = 0;
+                
             return $newObjetc->save();    
         }
         catch(\Exception $e)
