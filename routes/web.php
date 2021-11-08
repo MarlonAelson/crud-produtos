@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/categorias/alterar'  , [ CategoriaController::class, 'update'])->middleware(['permission:categoria_alterar'])->name('update');
         Route::get('/categorias/excluir/{id}'  , [ CategoriaController::class, 'destroy'])->middleware(['permission:categoria_excluir'])->name('destroy');
         Route::get('/categorias/inativar-ativar/{id}' , [ CategoriaController::class, 'inactiveOrActive' ])->middleware(['permission:categoria_inativar_ativar'])->name('inactiveOrActive');
+        Route::get('/categorias/clonar/{id}' , [ CategoriaController::class, 'replicate' ])->middleware(['permission:categoria_cadastrar'])->name('replicate');
     });
 });
 

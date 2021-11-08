@@ -13,6 +13,7 @@ abstract class AbstractRepository
     {
     }
 
+    //Método responsável por recuperar todos os objetos
     public function allObject($params = null)
     {
         try
@@ -31,6 +32,7 @@ abstract class AbstractRepository
         }
     }
 
+    //Método responsável por criar um objeto um objeto
     public function createObject($data)
     {
         //DB::beginTransaction();
@@ -53,6 +55,7 @@ abstract class AbstractRepository
         }   
     }
 
+    //Método responsável por buscar um objeto um objeto
     public function findObject($id)
     {
         try
@@ -75,6 +78,7 @@ abstract class AbstractRepository
         }
     }
 
+    //Método responsável por salvar as alterações de um objeto
     public function updateObject($id, $data)
     {
         try
@@ -94,7 +98,7 @@ abstract class AbstractRepository
             return false;
         }   
     }
-
+    //Método responsável por ativar ou inativar um objeto
     public function inactiveOrActiveObject($id)
     {
 
@@ -123,6 +127,7 @@ abstract class AbstractRepository
         }
     }
 
+    //Método responsável por deletar um objeto usando softdelete do laravel
     public function deleteObject($id)
     {
         try
@@ -132,6 +137,31 @@ abstract class AbstractRepository
             ** problema informando que não pode deletar um dado null e não caía no catch
             */
             return $this->model::findOrFail($id)->delete();       
+        }
+        catch(\Exception $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+        catch(QueryException $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+    }
+
+    //Método responsável por clonar um objeto
+    public function replicateObject($id)
+    {
+        try
+        {
+            /*
+            ** caso id não exista irá cair no catch. se usasse o método find dá 
+            ** problema informando que não pode deletar um dado null e não caía no catch
+            */
+            $newObjetc = $this->model::findOrFail($id)->replicate();
+            $newObjetc->nome = $newObjetc->nome . ' - COPIA';
+            return $newObjetc->save();    
         }
         catch(\Exception $e)
         {

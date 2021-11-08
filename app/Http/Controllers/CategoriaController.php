@@ -85,4 +85,13 @@ class CategoriaController extends Controller
     {       
         return $this->repository->inactiveOrActive($request);
     }
+
+     /**
+    * Método responsável por clonar e salvar um objeto
+    * no BD.
+    */
+    public function replicate(Request $request)
+    {       
+        return $this->repository->replicate($request);
+    }
 }

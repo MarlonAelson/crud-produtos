@@ -245,4 +245,38 @@ class CategoriaRepository extends AbstractRepository
             return response()->json($this->result, $this->status);
         }
     }
+
+    public function replicate($request)
+    {
+        $result;
+        $status;
+        $retorno = $this->replicateObject($request->id);
+        
+        if($retorno)
+        {
+            $this->result = ['data'=> $retorno, 'mensagem' =>'Registro clonado com sucesso.', 'errors'=> null];
+            $this->status = 200;
+        }
+        else
+        {
+            $this->result = ['data'=> null, 'mensagem' =>'Não foi possível clonar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $this->status = 400;
+        }          
+
+        if( env('FRONTEND_BLADE') && $this->status == 200 )
+        {   
+            return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
+        }
+        elseif( env('FRONTEND_BLADE') && $this->status == 400 )
+        {
+            return redirect()
+                    ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index")
+                    ->withErrors( $this->result['mensagem'] );
+            //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
+        }
+        elseif(!env('FRONTEND_BLADE'))
+        {
+            return response()->json($this->result, $this->status);
+        }
+    }
 }

@@ -112,6 +112,9 @@
                                                 <a class="btn btn-app bg-info" href="{{ route($informacoesComunsViews['route_name_view'].'.edit', $objeto->id) }}">
                                                     <i class="fas fa-search-plus"></i> Detalhar
                                                 </a>
+                                                <a class="btn btn-app bg-warning" href="{{ route($informacoesComunsViews['route_name_view'].'.replicate', $objeto->id) }}">
+                                                    <i class="far fa-copy"></i> Clonar
+                                                </a>
                                                 <a class="btn btn-app bg-secondary" href="{{ route($informacoesComunsViews['route_name_view'].'.inactiveOrActive', $objeto->id) }}">
                                                     <i class="fas fa-adjust"></i> Inativar/Ativar
                                                 </a>
