@@ -161,6 +161,7 @@ abstract class AbstractRepository
             */
             $objectNew = $this->model::findOrFail($id)->replicate();
             
+            //colocado esses campos apenas para ficar como exemplos de possibilidades
             if(isset($objectNew->nome))
                 $objectNew->nome = $objectNew->nome . ' - COPIA';
 
