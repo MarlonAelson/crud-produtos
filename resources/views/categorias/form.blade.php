@@ -12,21 +12,21 @@
             <!-- general form elements -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">{{ $informacoesComunsFront['label_card_form'] }}</h3>
+                        <h3 class="card-title">{{ $informationsCommonFrontEnd['label_card_form'] }}</h3>
                     </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                    <form class="form-horizontal" method="post" action="{{ route($informacoesComunsFront['route_name_view'].'.store') }}">
+                    <form class="form-horizontal" method="post" action="{{ route($informationsCommonFrontEnd['route_name_view'].'.store') }}">
                     @csrf    
                     <div class="card-body">
                         <small><strong>Os campos com o asterisco (*) são obrigatórios informar!</strong></small>
-                            @include($informacoesComunsFront['route_name_view'].'.body')
+                            @include($informationsCommonFrontEnd['route_name_view'].'.body')
                         </div>
                         <!-- /.card-body -->
 
                         <div class="card-footer">
                             <button type="submit" class="btn btn-outline-success"><i class="fas fa-save"></i> Salvar</button>
-                            <a href="{{ route($informacoesComunsFront['route_name_view'].'.index') }}" class="btn btn-outline-primary"><i class="fas fa-list-ol"></i> Ir P/ Listagem</a>
+                            <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.index') }}" class="btn btn-outline-primary"><i class="fas fa-list-ol"></i> Ir P/ Listagem</a>
                         </div>
                     </form>
                 </div>

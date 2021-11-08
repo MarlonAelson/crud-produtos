@@ -12,7 +12,7 @@
                     <label for="id">
                         ID:
                     </label>
-                        <input type="text" class="form-control" id="id" name="id" value="{{ $objeto->nome ?? '' }}" maxlength="20" disabled>
+                        <input type="text" class="form-control" id="id" name="id" value="{{ $object->nome ?? '' }}" maxlength="20" disabled>
                     </div>
                 </div>
 
@@ -21,7 +21,7 @@
                         <label for="nome">
                             Nome:*
                         </label>
-                        <input type="text" class="form-control" id="nome" name="nome" value="{{ $objeto->nome ?? old('nome') }}" maxlength="45">
+                        <input type="text" class="form-control" id="nome" name="nome" value="{{ $object->nome ?? old('nome') }}" maxlength="45">
                     </div>
                 </div>
 
@@ -33,11 +33,11 @@
 
                     <div class="form-group">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="ativo" id="sim" value="S" @isset($objeto->ativo) {{ $objeto->ativo == 'S' ? 'checked' : ''}} @endisset @empty($objeto->ativo) {{ old('ativo') == 'S' ? 'checked' : '' }} @endempty>
+                            <input class="form-check-input" type="radio" name="ativo" id="sim" value="S" @isset($object->ativo) {{ $object->ativo == 'S' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'S' ? 'checked' : '' }} @endempty>
                             <label class="form-check-label" for="sim">Sim</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="ativo" id="nao" value="N" @isset($objeto->ativo) {{ $objeto->ativo == 'N' ? 'checked' : ''}} @endisset @empty($objeto->ativo) {{ old('ativo') == 'N' ? 'checked' : '' }} @endempty>
+                            <input class="form-check-input" type="radio" name="ativo" id="nao" value="N" @isset($object->ativo) {{ $object->ativo == 'N' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'N' ? 'checked' : '' }} @endempty>
                             <label class="form-check-label" for="nao">Não</label>        
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <label for="">Categoria de Objeto de Manutenção:</label>
+                    <label for="">Categoria de objeto de Manutenção:</label>
                     <div class="form-group">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="categoria_objeto_manutencao" id="categoria_objeto_manutencao_sim" value="S">
