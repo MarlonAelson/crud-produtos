@@ -83,8 +83,8 @@ class CategoriaRepository extends AbstractRepository
 
         if($validation === true)
         {
-            $dadosTratados = $this->model->tratament($request->all());
-            $returnFromFunction = $this->createObject($dadosTratados);
+            $dataTrated = $this->model->tratament($request->all());
+            $returnFromFunction = $this->createObject($dataTrated);
 
             if($returnFromFunction)
             {
@@ -169,8 +169,8 @@ class CategoriaRepository extends AbstractRepository
 
         if($validation === true)
         {
-            $dadosTratados = $this->model->tratament($request->all());
-            $returnFromFunction = $this->createObject($dadosTratados);
+            $dataTrated = $this->model->tratament($request->all());
+            $returnFromFunction = $this->createObject($dataTrated);
 
             if($returnFromFunction)
             {
