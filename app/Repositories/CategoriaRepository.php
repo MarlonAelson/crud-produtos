@@ -79,9 +79,14 @@ class CategoriaRepository extends AbstractRepository
 
     public function edit($request)
     {
+        $result;
+        $status;               
+        $retorno = $this->findObject($request->id);
+
         if(env('FRONTEND_BLADE'))
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.edit",[
+                'objeto' => $retorno,
                 'informacoesComunsViews' => $this->labelsCommomFrontEnd()
             ]);
         }
@@ -211,7 +216,7 @@ class CategoriaRepository extends AbstractRepository
     {
         $result;
         $status;
-        $retorno = $this->showObject($request->id);
+        $retorno = $this->findObject($request->id);
         
         if($retorno)
         {

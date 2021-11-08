@@ -15,6 +15,14 @@ class Categoria extends Model
     protected $guarded = ['id'];
     //necessário para o softdelete
     protected $dates = ['deleted_at'];
+    /**
+     * Caso queira mudar o nome dos campos de deleted_at, created_at e updated_at
+     * 
+     * const DELETED_AT = 'is_deleted';
+     * const CREATED_AT = 'creation_date';
+     * const UPDATED_AT = 'updated_date';
+     * 
+     */
 
     protected $fillable = [
         'nome',
@@ -26,10 +34,10 @@ class Categoria extends Model
 
     private $regraValidacao = [
 		'nome'	                        => ['required', 'string', 'max:45'],
-        'categoria_pessoa'              => ['required', 'string', 'max:1'],
-        'categoria_produto_servico'     => ['required', 'string', 'max:1'],
-        'categoria_objeto_manutencao'   => ['required', 'string', 'max:1'],
-		'ativo'                         => ['required', 'string', 'max:1'],
+        //'categoria_pessoa'              => ['required', 'string', 'max:1'],
+        //'categoria_produto_servico'     => ['required', 'string', 'max:1'],
+        //'categoria_objeto_manutencao'   => ['required', 'string', 'max:1'],
+		'ativo'                         => ['required', 'string', 'max:3'],
 	];
 
 	public function validator($data = null)

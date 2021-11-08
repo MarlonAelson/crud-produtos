@@ -57,7 +57,11 @@ abstract class AbstractRepository
     {
         try
         {
-            return $this->model::find($id);
+            /*
+            ** caso id não exista irá cair no catch. se usasse o método find dá 
+            ** problema informando que não pode deletar um dado null e não caía no catch
+            */
+            return $this->model::findOrFail($id);       
         }
         catch(\Exception $e)
         {
@@ -68,7 +72,7 @@ abstract class AbstractRepository
         {
             \Log::error('Error '.$e->getMessage());
             return false;
-        }   
+        }
     }
 
     public function updateObject($id, $data)
@@ -105,7 +109,7 @@ abstract class AbstractRepository
             */
             $objectFind = $this->model::findOrFail($id);
 
-            $objectFind->ativo = $objectFind->ativo == "1" ? "0":"1";
+            $objectFind->ativo = $objectFind->ativo == "SIM" ? "NAO":"SIM";
 
             return $objectFind->save();
 
@@ -131,28 +135,6 @@ abstract class AbstractRepository
             ** problema informando que não pode deletar um dado null e não caía no catch
             */
             return $this->model::findOrFail($id)->delete();       
-        }
-        catch(\Exception $e)
-        {
-            \Log::error('Error '.$e->getMessage());
-            return false;
-        }
-        catch(QueryException $e)
-        {
-            \Log::error('Error '.$e->getMessage());
-            return false;
-        }
-    }
-
-    public function showObject($id)
-    {
-        try
-        {
-            /*
-            ** caso id não exista irá cair no catch. se usasse o método find dá 
-            ** problema informando que não pode deletar um dado null e não caía no catch
-            */
-            return $this->model::findOrFail($id);       
         }
         catch(\Exception $e)
         {

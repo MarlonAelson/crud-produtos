@@ -55,7 +55,7 @@ class CategoriaController extends Controller
      */
     public function edit(Request $request)
     {
-        return $this->repository->show($request);
+        return $this->repository->edit($request);
     }
 
     /**
