@@ -48,7 +48,7 @@ class CategoriaRepository extends AbstractRepository
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
                 'objetos' => $result, 
                 'qtdRegistros' => 10,
-                'informacoesComunsViews' => $this->labelsCommomFrontEnd()
+                'informacoesComunsFront' => $this->labelsCommomFrontEnd()
             ]);
         }
         elseif( env('FRONTEND_BLADE') && $status == 400 )
@@ -56,7 +56,7 @@ class CategoriaRepository extends AbstractRepository
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
                 'objetos' => $result, 
                 'qtdRegistros' => 0,
-                'informacoesComunsViews' => $this->labelsCommomFrontEnd()
+                'informacoesComunsFront' => $this->labelsCommomFrontEnd()
             ])->withErrors( $result );
         }
         elseif(!env('FRONTEND_BLADE'))
@@ -102,7 +102,7 @@ class CategoriaRepository extends AbstractRepository
                 /*return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
                     'objetos' => $this->result, 
                     'qtdRegistros' => 10,
-                    'informacoesComunsViews' => $this->labelsCommomFrontEnd()
+                    'informacoesComunsFront' => $this->labelsCommomFrontEnd()
                 ]);*/
                 return $this->all();
             } 
@@ -188,7 +188,7 @@ class CategoriaRepository extends AbstractRepository
                 /*return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
                     'objetos' => $this->result, 
                     'qtdRegistros' => 10,
-                    'informacoesComunsViews' => $this->labelsCommomFrontEnd()
+                    'informacoesComunsFront' => $this->labelsCommomFrontEnd()
                 ]);*/
                 return $this->all();
             } 
@@ -313,22 +313,20 @@ class CategoriaRepository extends AbstractRepository
         if(env('FRONTEND_BLADE'))
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.form",[
-                'informacoesComunsViews' => $this->labelsCommomFrontEnd()
+                'informacoesComunsFront' => $this->labelsCommomFrontEnd()
             ]);
         }
     }
 
     public function edit($request)
     {
-        $result;
-        $status;               
         $returnFromFunction = $this->findObject($request->id);
 
         if(env('FRONTEND_BLADE'))
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.edit",[
                 'objeto' => $returnFromFunction,
-                'informacoesComunsViews' => $this->labelsCommomFrontEnd()
+                'informacoesComunsFront' => $this->labelsCommomFrontEnd()
             ]);
         }
     }

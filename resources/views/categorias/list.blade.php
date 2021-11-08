@@ -16,7 +16,7 @@
                 <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">{{ $informacoesComunsViews['label_card_list'] }} - Quantidade: {{ $qtdRegistros }}</h3>
+                            <h3 class="card-title">{{ $informacoesComunsFront['label_card_list'] }} - Quantidade: {{ $qtdRegistros }}</h3>
                         </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -24,7 +24,7 @@
                             <div class="card-body">
                                 <div class="form-group row">
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="textoBusca" name="textoBusca" placeholder="{{ $informacoesComunsViews['informativo_pesquisa'] }}">
+                                        <input type="text" class="form-control" id="textoBusca" name="textoBusca" placeholder="{{ $informacoesComunsFront['informativo_pesquisa'] }}">
                                     </div>
                                     <button type="submit" class="btn btn-secondary col-sm-2"><i class="fas fa-search"></i> Pesquisar</button>
                                 </div>
@@ -32,7 +32,7 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <a href="{{ route($informacoesComunsViews['route_name_view'].'.create') }}" class="btn btn-secondary"><i class="far fa-file"></i> Novo</a>
+                                <a href="{{ route($informacoesComunsFront['route_name_view'].'.create') }}" class="btn btn-secondary"><i class="far fa-file"></i> Novo</a>
                             </div>
                         </form>
                     </div>
@@ -106,19 +106,19 @@
                                             <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <div class="dropdown-menu" role="menu">
-                                                <a class="btn btn-app bg-primary" href="{{ route($informacoesComunsViews['route_name_view'].'.edit', $objeto->id) }}">
+                                                <a class="btn btn-app bg-primary" href="{{ route($informacoesComunsFront['route_name_view'].'.edit', $objeto->id) }}">
                                                     <i class="fas fa-edit"></i> Alterar
                                                 </a>
-                                                <a class="btn btn-app bg-info" href="{{ route($informacoesComunsViews['route_name_view'].'.edit', $objeto->id) }}">
+                                                <a class="btn btn-app bg-info" href="{{ route($informacoesComunsFront['route_name_view'].'.edit', $objeto->id) }}">
                                                     <i class="fas fa-search-plus"></i> Detalhar
                                                 </a>
-                                                <a class="btn btn-app bg-warning" href="{{ route($informacoesComunsViews['route_name_view'].'.replicate', $objeto->id) }}">
+                                                <a class="btn btn-app bg-warning" href="{{ route($informacoesComunsFront['route_name_view'].'.replicate', $objeto->id) }}">
                                                     <i class="far fa-copy"></i> Clonar
                                                 </a>
-                                                <a class="btn btn-app bg-secondary" href="{{ route($informacoesComunsViews['route_name_view'].'.inactiveOrActive', $objeto->id) }}">
+                                                <a class="btn btn-app bg-secondary" href="{{ route($informacoesComunsFront['route_name_view'].'.inactiveOrActive', $objeto->id) }}">
                                                     <i class="fas fa-adjust"></i> Inativar/Ativar
                                                 </a>
-                                                <a class="btn btn-app bg-danger" href="{{ route($informacoesComunsViews['route_name_view'].'.destroy', $objeto->id) }}">
+                                                <a class="btn btn-app bg-danger" href="{{ route($informacoesComunsFront['route_name_view'].'.destroy', $objeto->id) }}">
                                                     <i class="fas fa-trash"></i> Excluir
                                                 </a>
                                             </div>
