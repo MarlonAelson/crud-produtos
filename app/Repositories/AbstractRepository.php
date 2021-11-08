@@ -110,7 +110,7 @@ abstract class AbstractRepository
             */
             $objectFind = $this->model::findOrFail($id);
 
-            $objectFind->ativo = $objectFind->ativo == "SIM" ? "NAO":"SIM";
+            $objectFind->ativo = $objectFind->ativo == "S" ? "N":"S";
 
             return $objectFind->save();
 

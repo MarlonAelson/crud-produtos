@@ -30,38 +30,38 @@ class CategoriaRepository extends AbstractRepository
 
         if($returnFromFunction)
         {
-            $this->result = ['data'=> $returnFromFunction, 'mensagem' =>'Registros carregados com sucesso.', 'errors'=> null];
-            $this->status = 200;
+            $result = ['data'=> $returnFromFunction, 'mensagem' =>'Registros carregados com sucesso.', 'errors'=> null];
+            $status = 200;
         }
         else
         {
-            $this->result = ['data'=> null, 'mensagem' =>'Não foi possível carregar os registros do banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
-            $this->status = 400;
+            $result = ['data'=> null, 'mensagem' =>'Não foi possível carregar os registros do banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $status = 400;
         }
         
         /*
         **analisar se a condição de status vai permanecer
         **pois nada muda praticamente
         */
-        if( env('FRONTEND_BLADE') && $this->status == 200 )
+        if( env('FRONTEND_BLADE') && $status == 200 )
         {   
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
-                'objetos' => $this->result, 
+                'objetos' => $result, 
                 'qtdRegistros' => 10,
                 'informacoesComunsViews' => $this->labelsCommomFrontEnd()
             ]);
         }
-        elseif( env('FRONTEND_BLADE') && $this->status == 400 )
+        elseif( env('FRONTEND_BLADE') && $status == 400 )
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
-                'objetos' => $this->result, 
+                'objetos' => $result, 
                 'qtdRegistros' => 0,
                 'informacoesComunsViews' => $this->labelsCommomFrontEnd()
-            ])->withErrors( $this->result );
+            ])->withErrors( $result );
         }
         elseif(!env('FRONTEND_BLADE'))
         {
-            return response()->json($this->result, $this->status);
+            return response()->json($result, $status);
         }
     }
     

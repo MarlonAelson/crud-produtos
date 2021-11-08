@@ -32,7 +32,7 @@ class Categoria extends Model
         'ativo'
     ];
 
-    private $regraValidacao = [
+    private $rulesValidation = [
 		'nome'	                        => ['required', 'string', 'max:45'],
         //'categoria_pessoa'              => ['required', 'string', 'max:1'],
         //'categoria_produto_servico'     => ['required', 'string', 'max:1'],
@@ -44,7 +44,7 @@ class Categoria extends Model
     {
         if($data)
         {   
-            $validator = Validator::make($data, $this->regraValidacao);
+            $validator = Validator::make($data, $this->rulesValidation);
 
             if($validator->passes())
             {
@@ -55,7 +55,7 @@ class Categoria extends Model
         }
         else
         {
-            return $this->regraValidacao;
+            return $this->rulesValidation;
         }
     }
 
