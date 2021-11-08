@@ -159,16 +159,16 @@ abstract class AbstractRepository
             ** caso id não exista irá cair no catch. se usasse o método find dá 
             ** problema informando que não pode deletar um dado null e não caía no catch
             */
-            $objetcNew = $this->model::findOrFail($id)->replicate();
-            $objetcNew->nome = $objetcNew->nome . ' - COPIA';
+            $objectNew = $this->model::findOrFail($id)->replicate();
+            $objectNew->nome = $objectNew->nome . ' - COPIA';
 
-            if(isset($objetcNew->estoque))
-                $objetcNew->estoque = 0;
+            if(isset($objectNew->estoque))
+                $objectNew->estoque = 0;
             
-            if(isset($objetcNew->preco))
-                $objetcNew->preco = 0;
+            if(isset($objectNew->preco))
+                $objectNew->preco = 0;
 
-            return $objetcNew->save();    
+            return $objectNew->save();    
         }
         catch(\Exception $e)
         {
