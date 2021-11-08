@@ -160,7 +160,9 @@ abstract class AbstractRepository
             ** problema informando que não pode deletar um dado null e não caía no catch
             */
             $objectNew = $this->model::findOrFail($id)->replicate();
-            $objectNew->nome = $objectNew->nome . ' - COPIA';
+            
+            if(isset($objectNew->nome))
+                $objectNew->nome = $objectNew->nome . ' - COPIA';
 
             if(isset($objectNew->estoque))
                 $objectNew->estoque = 0;
