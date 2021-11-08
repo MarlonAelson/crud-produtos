@@ -12,7 +12,7 @@
                     <label for="id">
                         ID:
                     </label>
-                        <input type="text" class="form-control" id="id" name="id" maxlength="20" disabled>
+                        <input type="text" class="form-control" id="id" name="id" value="{{ $objeto->id ?? '' }}" maxlength="20" disabled>
                     </div>
                 </div>
 
