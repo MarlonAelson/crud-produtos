@@ -11,6 +11,7 @@ class Categoria extends Model
 {
     use HasFactory, SoftDeletes;
 
+    private $teste;
     protected $table = 'categorias';
     protected $guarded = ['id'];
     //necessário para o softdelete
@@ -33,11 +34,11 @@ class Categoria extends Model
     ];
 
     private $rulesValidation = [
-		'nome'	                        => ['required', 'string', 'max:45'],
+		'nome'	                        => ['required', 'string', 'max:45', "unique:categorias, nome, { request()->segment(3) }, id"],
         //'categoria_pessoa'              => ['required', 'string', 'max:1'],
         //'categoria_produto_servico'     => ['required', 'string', 'max:1'],
         //'categoria_objeto_manutencao'   => ['required', 'string', 'max:1'],
-		'ativo'                         => ['required', 'string', 'max:3'],
+		'ativo'                         => ['required', 'string', 'max:1'],
 	];
 
 	public function validator($data = null)
@@ -61,7 +62,28 @@ class Categoria extends Model
 
     public function tratament($data)
     {
+        if(isset($data['categoria_pessoa']) && empty($data['categoria_pessoa']))
+            $data['categoria_pessoa'] = 'S';
+            
+        if(isset($data['categoria_produto_servico']) && empty($data['categoria_produto_servico']))
+            $data['categoria_produto_servico'] = 'S';
+        
+        if(isset($data['categoria_objeto_manutencao']) && empty($data['categoria_objeto_manutencao']))
+            $data['categoria_objeto_manutencao'] = 'S';
+        
+        if(isset($data['ativo']) && empty($data['ativo']))
+            $data['ativo'] = 'S';
+
         return $data;
+    }
+
+    /**
+     * Quando um campo é definido como único, fica ocorrendo na alteração.
+     * Portanto tem que realizar uma ajuste conforme está no array $rulesValidation
+     * Esse método é para deixar setando o id de forma dinamica
+     */
+    public function setIgnoreColumnUniqueInMethodUpdate($id){
+        return $id;
     }
     
 }

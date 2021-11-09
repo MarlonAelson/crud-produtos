@@ -279,7 +279,7 @@ class CategoriaRepository extends AbstractRepository
     {
         $result;
         $status;
-        $returnFromFunction = $replicateObject($request->id);
+        $returnFromFunction = $this->replicateObject($request->id);
         
         if($returnFromFunction)
         {
