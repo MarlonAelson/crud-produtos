@@ -17,25 +17,9 @@ class CategoriaSeeder extends Seeder
         Categoria::create([ 
             'nome' => 'CATEGORIA NÃO DEFINIDA', 
             'categoria_pessoa' => 'S', 
-            'categoria_produto_servico' => 'N',
-            'categoria_objeto_assistencia' => 'N',
-            'ativo' => 'S'
-        ]);
-
-        Categoria::create([ 
-            'nome' => 'CATEGORIA NÃO DEFINIDA', 
-            'categoria_pessoa' => 'N', 
             'categoria_produto_servico' => 'S',
-            'categoria_objeto_assistencia' => 'N',
+            'categoria_objeto_manutencao' => 'S',
             'ativo' => 'S'
         ]);
-
-        Categoria::create([ 
-            'nome' => 'CATEGORIA NÃO DEFINIDA', 
-            'categoria_pessoa' => 'N', 
-            'categoria_produto_servico' => 'N',
-            'categoria_objeto_assistencia' => 'S',
-            'ativo' => 'S'
-        ]); 
     }
 }
