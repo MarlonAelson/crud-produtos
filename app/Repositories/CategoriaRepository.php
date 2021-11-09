@@ -43,7 +43,7 @@ class CategoriaRepository extends AbstractRepository
         **analisar se a condição de status vai permanecer
         **pois nada muda praticamente
         */
-        if( env('FRONTEND_BLADE') && $status == 200 )
+        if(env('FRONTEND_BLADE') && $status == 200)
         {   
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
                 'objects' => $result, 
@@ -51,13 +51,13 @@ class CategoriaRepository extends AbstractRepository
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ]);
         }
-        elseif( env('FRONTEND_BLADE') && $status == 400 )
+        elseif(env('FRONTEND_BLADE') && $status == 400)
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
                 'objects' => $result, 
                 'qtdRegisters' => 0,
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
-            ])->withErrors( $result );
+            ])->withErrors($result['message']);
         }
         elseif(!env('FRONTEND_BLADE'))
         {
@@ -97,16 +97,18 @@ class CategoriaRepository extends AbstractRepository
                 $status = 400;
             }
 
-            if(env('FRONTEND_BLADE'))
+            if(env('FRONTEND_BLADE') && $status == 200)
             {
-                /*return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
-                    'objects' => $result, 
-                    'qtdRegisters' => 10,
-                    'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
-                ]);*/
-                return $this->all();
+                return redirect()
+                       ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
+            }
+            elseif(env('FRONTEND_BLADE') && $status == 400)
+            {
+                return redirect()
+                       ->back()
+                       ->withErrors($result['message']);
             } 
-            else
+            elseif(!env('FRONTEND_BLADE'))
             {
                 return response()->json($result, $status);
             }
@@ -134,15 +136,15 @@ class CategoriaRepository extends AbstractRepository
             $status = 400;
         }          
 
-        if( env('FRONTEND_BLADE') && $status == 200 )
+        if(env('FRONTEND_BLADE') && $status == 200)
         {   
             return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
         }
-        elseif( env('FRONTEND_BLADE') && $status == 400 )
+        elseif(env('FRONTEND_BLADE') && $status == 400)
         {
             return redirect()
                     ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index")
-                    ->withErrors( $result['message'] );
+                    ->withErrors($result['message']);
             //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
         }
         elseif(!env('FRONTEND_BLADE'))
@@ -183,16 +185,18 @@ class CategoriaRepository extends AbstractRepository
                 $status = 400;
             }
 
-            if(env('FRONTEND_BLADE'))
+            if(env('FRONTEND_BLADE') && $status == 200)
             {
-                /*return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
-                    'objects' => $result, 
-                    'qtdRegisters' => 10,
-                    'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
-                ]);*/
-                return $this->all();
+                return redirect()
+                       ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
+            }
+            elseif(env('FRONTEND_BLADE') && $status == 400)
+            {
+                return redirect()
+                       ->back()
+                       ->withErrors($result['message']);
             } 
-            else
+            elseif(!env('FRONTEND_BLADE'))
             {
                 return response()->json($result, $status);
             }
@@ -220,15 +224,15 @@ class CategoriaRepository extends AbstractRepository
             $status = 400;
         }          
 
-        if( env('FRONTEND_BLADE') && $status == 200 )
+        if(env('FRONTEND_BLADE') && $status == 200)
         {   
             return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
         }
-        elseif( env('FRONTEND_BLADE') && $status == 400 )
+        elseif(env('FRONTEND_BLADE') && $status == 400)
         {
             return redirect()
                     ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index")
-                    ->withErrors( $result['message'] );
+                    ->withErrors($result['message']);
             //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
         }
         elseif(!env('FRONTEND_BLADE'))
@@ -254,15 +258,15 @@ class CategoriaRepository extends AbstractRepository
             $status = 400;
         }          
 
-        if( env('FRONTEND_BLADE') && $status == 200 )
+        if(env('FRONTEND_BLADE') && $status == 200)
         {   
             return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
         }
-        elseif( env('FRONTEND_BLADE') && $status == 400 )
+        elseif(env('FRONTEND_BLADE') && $status == 400)
         {
             return redirect()
                     ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index")
-                    ->withErrors( $result['message'] );
+                    ->withErrors($result['message']);
             //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
         }
         elseif(!env('FRONTEND_BLADE'))
@@ -288,15 +292,15 @@ class CategoriaRepository extends AbstractRepository
             $status = 400;
         }          
 
-        if( env('FRONTEND_BLADE') && $status == 200 )
+        if(env('FRONTEND_BLADE') && $status == 200)
         {   
             return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
         }
-        elseif( env('FRONTEND_BLADE') && $status == 400 )
+        elseif(env('FRONTEND_BLADE') && $status == 400)
         {
             return redirect()
                     ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index")
-                    ->withErrors( $result['message'] );
+                    ->withErrors($result['message']);
             //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
         }
         elseif(!env('FRONTEND_BLADE'))
