@@ -17,6 +17,8 @@ use App\Http\Controllers\{
 ** "name" do "group" é utilizado para definir prefixos nos nomes as rotas (ex: categorias.index)
 */
 
+Route::redirect('/categorias', '/categorias/listagem');
+
 Route::get('/404', function () {
     return view('404');
 })->name('404');
@@ -27,7 +29,6 @@ Route::redirect('/', '/login');
 Route::get('{domain}/teste', function(){
     return 'login';
 });
-
 
 Route::get('/login',  [ LoginController::class, 'login' ])->name('login');
 Route::post('/login', [ LoginController::class, 'autenticarUsuario' ])->name('autenticarUsuario');

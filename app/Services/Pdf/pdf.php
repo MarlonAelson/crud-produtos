@@ -1,7 +1,7 @@
 <?php
 namespace App\Services\Pdf;
 
-class pdf 
+class Pdf 
 {
     public static function generatePDF()
     {

@@ -32,7 +32,8 @@
                             <!-- /.card-body -->
 
                             <div class="card-footer">
-                                <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.create') }}" class="btn btn-secondary"><i class="far fa-file"></i> Novo</a>
+                                <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.create') }}" class="btn btn-secondary"><i class="fas fa-file"></i> Novo</a>
+                                <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.pdf') }}" class="btn btn-secondary"><i class="fas fa-file-pdf"></i> PDF</a>
                             </div>
                         </form>
                     </div>
