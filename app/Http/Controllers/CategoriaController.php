@@ -101,6 +101,15 @@ class CategoriaController extends Controller
     */
     public function pdf(Request $request)
     {       
-        return $this->repository->pdf($request);
+        return $this->repository->pdfObjects($request);
+    }
+
+    /**
+    * Método responsável por clonar e salvar um objeto
+    * no BD.
+    */
+    public function email(Request $request)
+    {       
+        return $this->repository->email($request);
     }
 }

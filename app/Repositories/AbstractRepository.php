@@ -3,8 +3,11 @@ namespace App\Repositories;
 
 use Log;
 use Illuminate\Database\QueryException;
-use App\Services\Pdf\Pdf;
 use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Mail;
+use App\Services\Pdf\Pdf;
+use App\Services\Email\Email;
 
 abstract class AbstractRepository
 {
@@ -190,6 +193,28 @@ abstract class AbstractRepository
         try
         {
             return Pdf::generatePDF();    
+        }
+        catch(\Exception $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+        catch(QueryException $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+    }
+
+    //Método responsável por enviar os objetos do sistema por e-mail
+    public function emailsObjects()
+    {
+        try
+        {
+            Mail::to('marlon@ar-consultoria.com')
+                  //->cc()
+                  ->send(new Email());
+            return Email::Send();    
         }
         catch(\Exception $e)
         {

@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/categorias/inativar-ativar/{id}' , [ CategoriaController::class, 'inactiveOrActive' ])->middleware(['permission:categoria_inativar_ativar'])->name('inactiveOrActive');
         Route::get('/categorias/clonar/{id}' , [ CategoriaController::class, 'replicate' ])->middleware(['permission:categoria_cadastrar'])->name('replicate');
         Route::get('/categorias/pdf/{id?}' , [ CategoriaController::class, 'pdf' ])->middleware(['permission:categoria_pdf'])->name('pdf');
+        Route::get('/categorias/email' , [ CategoriaController::class, 'email' ])->middleware(['permission:categoria_pdf'])->name('email');
     });
 });
 
