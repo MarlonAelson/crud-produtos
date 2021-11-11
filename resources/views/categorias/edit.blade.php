@@ -16,7 +16,7 @@
                     </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                    <form class="form-horizontal" method="post" action="{{ route($informationsCommonFrontEnd['route_name_view'].'.update') }}">
+                    <form class="form-horizontal" method="post" action="{{ route($informationsCommonFrontEnd['route_name_view'].'.update', $object->id) }}">
                     @method('PUT')
                     @csrf    
                     <div class="card-body">

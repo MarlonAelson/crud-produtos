@@ -88,7 +88,7 @@ class CategoriaRepository extends AbstractRepository
 
             if($returnFromFunction)
             {
-                $result = ['data'=> $returnFromFunction, 'message' =>'Registros carregados com sucesso.', 'errors'=> null];
+                $result = ['data'=> $returnFromFunction, 'message' =>'Registro salvo com sucesso.', 'errors'=> null];
                 $status = 200;
             }
             else
@@ -172,16 +172,16 @@ class CategoriaRepository extends AbstractRepository
         if($validation === true)
         {
             $dataTrated = $this->model->tratament($request->all());
-            $returnFromFunction = $this->createObject($dataTrated);
-
+            $returnFromFunction = $this->updateObject($request->id, $dataTrated);
+      
             if($returnFromFunction)
             {
-                $result = ['data'=> $returnFromFunction, 'message' =>'Registros carregados com sucesso.', 'errors'=> null];
+                $result = ['data'=> $returnFromFunction, 'message' =>'Registro alterado com sucesso.', 'errors'=> null];
                 $status = 200;
             }
             else
             {
-                $result = ['data'=> null, 'message' =>'Não foi possivel salvar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+                $result = ['data'=> null, 'message' =>'Não foi possivel alterar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
                 $status = 400;
             }
 
@@ -261,7 +261,7 @@ class CategoriaRepository extends AbstractRepository
         if(env('FRONTEND_BLADE') && $status == 200)
         {   
             return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
-        }
+        }   
         elseif(env('FRONTEND_BLADE') && $status == 400)
         {
             return redirect()
@@ -309,6 +309,11 @@ class CategoriaRepository extends AbstractRepository
         }
     }
 
+    public function pdf()
+    {
+        return $this->pdfObjects();
+    }
+
     /**
      * Os Métodos abaixos: create e edit - são específicos para quando o projeto for com blade
      */
@@ -324,14 +329,38 @@ class CategoriaRepository extends AbstractRepository
 
     public function edit($request)
     {
+        $result;
+        $status;
         $returnFromFunction = $this->findObject($request->id);
 
-        if(env('FRONTEND_BLADE'))
+        if($returnFromFunction)
         {
+            $result = ['data'=> $returnFromFunction, 'message' =>'Registro carregado com sucesso para poder ser alterado.', 'errors'=> null];
+            $status = 200;
+        }
+        else
+        {
+            $result = ['data'=> null, 'message' =>'Não foi possível alterar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $status = 400;
+        }
+
+        if(env('FRONTEND_BLADE') && $status == 200)
+        {   
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.edit",[
-                'objeto' => $returnFromFunction,
+                'object' => $returnFromFunction,
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ]);
+        }
+        elseif(env('FRONTEND_BLADE') && $status == 400)
+        {
+            return redirect()
+                       ->back()
+                       ->withErrors($result['message']);
+            //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
+        }
+        elseif(!env('FRONTEND_BLADE'))
+        {
+            return response()->json($result, $status);
         }
     }
 }

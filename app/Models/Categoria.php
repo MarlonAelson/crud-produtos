@@ -11,7 +11,6 @@ class Categoria extends Model
 {
     use HasFactory, SoftDeletes;
 
-    private $teste;
     protected $table = 'categorias';
     protected $guarded = ['id'];
     //necessário para o softdelete
@@ -34,7 +33,8 @@ class Categoria extends Model
     ];
 
     private $rulesValidation = [
-		'nome'	                        => ['required', 'string', 'max:45', "unique:categorias, nome, { request()->segment(3) }, id"],
+		//'nome'	                        => ['required', 'string', 'max:45', "unique:categorias, nome, {ignore()}, id"],
+        'nome'	                        => ['required', 'string', 'max:45'],
         //'categoria_pessoa'              => ['required', 'string', 'max:1'],
         //'categoria_produto_servico'     => ['required', 'string', 'max:1'],
         //'categoria_objeto_manutencao'   => ['required', 'string', 'max:1'],
@@ -62,16 +62,16 @@ class Categoria extends Model
 
     public function tratament($data)
     {
-        if(isset($data['categoria_pessoa']) && empty($data['categoria_pessoa']))
+        if(empty($data['categoria_pessoa']))
             $data['categoria_pessoa'] = 'S';
             
-        if(isset($data['categoria_produto_servico']) && empty($data['categoria_produto_servico']))
+        if(empty($data['categoria_produto_servico']))
             $data['categoria_produto_servico'] = 'S';
         
-        if(isset($data['categoria_objeto_manutencao']) && empty($data['categoria_objeto_manutencao']))
+        if(empty($data['categoria_objeto_manutencao']))
             $data['categoria_objeto_manutencao'] = 'S';
         
-        if(isset($data['ativo']) && empty($data['ativo']))
+        if(empty($data['ativo']))
             $data['ativo'] = 'S';
 
         return $data;
@@ -82,8 +82,8 @@ class Categoria extends Model
      * Portanto tem que realizar uma ajuste conforme está no array $rulesValidation
      * Esse método é para deixar setando o id de forma dinamica
      */
-    public function setIgnoreColumnUniqueInMethodUpdate($id){
-        return $id;
+    public function ignoreColumnUniqueInMethodUpdate(){
+        return request()->segment(3);
     }
     
 }

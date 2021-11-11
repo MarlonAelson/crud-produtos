@@ -64,7 +64,7 @@ class CategoriaController extends Controller
     */
     public function update(Request $request)
     {
-        return $this->repository->update($request->all(), $request->id);
+        return $this->repository->update($request);
     }
 
     /**
@@ -86,12 +86,21 @@ class CategoriaController extends Controller
         return $this->repository->inactiveOrActive($request);
     }
 
-     /**
+    /**
     * Método responsável por clonar e salvar um objeto
     * no BD.
     */
     public function replicate(Request $request)
     {       
         return $this->repository->replicate($request);
+    }
+
+    /**
+    * Método responsável por clonar e salvar um objeto
+    * no BD.
+    */
+    public function pdf(Request $request)
+    {       
+        return $this->repository->pdf($request);
     }
 }

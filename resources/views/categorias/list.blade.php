@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 @section('content_header')
-
+<span></span>
 @endsection
 
 @section('content')

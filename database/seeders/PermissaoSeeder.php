@@ -25,5 +25,6 @@ class PermissaoSeeder extends Seeder
         Permissao::create(['id' => 8, 'name'=> 'categoria_cadastrar', 'guard_name' => 'web', 'nome_alternativo' => 'Cadastrar Categorias']);
         Permissao::create(['id' => 9, 'name'=> 'categoria_inativar_ativar', 'guard_name' => 'web', 'nome_alternativo' => 'Inativar/Ativar Categorias']);        
         Permissao::create(['id' => 10, 'name'=> 'categoria_excluir', 'guard_name' => 'web', 'nome_alternativo' => 'Excluir Categorias']);
+        Permissao::create(['id' => 11, 'name'=> 'categoria_pdf', 'guard_name' => 'web', 'nome_alternativo' => 'PDF Categorias']);
     }
 }

@@ -24,5 +24,6 @@ class UsuarioPermissaoSeeder extends Seeder
         UsuarioPermissao::create(['permission_id' => 8, 'model_type'=> 'App\Models\Pessoa', 'model_id' => 1]);
         UsuarioPermissao::create(['permission_id' => 9, 'model_type'=> 'App\Models\Pessoa', 'model_id' => 1]);
         UsuarioPermissao::create(['permission_id' => 10, 'model_type'=> 'App\Models\Pessoa', 'model_id' => 1]);
+        UsuarioPermissao::create(['permission_id' => 11, 'model_type'=> 'App\Models\Pessoa', 'model_id' => 1]);
     }
 }

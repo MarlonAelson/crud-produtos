@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use Log;
 use Illuminate\Database\QueryException;
+use App\Services\Pdf\Pdf;
 use Illuminate\Support\Facades\DB;
 
 abstract class AbstractRepository
@@ -83,9 +84,7 @@ abstract class AbstractRepository
     {
         try
         {
-            $objectFind = $this->model::findOrFail($id);
-    
-            return $this->model->update($data);
+            return $this->model::findOrFail($id)->update($data);
         }
         catch(\Exception $e)
         {
@@ -172,6 +171,25 @@ abstract class AbstractRepository
                 $objectNew->preco = 0;
 
             return $objectNew->save();    
+        }
+        catch(\Exception $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+        catch(QueryException $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+    }
+
+    //Método responsável por gerar o pdf dos objetos
+    public function pdfObjects()
+    {
+        try
+        {
+            return Pdf::generatePDF();    
         }
         catch(\Exception $e)
         {
