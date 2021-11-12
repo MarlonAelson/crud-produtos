@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Mail;
 use App\Services\Pdf\Pdf;
-use App\Services\Email\Email;
+use App\Services\Mail\Email;
+
+use App\Models\Pessoa;
 
 abstract class AbstractRepository
 {
@@ -209,12 +211,14 @@ abstract class AbstractRepository
     //Método responsável por enviar os objetos do sistema por e-mail
     public function emailsObjects()
     {
+        $id = 1;
+        $pessoa = Pessoa::where('id', $id)->first();
         try
         {
-            Mail::to('marlon@ar-consultoria.com')
-                  //->cc()
-                  ->send(new Email());
-            return Email::Send();    
+            return Mail::to('marlon@ar-consultoria.com')
+                  //->cc('') //email para receber a cópia
+                  //->bcc()  //email para receber a cópia oculta
+                  ->send(new Email($pessoa)); 
         }
         catch(\Exception $e)
         {

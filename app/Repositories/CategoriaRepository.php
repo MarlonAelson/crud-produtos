@@ -314,6 +314,11 @@ class CategoriaRepository extends AbstractRepository
         return $this->pdfObjects();
     }
 
+    public function email()
+    {
+        dd($this->emailsObjects());
+    }
+
     /**
      * Os Métodos abaixos: create e edit - são específicos para quando o projeto for com blade
      */

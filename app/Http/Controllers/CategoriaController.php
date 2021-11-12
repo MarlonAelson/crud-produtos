@@ -105,7 +105,7 @@ class CategoriaController extends Controller
     }
 
     /**
-    * Método responsável por clonar e salvar um objeto
+    * Método responsável por enviar os e-mails dos objetos
     * no BD.
     */
     public function email(Request $request)

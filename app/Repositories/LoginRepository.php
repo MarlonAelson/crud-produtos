@@ -7,9 +7,9 @@ class LoginRepository
 {
 
     // caso queira trocar o campo de autenticacao
-    /*public function username(){
-        return "login";
-    }*/
+    public function username(){
+        return "nome_alternativo";
+    }
 
     public function login()
     {
@@ -27,7 +27,7 @@ class LoginRepository
     {   
         if(env('FRONTEND_BLADE'))
         {
-            if (Auth::attempt([ 'email' => $request->email, 'password' => $request->password, 'acessa_sistema' => 'S', 'ativo' => 'S' ]))
+            if (Auth::attempt([ 'email' => $request->nome_alternativo, 'password' => $request->password, 'acessa_sistema' => 'S', 'ativo' => 'S' ]))
             {
 
                 $request->session()->regenerate();

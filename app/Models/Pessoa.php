@@ -27,9 +27,13 @@ class Pessoa extends Authenticatable
      */
     protected $fillable = [
         'nome',
-        'email',
+        'nome_alternativo',
+        'empresa',
+        'cliente',
+        'fornecedor',
+        'colaborador',
+        'outros',
         'password',
-        'login',
         'acessa_sistema',
         'ativo'
     ];
@@ -52,5 +56,10 @@ class Pessoa extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime'
     ];
+
+    public function pessoasEmails()
+    {
+        return $this->hasMany(PessoaEmails::class);
+    }
 
 }

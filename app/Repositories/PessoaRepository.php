@@ -3,161 +3,369 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Pessoa;
-use App\Repositories\PermissaoRepository;
 
 class PessoaRepository extends AbstractRepository
 {
-    private $personaliteView = [];
-    private $dependencias;
-
-    public function __construct(Pessoa $model, PermissaoRepository $dependencia1)
+    public function __construct(Pessoa $model)
     {
         $this->model = $model;
-        $this->dependencias = $dependencia1;
     }
 
-    public function all($request)
-    {        
-        $all      = $this->allObject();
-        $pathUrl  = $request->path();
-        
-        $objetos  = $this->definicaoPessoa($all, $pathUrl);
-
-        if(env('FRONTEND_BLADE'))
-        {
-            return view('list',[
-                'objetos' => $objetos, 
-                'qtdRegistros' => 10,
-                'informacoesComunsViews' => $this->getDataCommomViews($pathUrl)
-            ]);
-        } 
-    }
-
-    public function form($request)
+    public function labelsCommomFrontEnd()
     {
-        $pathUrl = $request->path();
+        $personalization['informative_search'] = "Pesquise digitando o ... desejada";
+        $personalization['label_card_form'] = "Cadastrar Pessoa";
+        $personalization['label_card_edit'] = "Alterar Pessoa";
+        $personalization['label_card_list'] = "Consultar Pessoas";
+        $personalization['route_name_view'] = "pessoas";
+        
+        return $personalization;
+    }
 
-        if(env('FRONTEND_BLADE'))
+    public function all($request = null)
+    {  
+        $result;
+        $status;               
+        $returnFromFunction = $this->allObject();
+
+        if($returnFromFunction)
         {
-            return view('form',[
-                'dependencias' => $this->dependencias->all(),
-                'informacoesComunsViews' => $this->getDataCommomViews($pathUrl)
+            $result = ['data'=> $returnFromFunction, 'message' =>'Registros carregados com sucesso.', 'errors'=> null];
+            $status = 200;
+        }
+        else
+        {
+            $result = ['data'=> null, 'message' =>'Não foi possível carregar os registros do banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $status = 400;
+        }
+        
+        /*
+        **analisar se a condição de status vai permanecer
+        **pois nada muda praticamente
+        */
+        if(env('FRONTEND_BLADE') && $status == 200)
+        {   
+            return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
+                'objects' => $result, 
+                'qtdRegisters' => 10,
+                'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ]);
         }
-    }
-
-    public function create($data)
-    {
-        return $this->createObject($data);
-    }
-
-    public function find($id)
-    {
-        return $this->findObject($id);
-    }
-
-    public function definicaoPessoa($all, $pathUrl)
-    {
-        switch(substr($pathUrl, 0, -5))
+        elseif(env('FRONTEND_BLADE') && $status == 400)
         {
-            case 'clientes':
-                return $all->where('cliente', 'S');
-            case 'fornecedores':
-                return $all->where('fornecedor', 'S');
-            case 'usuarios':
-                return $all->where('acessa_sistema', 'S');
-            case 'colaborador':
-                return $all->where('colaborador', 'S');
-            case 'empresas':
-                return $all->where('empresa', 'S');
-            case 'outro':
-                return $all->where('outro', 'S');
-            default: $all;
-        } 
+            return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
+                'objects' => $result, 
+                'qtdRegisters' => 0,
+                'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
+            ])->withErrors($result['message']);
+        }
+        elseif(!env('FRONTEND_BLADE'))
+        {
+            return response()->json($result, $status);
+        }
     }
-
-    public static function getClientes()
+    
+    public function store($request)
     {
-        return $this->model->where('cliente', 'S')->where('ativo', 'S')->get();
-    }
+        $result;
+        $status;
+        $validation;
 
-    public static function getFornecedores()
-    {
-        return $this->model->where('fornecedor', 'S')->where('ativo', 'S')->get();
-    }
+        if(env('FRONTEND_BLADE'))
+        {
+            $request->validate($this->model->validator());
+            $validation = true;
+        }
+        else
+        {
+            $validation = $this->model->validator($request->all());
+        }
 
-    public static function getUsuarios()
-    {
-        return $this->model->where('acessa_sistema', 'S')->where('ativo', 'S')->get();
-    }
+        if($validation === true)
+        {
+            $dataTrated = $this->model->tratament($request->all());
+            $returnFromFunction = $this->createObject($dataTrated);
 
-    public static function getColaboradores()
-    {
-        return $this->model->where('colaborador', 'S')->where('ativo', 'S')->get();
-    }
-
-    public static function getEmpresas()
-    {
-        return $this->model->where('empresa', 'S')->where('ativo', 'S')->get();
-    }
-
-    public static function getOutros()
-    {
-        return $this->model->where('outro', 'S')->where('ativo', 'S')->get();
-    }
-
-    public function getDataCommomViews($data = null)
-    {
-        $this->personaliteView['informativo_pesquisa'] = "Pesquise por ...";
-        $this->personaliteView['simbolo_obrigatoriedade_inputs'] = '*';
-        $this->personaliteView['obrigatoriedade_inputs'] = true;
-        /*$colunasDaTabelaDoGrid = ['', '',''];
-        $tamanhoColunaDosCampos = [4,4,4];*/
-        $this->personaliteView['qtd_max_caracteres_inputs'][20]   = 20;
-        $this->personaliteView['qtd_max_caracteres_inputs'][45]   = 45;
-        $this->personaliteView['qtd_max_caracteres_inputs'][60]   = 60;
-        $this->personaliteView['qtd_max_caracteres_inputs'][120]  = 120;
-        //$this->personaliteView['required'] =  true; Vou deixar para o validator do laravel mesmo;
-        
-        if($data){
-            switch(substr($data, 0, -5))
+            if($returnFromFunction)
             {
-                case 'clientes':
-                    $this->personaliteView['label_card_form'] = "Cadastrar Cliente";
-                    $this->personaliteView['label_card_edit'] = "Alterar Cliente";
-                    $this->personaliteView['label_card_list'] = "Listagem de Clientes";
-                    $this->personaliteView['route_name_view'] = "pessoas";
-                    break;
-                case 'fornecedores':
-                    $this->personaliteView['label_card_form'] = "Cadastrar Fornecedor";
-                    $this->personaliteView['label_card_edit'] = "Alterar Fornecedor";
-                    $this->personaliteView['label_card_list'] = "Listagem de Fornecedores";
-                    $this->personaliteView['route_name_view'] = "fornecedores";
-                    break;
-                case 'usuarios':
-                    $this->personaliteView['label_card_form'] = "Cadastrar Usuário";
-                    $this->personaliteView['label_card_edit'] = "Alterar Usuário";
-                    $this->personaliteView['label_card_list'] = "Listagem de Usuários";
-                    $this->personaliteView['route_name_view'] = "usuarios";
-                    break;
-                case 'colaborador':
-                    $this->personaliteView['label_card_form'] = "Cadastrar Usuário";
-                    $this->personaliteView['label_card_edit'] = "Alterar Usuário";
-                    $this->personaliteView['label_card_list'] = "Listagem de Usuários";
-                    $this->personaliteView['route_name_view'] = "usuarios";
-                case 'empresas':
-                    $this->personaliteView['label_card_form'] = "Cadastrar Usuário";
-                    $this->personaliteView['label_card_edit'] = "Alterar Usuário";
-                    $this->personaliteView['label_card_list'] = "Listagem de Usuários";
-                    $this->personaliteView['route_name_view'] = "usuarios";
-                case 'pessoas':
-                    $this->personaliteView['label_card_form'] = "Cadastrar Pessoa";
-                    $this->personaliteView['label_card_edit'] = "Alterar Pessoa";
-                    $this->personaliteView['label_card_list'] = "Listagem de Pessoas";
-                    $this->personaliteView['route_name_view'] = "pessoas";
+                $result = ['data'=> $returnFromFunction, 'message' =>'Registro salvo com sucesso.', 'errors'=> null];
+                $status = 200;
+            }
+            else
+            {
+                $result = ['data'=> null, 'message' =>'Não foi possivel salvar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+                $status = 400;
+            }
+
+            if(env('FRONTEND_BLADE') && $status == 200)
+            {
+                return redirect()
+                       ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
+            }
+            elseif(env('FRONTEND_BLADE') && $status == 400)
+            {
+                return redirect()
+                       ->back()
+                       ->withErrors($result['message']);
+            } 
+            elseif(!env('FRONTEND_BLADE'))
+            {
+                return response()->json($result, $status);
             }
         }
+        else
+        {
+            return response()->json(['data'=> null, 'message' => $validation, 'errors'=> true], 201);//$result e $status
+        }
+    }
+
+    public function show($request)
+    {
+        $result;
+        $status;
+        $returnFromFunction = $this->findObject($request->id);
         
-        return $this->personaliteView;
+        if($returnFromFunction)
+        {
+            $result = ['data'=> $returnFromFunction, 'message' =>'Registro detalhado com sucesso.', 'errors'=> null];
+            $status = 200;
+        }
+        else
+        {
+            $result = ['data'=> null, 'message' =>'Não foi possível carregar os detalhes do registro. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $status = 400;
+        }          
+
+        if(env('FRONTEND_BLADE') && $status == 200)
+        {   
+            return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
+        }
+        elseif(env('FRONTEND_BLADE') && $status == 400)
+        {
+            return redirect()
+                    ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index")
+                    ->withErrors($result['message']);
+            //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
+        }
+        elseif(!env('FRONTEND_BLADE'))
+        {
+            return response()->json($result, $status);
+        }
+    }
+
+    public function update($request)
+    {
+        $result;
+        $status;
+        $validation;
+
+        if(env('FRONTEND_BLADE'))
+        {
+            $request->validate($this->model->validator());
+            $validation = true;
+        }
+        else
+        {
+            $validation = $this->model->validator($request->all());
+        }
+
+        if($validation === true)
+        {
+            $dataTrated = $this->model->tratament($request->all());
+            $returnFromFunction = $this->updateObject($request->id, $dataTrated);
+      
+            if($returnFromFunction)
+            {
+                $result = ['data'=> $returnFromFunction, 'message' =>'Registro alterado com sucesso.', 'errors'=> null];
+                $status = 200;
+            }
+            else
+            {
+                $result = ['data'=> null, 'message' =>'Não foi possivel alterar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+                $status = 400;
+            }
+
+            if(env('FRONTEND_BLADE') && $status == 200)
+            {
+                return redirect()
+                       ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
+            }
+            elseif(env('FRONTEND_BLADE') && $status == 400)
+            {
+                return redirect()
+                       ->back()
+                       ->withErrors($result['message']);
+            } 
+            elseif(!env('FRONTEND_BLADE'))
+            {
+                return response()->json($result, $status);
+            }
+        }
+        else
+        {
+            return response()->json(['data'=> null, 'message' => $validation, 'errors'=> true], 201);//$result e $status
+        }
+    }
+
+    public function delete($request)
+    {
+        $result;
+        $status;
+        $returnFromFunction = $this->deleteObject($request->id);
+        
+        if($returnFromFunction)
+        {
+            $result = ['data'=> $returnFromFunction, 'message' =>'Registro excluído com sucesso.', 'errors'=> null];
+            $status = 200;
+        }
+        else
+        {
+            $result = ['data'=> null, 'message' =>'Não foi possível excluir o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $status = 400;
+        }          
+
+        if(env('FRONTEND_BLADE') && $status == 200)
+        {   
+            return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
+        }
+        elseif(env('FRONTEND_BLADE') && $status == 400)
+        {
+            return redirect()
+                    ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index")
+                    ->withErrors($result['message']);
+            //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
+        }
+        elseif(!env('FRONTEND_BLADE'))
+        {
+            return response()->json($result, $status);
+        }
+    }
+
+    public function inactiveOrActive($request)
+    {
+        $result;
+        $status;
+        $returnFromFunction = $this->inactiveOrActiveObject($request->id);
+        
+        if($returnFromFunction)
+        {
+            $result = ['data'=> $returnFromFunction, 'message' =>'Registro inativado ou ativado com sucesso.', 'errors'=> null];
+            $status = 200;
+        }
+        else
+        {
+            $result = ['data'=> null, 'message' =>'Não foi possível inativar ou ativar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $status = 400;
+        }          
+
+        if(env('FRONTEND_BLADE') && $status == 200)
+        {   
+            return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
+        }   
+        elseif(env('FRONTEND_BLADE') && $status == 400)
+        {
+            return redirect()
+                    ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index")
+                    ->withErrors($result['message']);
+            //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
+        }
+        elseif(!env('FRONTEND_BLADE'))
+        {
+            return response()->json($result, $status);
+        }
+    }
+
+    public function replicate($request)
+    {
+        $result;
+        $status;
+        $returnFromFunction = $this->replicateObject($request->id);
+        
+        if($returnFromFunction)
+        {
+            $result = ['data'=> $returnFromFunction, 'message' =>'Registro clonado com sucesso.', 'errors'=> null];
+            $status = 200;
+        }
+        else
+        {
+            $result = ['data'=> null, 'message' =>'Não foi possível clonar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $status = 400;
+        }          
+
+        if(env('FRONTEND_BLADE') && $status == 200)
+        {   
+            return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
+        }
+        elseif(env('FRONTEND_BLADE') && $status == 400)
+        {
+            return redirect()
+                    ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index")
+                    ->withErrors($result['message']);
+            //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
+        }
+        elseif(!env('FRONTEND_BLADE'))
+        {
+            return response()->json($result, $status);
+        }
+    }
+
+    public function pdf()
+    {
+        return $this->pdfObjects();
+    }
+
+    public function email()
+    {
+        dd($this->emailsObjects());
+    }
+
+    /**
+     * Os Métodos abaixos: create e edit - são específicos para quando o projeto for com blade
+     */
+    public function create($request)
+    {
+        if(env('FRONTEND_BLADE'))
+        {
+            return view("{$this->labelsCommomFrontEnd()['route_name_view']}.form",[
+                'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
+            ]);
+        }
+    }
+
+    public function edit($request)
+    {
+        $result;
+        $status;
+        $returnFromFunction = $this->findObject($request->id);
+
+        if($returnFromFunction)
+        {
+            $result = ['data'=> $returnFromFunction, 'message' =>'Registro carregado com sucesso para poder ser alterado.', 'errors'=> null];
+            $status = 200;
+        }
+        else
+        {
+            $result = ['data'=> null, 'message' =>'Não foi possível alterar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $status = 400;
+        }
+
+        if(env('FRONTEND_BLADE') && $status == 200)
+        {   
+            return view("{$this->labelsCommomFrontEnd()['route_name_view']}.edit",[
+                'object' => $returnFromFunction,
+                'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
+            ]);
+        }
+        elseif(env('FRONTEND_BLADE') && $status == 400)
+        {
+            return redirect()
+                       ->back()
+                       ->withErrors($result['message']);
+            //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
+        }
+        elseif(!env('FRONTEND_BLADE'))
+        {
+            return response()->json($result, $status);
+        }
     }
 }
