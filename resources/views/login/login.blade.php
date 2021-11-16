@@ -53,6 +53,19 @@
             @endif
         </div>
 
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group">
+                    <label for="">Seleciona a Empresa:</label>
+                    <select name="empresa_id" id="empresa" class="form-control">
+                        @foreach($companies as $company)
+                            <option value="{{ $company->id }}">{{ $company->nome_alternativo }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        </div>
+
         {{-- Login field --}}
         <div class="row">
             <div class="col-5">

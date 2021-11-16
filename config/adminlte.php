@@ -240,14 +240,12 @@ return [
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'Usuarios/Clientes/Fornecedores/Colaboradores',
-                    'url'  => '/pessoas/listagem',
-                ],
-            ],
-            'submenu' => [
-                [
                     'text' => 'Categorias',
                     'url'  => '/categorias/listagem',
+                ],
+                [
+                    'text' => 'Pessoas',
+                    'url'  => '/pessoas/listagem',
                 ],
             ],
         ],

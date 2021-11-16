@@ -2,8 +2,9 @@
 namespace App\Repositories;
 
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\PessoaRepository;
 
-class LoginRepository
+class LoginRepository extends AbstractRepository
 {
 
     // caso queira trocar o campo de autenticacao
@@ -15,7 +16,7 @@ class LoginRepository
     {
         if(env('FRONTEND_BLADE'))
         {
-            return view('login.login');
+            return view('login.login', ['companies' => PessoaRepository::getCompanies()]);
         }
         else
         {
@@ -27,11 +28,18 @@ class LoginRepository
     {   
         if(env('FRONTEND_BLADE'))
         {
-            if (Auth::attempt([ 'email' => $request->nome_alternativo, 'password' => $request->password, 'acessa_sistema' => 'S', 'ativo' => 'S' ]))
+            if (Auth::attempt([ 'nome_alternativo' => $request->nome_alternativo, 'password' => $request->password, 'acessa_sistema' => 'S', 'ativo' => 'S' ]))
             {
-
+                
                 $request->session()->regenerate();
+                $request->session()->put('empresa_id', $request->empresa_id);
                 return redirect()->intended('home');
+                
+                /*Utilizado para testes
+                return view('home', [
+                    "teste_empresa" => $this->getCompanyId(),
+                    "teste_usuario" => $this->getUserId()
+                ]);*/
             }
             else
             {

@@ -62,4 +62,9 @@ class Pessoa extends Authenticatable
         return $this->hasMany(PessoaEmails::class);
     }
 
+    public function permissoes()
+	{
+		return $this->belongsToMany(Permissao::class, 'model_has_permissions', 'model_id', 'permission_id');
+	}
+
 }

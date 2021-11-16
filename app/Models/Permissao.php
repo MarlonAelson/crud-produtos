@@ -17,5 +17,10 @@ class Permissao extends Model
         'guarde_name',
         'nome_alternativo'
     ];
+
+    public function pessoas()
+    {
+        return $this->belongsToMany(Pessoa::class);
+    }
    
 }

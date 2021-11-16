@@ -35,7 +35,7 @@
                                 <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.create') }}" class="btn btn-secondary"><i class="fas fa-file"></i> Novo</a>
                                 <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.pdf') }}" class="btn btn-secondary"><i class="fas fa-file-pdf"></i> PDF</a>
                                 <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.email') }}" class="btn btn-secondary"><i class="fas fa-envelope"></i> Email</a>
-                                <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.email') }}" class="btn btn-secondary"><i class="fas fa-file-excel"></i> Excel</a>
+                                <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.excel') }}" class="btn btn-secondary"><i class="fas fa-file-excel"></i> Excel</a>
                             </div>
                         </form>
                     </div>

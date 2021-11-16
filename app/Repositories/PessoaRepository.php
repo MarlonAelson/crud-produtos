@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Pessoa;
+use App\Models\Permissao;
 
 class PessoaRepository extends AbstractRepository
 {
@@ -319,14 +320,23 @@ class PessoaRepository extends AbstractRepository
         dd($this->emailsObjects());
     }
 
+    //Método responsável por retornar as empresas cadastradas no banco de dados
+    public static function getCompanies()
+    {
+        //model, campos, wheres (condicoes)
+        return Pessoa::select('id', 'nome', 'nome_alternativo',)->where('empresa', 'S')->where('ativo', 'S')->get();
+    }
+
     /**
      * Os Métodos abaixos: create e edit - são específicos para quando o projeto for com blade
      */
     public function create($request)
     {
+        $permissoes = Permissao::all();
         if(env('FRONTEND_BLADE'))
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.form",[
+                'permissoes' => $permissoes,
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ]);
         }

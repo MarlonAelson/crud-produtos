@@ -4,6 +4,7 @@ namespace App\Repositories;
 use Log;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Mail;
 use App\Services\Pdf\Pdf;
@@ -230,5 +231,16 @@ abstract class AbstractRepository
             \Log::error('Error '.$e->getMessage());
             return false;
         }
+    }
+
+    //Método responsável por recuperar o ID da empresa selecionada para se trabalhar
+    public function getCompanyId(){
+        return session()->get('empresa_id');
+    }
+
+    //Método responsável por recuperar o ID do usuário logado.
+    public function getUserId(){
+        $user = Auth::guard()->user();
+        return $user->id ? : 0;
     }
 }

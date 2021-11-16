@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+Usuario ID: {{ $teste_usuario }} - Empresa ID: {{ $teste_empresa }}
     <p>Welcome to this beautiful admin panel.</p>
 @stop
 
