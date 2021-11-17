@@ -57,6 +57,51 @@ class Pessoa extends Authenticatable
         'email_verified_at' => 'datetime'
     ];
 
+    private $rulesValidation = [
+		//'nome'	                        => ['required', 'string', 'max:45', "unique:categorias, nome, {ignore()}, id"],
+        //'nome'	                        => ['required', 'string', 'max:45'],
+        //'categoria_pessoa'              => ['required', 'string', 'max:1'],
+        //'categoria_produto_servico'     => ['required', 'string', 'max:1'],
+        //'categoria_objeto_manutencao'   => ['required', 'string', 'max:1'],
+		//'ativo'                         => ['required', 'string', 'max:1'],
+	];
+
+	public function validator($data = null)
+    {
+        if($data)
+        {   
+            $validator = Validator::make($data, $this->rulesValidation);
+
+            if($validator->passes())
+            {
+                return true;
+            }else{
+                return $validator->errors();
+            }
+        }
+        else
+        {
+            return $this->rulesValidation;
+        }
+    }
+
+    public function tratament($data)
+    {
+        if(empty($data['categoria_pessoa']))
+            $data['categoria_pessoa'] = 'S';
+            
+        if(empty($data['categoria_produto_servico']))
+            $data['categoria_produto_servico'] = 'S';
+        
+        if(empty($data['categoria_objeto_manutencao']))
+            $data['categoria_objeto_manutencao'] = 'S';
+        
+        if(empty($data['ativo']))
+            $data['ativo'] = 'S';
+
+        return $data;
+    }
+
     public function pessoasEmails()
     {
         return $this->hasMany(PessoaEmails::class);

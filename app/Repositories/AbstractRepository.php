@@ -15,6 +15,7 @@ use App\Models\Pessoa;
 abstract class AbstractRepository
 {
     protected $model;
+    protected $relationShip = [];
 
     public function __construct()
     {
@@ -42,10 +43,15 @@ abstract class AbstractRepository
     //Método responsável por criar um objeto um objeto
     public function createObject($data)
     {
+
+        dd($this->relationShip);
         //DB::beginTransaction();
         try
         {
-            return $this->model::create($data);
+           /* $object = $this->model::create($data);
+            if($this->relationShip){
+                $object->$this->relationShip
+            }*/
             //DB::commit();
         }
         catch(\Exception $e)
