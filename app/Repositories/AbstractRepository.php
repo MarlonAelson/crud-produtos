@@ -44,14 +44,14 @@ abstract class AbstractRepository
     public function createObject($data)
     {
 
-        dd($this->relationShip);
+        //dd($this->relationShip);
         //DB::beginTransaction();
         try
         {
-           /* $object = $this->model::create($data);
+           $object = $this->model::create($data);
             if($this->relationShip){
-                $object->$this->relationShip
-            }*/
+                $object->$this->relationShip;
+            }
             //DB::commit();
         }
         catch(\Exception $e)
