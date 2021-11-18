@@ -11,8 +11,8 @@ class PessoaRepository extends AbstractRepository
     {
         $this->model = $model;
         $this->relationShip = [
-            ['permissoes', 'ManToMany'],
-            ['teste', 'ManToMany'],
+            ['ManToMany', 'permissoes'],
+            ['OneToMany', 'enderecos'],
         ];
     }
 

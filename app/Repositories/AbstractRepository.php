@@ -44,14 +44,31 @@ abstract class AbstractRepository
     public function createObject($data)
     {
 
-        //dd($this->relationShip);
+        dd($this->relationShip);
         //DB::beginTransaction();
         try
         {
-           $object = $this->model::create($data);
-            if($this->relationShip){
-                $object->$this->relationShip;
+            $object = $this->model::create($data);
+            if(count($this->relationShip)){
+                
+                for($i = 0; $i < count($this->relationShip); $i++){
+                    switch($this->relationShip[$i]){
+                        case $this->relationShip[$i][0] == 'OneToOne':
+                            $method = $this->relationShip[$i][1];
+                            $object->$method()->attach($data);
+                            break;
+                        case $this->relationShip[$i][0] == 'OneToMany':
+                            $method = $this->relationShip[$i][1];
+                            $object->$method()->attach($data);
+                            break;
+                        case $this->relationShip[$i][0] == 'ManToMany':
+                            $method = $this->relationShip[$i][1];
+                            $object->$method()->attach($data);
+                            break;
+                    }
+                }   
             }
+            return $object;
             //DB::commit();
         }
         catch(\Exception $e)
