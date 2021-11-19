@@ -16,6 +16,7 @@ abstract class AbstractRepository
 {
     protected $model;
     protected $relationShip = [];
+    protected $hasComplements = false;
 
     public function __construct()
     {
@@ -43,7 +44,6 @@ abstract class AbstractRepository
     //Método responsável por criar um objeto um objeto
     public function createObject($data)
     {
-        //dd($data['permissoes']);
         DB::beginTransaction();
         try
         {

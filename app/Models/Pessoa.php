@@ -125,11 +125,21 @@ class Pessoa extends Authenticatable
     ** Método responsável por retornar os relacionamentos do model
     ** contendo o tipo do relacionamento. Ex. OneToOne, OneToMany e ManToMany
     */
-    public function relationShipsPossible()
+    public function relationShipsPossibles()
     {
         return  [
                     ['ManToMany', 'permissoes'],
                     //['OneToMany', 'enderecos'],
                 ];
     }
+
+    /*public function complementAfterRegisteredInDatabase()
+    {
+        Devido a está utilizando os métodos padrões dos models
+        foi desativado na migration a obrigatoriedade da coluna model_type
+        e esse método seria utilizado para a atualizar este campo. Porém, 
+        foi colocado direto na migration para ser preenchido com um valor default 
+        que está vindo do diretório config/permission.php array 'columns_values_defaults'
+        e índice 'model_type'. Assim, fica a idéia para os próximos projetos ou próximas necessidades.
+    }*/
 }

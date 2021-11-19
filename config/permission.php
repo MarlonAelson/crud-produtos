@@ -151,4 +151,8 @@ return [
 
         'store' => 'default',
     ],
+
+    'columns_values_defaults' => [
+        'model_type' => 'App\\\Models\\\Pessoa',
+    ],
 ];

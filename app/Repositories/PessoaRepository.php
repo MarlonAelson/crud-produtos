@@ -10,7 +10,8 @@ class PessoaRepository extends AbstractRepository
     public function __construct(Pessoa $model)
     {
         $this->model = $model;
-        $this->relationShip = $this->model->relationShipsPossible();
+        $this->relationShip = $this->model->relationShipsPossibles();
+        $this->hasComplements = true;
     }
 
     public function labelsCommomFrontEnd()
