@@ -43,9 +43,8 @@ abstract class AbstractRepository
     //Método responsável por criar um objeto um objeto
     public function createObject($data)
     {
-
-        dd($this->relationShip);
-        //DB::beginTransaction();
+        //dd($data['permissoes']);
+        DB::beginTransaction();
         try
         {
             $object = $this->model::create($data);
@@ -55,31 +54,31 @@ abstract class AbstractRepository
                     switch($this->relationShip[$i]){
                         case $this->relationShip[$i][0] == 'OneToOne':
                             $method = $this->relationShip[$i][1];
-                            $object->$method()->attach($data);
+                            $object->$method()->attach($data[$this->relationShip[$i][1]]);
                             break;
                         case $this->relationShip[$i][0] == 'OneToMany':
                             $method = $this->relationShip[$i][1];
-                            $object->$method()->attach($data);
+                            $object->$method()->attach($data[$this->relationShip[$i][1]]);
                             break;
                         case $this->relationShip[$i][0] == 'ManToMany':
                             $method = $this->relationShip[$i][1];
-                            $object->$method()->attach($data);
+                            $object->$method()->attach($data[$this->relationShip[$i][1]]);
                             break;
                     }
                 }   
             }
+            DB::commit();
             return $object;
-            //DB::commit();
         }
         catch(\Exception $e)
         {
-            //DB::rollBack();
+            DB::rollBack();
             \Log::error('Error '.$e->getMessage());
             return false;
         }
         catch(QueryException $e)
         {
-            //DB::rollBack();
+            DB::rollBack();
             \Log::error('Error '.$e->getMessage());
             return false;
         }   

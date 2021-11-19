@@ -98,7 +98,16 @@ class Pessoa extends Authenticatable
         
         if(empty($data['ativo']))
             $data['ativo'] = 'S';
-
+        
+        //$data['permissoes']['model_type'] = 'App\Models\Pessoa';
+        /*if(count($data['permissoes']))
+        {
+            for($i = 0; $i < count($data['permissoes']); $i++)
+            {
+                $data['permissoes'][$i] = ['model_type' => 'App\Models\Pessoa'];
+            }
+        }*/
+    
         return $data;
     }
 
@@ -109,7 +118,18 @@ class Pessoa extends Authenticatable
 
     public function permissoes()
 	{
-		return $this->belongsToMany(Permissao::class, 'model_has_permissions', 'model_id', 'permission_id');
+		return $this->belongsToMany(Permissao::class, 'model_has_permissions', 'model_id', 'permission_id')->withPivot('model_type');
 	}
 
+    /*
+    ** Método responsável por retornar os relacionamentos do model
+    ** contendo o tipo do relacionamento. Ex. OneToOne, OneToMany e ManToMany
+    */
+    public function relationShipsPossible()
+    {
+        return  [
+                    ['ManToMany', 'permissoes'],
+                    //['OneToMany', 'enderecos'],
+                ];
+    }
 }
