@@ -98,16 +98,7 @@ class Pessoa extends Authenticatable
         
         if(empty($data['ativo']))
             $data['ativo'] = 'S';
-        
-        //$data['permissoes']['model_type'] = 'App\Models\Pessoa';
-        /*if(count($data['permissoes']))
-        {
-            for($i = 0; $i < count($data['permissoes']); $i++)
-            {
-                $data['permissoes'][$i] = ['model_type' => 'App\Models\Pessoa'];
-            }
-        }*/
-    
+           
         return $data;
     }
 
@@ -135,11 +126,10 @@ class Pessoa extends Authenticatable
 
     /*public function complementAfterRegisteredInDatabase()
     {
-        Devido a está utilizando os métodos padrões dos models
-        foi desativado na migration a obrigatoriedade da coluna model_type
-        e esse método seria utilizado para a atualizar este campo. Porém, 
-        foi colocado direto na migration para ser preenchido com um valor default 
-        que está vindo do diretório config/permission.php array 'columns_values_defaults'
-        e índice 'model_type'. Assim, fica a idéia para os próximos projetos ou próximas necessidades.
+        Devido a está utilizando os métodos padrões dos models de permissao/permission
+        foi desativado colocado na migration um valor defautl para a coluna model_type,
+        por isso esse método está comentado já que o mesmo iria ser utilizado para atualizar 
+        esse campo. O valor default está vindo do diretório config/permission.php array 'columns_values_defaults'
+        e índice 'model_type'. No entanto, esse permanece de idéia para os próximos projetos ou próximas necessidades.
     }*/
 }
