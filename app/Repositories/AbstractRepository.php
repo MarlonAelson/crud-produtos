@@ -16,7 +16,6 @@ abstract class AbstractRepository
 {
     protected $model;
     protected $relationShip = [];
-    protected $hasComplements = false;
 
     public function __construct()
     {
