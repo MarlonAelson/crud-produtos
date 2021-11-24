@@ -29,6 +29,7 @@ class Tenant extends Model
 		'bd_username',
 		'bd_password',
 		'bd_drive',
-		'bd_port'
+		'bd_port',
+		'bd_create'
 	];
 }

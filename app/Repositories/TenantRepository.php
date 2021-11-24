@@ -3,16 +3,43 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Tenant;
+use App\Events\TenantCreated;
 
 class TenantRepository extends AbstractRepository
 {
 
-    public function __construct(Tenant $repository){
-        $this->model = $repository;
+    public function __construct(Tenant $model){
+        $this->model = $model;
     }
 
-    public function create($data){
-        return $this->createObject($data);
+    public function store($data){
+        $data = null;
+        $data = [
+            //'id' => $request->id,
+            //'name' => $request->name,
+            //'domain' => $request->domain,
+            //'bd_database' => $request->bd_database,
+            //'bd_hostname' => $request->bd_hostname,
+            //'bd_username' => $request->bd_username,
+            //'bd_password' => $request->bd_password,
+            
+            'identification' => 'projeto.local.com' . rand(5,10000),
+            'bd_create' => 'S',
+            'bd_database' => 'base' . rand(5,10000),
+            'bd_hostname' => '127.0.0.1',
+            'bd_username' => 'root',
+            'bd_password' => '769SUPORTESEGURO',
+        ];
+        
+        $returnFromFunction = $this->createObject($data);      
+    
+        //verifica se é para criar o banco de dados;        
+        if($returnFromFunction && $data['bd_create']){
+            //evento que cria o banco de dados do nosso cliente.
+            event(new TenantCreated($returnFromFunction));
+        }else{
+            return "Cliente cadastrado sem necessidade de banco de dados, pois irá trabalhar com as empresas na mesma base.";
+        }
     }
 
     public function find($id){

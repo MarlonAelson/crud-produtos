@@ -16,9 +16,8 @@ class CreatePessoasEmailsTable extends Migration
         Schema::create('pessoas_emails', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pessoa_id');
-            $table->string('email');
-
             $table->foreign('pessoa_id')->references('id')->on('pessoas');
+            $table->string('email');
         });
     }
 

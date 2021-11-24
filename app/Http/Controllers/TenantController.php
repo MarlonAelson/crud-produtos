@@ -5,42 +5,113 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Repositories\TenantRepository;
-use App\Events\TenantCreated;
 
 class TenantController extends Controller
 {
     //
-    private $tenant;
+    private $repository;
     
-    public function __construct(TenantRepository $tenant){
-        $this->tenant = $tenant;
+    public function __construct(TenantRepository $repository){
+        $this->repository = $repository;
+    }
+    
+    /*
+    ** Método responsável por retornar a listagem
+    ** de objetos. Também será utilizado para rea-
+    ** lizar buscas.
+    */
+    public function index(Request $request)
+    {   
+        return $this->repository->all($request);      
     }
 
+    /* 
+    ** Método para retornar o form de cadastro se
+    ** estiver usando blade.
+    */
+    public function create(Request $request)
+    {
+        return $this->repository->create($request);
+    }
+
+    /*
+    ** Método responsável por criar objeto no BD.
+    */
     public function store(Request $request)
     {
-        $tenant = $this->tenant->create([
-            //'id' => $request->id,
-            //'name' => $request->name,
-            //'domain' => $request->domain,
-            //'bd_database' => $request->bd_database,
-            //'bd_hostname' => $request->bd_hostname,
-            //'bd_username' => $request->bd_username,
-            //'bd_password' => $request->bd_password,
-            
-            'identification' => 'projeto.local.com' . rand(5,10000),
-            'bd_database' => 'base' . rand(5,10000),
-            'bd_hostname' => '127.0.0.1',
-            'bd_username' => 'root',
-            'bd_password' => '769SUPORTESEGURO',
-        ]);
-        
-        //verifica se é para criar o banco de dados;        
-        if(true){
-            //evento que cria o banco de dados ao salvar a base dados do cliente.
-            event(new TenantCreated($tenant));
-        }else{
-            return "Cliente cadastrado sem necessidade de banco de dados, pois irá trabalhar com as empresas na mesma base.";
-        }
-        
+        return $this->repository->store($request); 
     }
+
+    /*
+    * Método responsável por exibir detalhes do objeto.
+    */
+    public function show(Request $request)
+    {
+        return $this->repository->show($request);
+    }
+    
+    /**
+     * Método responsável por retornar o form de edição 
+     * se estiver usando blade.
+     */
+    public function edit(Request $request)
+    {
+        return $this->repository->edit($request);
+    }
+
+    /**
+    * Método responsável por salvar as alterações do obje-
+    * to no BD.
+    */
+    public function update(Request $request)
+    {
+        return $this->repository->update($request);
+    }
+
+    /**
+    * Método responsável por excluir o objeto no BD. 
+    * Está usando o softdelete do Laravel para evi-
+    * tar problemas.
+    */
+    public function destroy(Request $request)
+    {
+        return $this->repository->delete($request);
+    }
+
+    /**
+    * Método responsável por inativar/ativar um objeto
+    * no BD.
+    */
+    public function inactiveOrActive(Request $request)
+    {       
+        return $this->repository->inactiveOrActive($request);
+    }
+
+    /**
+    * Método responsável por clonar e salvar um objeto
+    * no BD.
+    */
+    public function replicate(Request $request)
+    {       
+        return $this->repository->replicate($request);
+    }
+
+    /**
+    * Método responsável por clonar e salvar um objeto
+    * no BD.
+    */
+    public function pdf(Request $request)
+    {       
+        return $this->repository->pdfObjects($request);
+    }
+
+    /**
+    * Método responsável por enviar os e-mails dos objetos
+    * no BD.
+    */
+    public function email(Request $request)
+    {       
+        return $this->repository->email($request);
+    }
+
 }
