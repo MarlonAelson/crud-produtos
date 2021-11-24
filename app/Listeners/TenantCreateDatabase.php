@@ -11,15 +11,15 @@ use App\Repositories\TenantRepository;
 
 class TenantCreateDatabase
 {
-    private $tenant;
+    private $tenantRepository;
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct(TenantRepository $tenant)
+    public function __construct(TenantRepository $tenantRepository)
     {
-        $this->tenant = $tenant;
+        $this->tenantRepository = $tenantRepository;
     }
 
     /**
@@ -34,7 +34,7 @@ class TenantCreateDatabase
         $tenant = $event->tenant();
 
         //cria a base de dados de forma automatica após cadastrar o cliente na nossa base
-        if(!$this->tenant->createDatabase($tenant)){
+        if(!$this->tenantRepository->createDatabase($tenant)){
             throw new \Exception('Erro ao criar database');
         }
 
