@@ -73,10 +73,12 @@ class TenantMigrations extends Command
         $this->info("Conectando ao banco de dados da empresa {$tenant->identification} e criando ou alterando as tabelas.");
 
         //executa o comando de migration para criar as tabelas na base de acordo com a conexão que está aberta no momento... vai executar em todas as bases até que termine
+        $run = Artisan::call($command);
+        /* comentado para não perder a maneira que estava
         $run = Artisan::call($command, [
             '--force' => true,
             '--path' => '/database/migrations/tenant',
-        ]);
+        ]);*/
 
         if($run === 0){
             Artisan::call('db:seed');
