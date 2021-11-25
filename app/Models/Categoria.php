@@ -85,5 +85,10 @@ class Categoria extends Model
     public function ignoreColumnUniqueInMethodUpdate(){
         return request()->segment(3);
     }
+
+    public function pessoa()
+    {
+        return $this->belongsTo(Pessoa::class);
+    }
     
 }

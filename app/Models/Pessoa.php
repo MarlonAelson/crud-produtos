@@ -35,6 +35,7 @@ class Pessoa extends Authenticatable
         'outros',
         'password',
         'acessa_sistema',
+        'categoria_id',
         'ativo'
     ];
 
@@ -60,10 +61,10 @@ class Pessoa extends Authenticatable
     private $rulesValidation = [
 		//'nome'	                        => ['required', 'string', 'max:45', "unique:categorias, nome, {ignore()}, id"],
         //'nome'	                        => ['required', 'string', 'max:45'],
-        //'categoria_pessoa'              => ['required', 'string', 'max:1'],
-        //'categoria_produto_servico'     => ['required', 'string', 'max:1'],
-        //'categoria_objeto_manutencao'   => ['required', 'string', 'max:1'],
-		//'ativo'                         => ['required', 'string', 'max:1'],
+        //'categoria_pessoa'                => ['required', 'string', 'max:1'],
+        //'categoria_produto_servico'       => ['required', 'string', 'max:1'],
+        //'categoria_objeto_manutencao'     => ['required', 'string', 'max:1'],
+		//'ativo'                           => ['required', 'string', 'max:1'],
 	];
 
 	public function validator($data = null)
@@ -102,6 +103,11 @@ class Pessoa extends Authenticatable
         return $data;
     }
 
+    public function categoria()
+    {
+        return $this->hasOne(Categoria::class);
+    }
+
     public function pessoasEmails()
     {
         return $this->hasMany(PessoaEmails::class);
@@ -112,6 +118,11 @@ class Pessoa extends Authenticatable
 		return $this->belongsToMany(Permissao::class, 'model_has_permissions', 'model_id', 'permission_id')->withPivot('model_type');
 	}
 
+    public function enderecos()
+    {
+        return $this->hasMany(Endereco::class);
+    }
+
     /*
     ** Método responsável por retornar os relacionamentos do model
     ** contendo o tipo do relacionamento. Ex. OneToOne, OneToMany e ManToMany
@@ -120,7 +131,7 @@ class Pessoa extends Authenticatable
     {
         return  [
                     ['ManToMany', 'permissoes'],
-                    //['OneToMany', 'enderecos'],
+                    ['OneToMany', 'enderecos'],
                 ];
     }
 
