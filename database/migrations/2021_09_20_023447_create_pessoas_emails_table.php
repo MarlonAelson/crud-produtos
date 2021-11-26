@@ -17,7 +17,7 @@ class CreatePessoasEmailsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('pessoa_id');
             $table->foreign('pessoa_id')->references('id')->on('pessoas');
-            $table->string('email');
+            $table->string('email', 120);
         });
     }
 

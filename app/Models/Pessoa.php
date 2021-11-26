@@ -61,7 +61,7 @@ class Pessoa extends Authenticatable
     private $rulesValidation = [
 		//'nome'	                        => ['required', 'string', 'max:45', "unique:categorias, nome, {ignore()}, id"],
         //'nome'	                        => ['required', 'string', 'max:45'],
-        //'categoria_pessoa'                => ['required', 'string', 'max:1'],
+        //'categoria_id'                => ['required', 'string', 'min:1', 'max:9223372036854775807'],
         //'categoria_produto_servico'       => ['required', 'string', 'max:1'],
         //'categoria_objeto_manutencao'     => ['required', 'string', 'max:1'],
 		//'ativo'                           => ['required', 'string', 'max:1'],
@@ -110,7 +110,7 @@ class Pessoa extends Authenticatable
 
     public function pessoasEmails()
     {
-        return $this->hasMany(PessoaEmails::class);
+        return $this->hasMany(PessoaEmail::class);
     }
 
     public function permissoes()
@@ -132,6 +132,7 @@ class Pessoa extends Authenticatable
         return  [
                     ['ManToMany', 'permissoes'],
                     ['OneToMany', 'enderecos'],
+                    ['OneToMany', 'pessoasEmails'],
                 ];
     }
 

@@ -11,7 +11,6 @@ class PessoaRepository extends AbstractRepository
     {
         $this->model = $model;
         $this->relationShip = $this->model->relationShipsPossibles();
-        $this->hasComplements = true;
     }
 
     public function labelsCommomFrontEnd()

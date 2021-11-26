@@ -43,7 +43,7 @@ abstract class AbstractRepository
     //Método responsável por criar um objeto um objeto
     public function createObject($data)
     {
-        $enderecos = [
+        $data['enderecos'] = [
             [
                 'nome' => 1,
                 'logradouro' => 1
@@ -53,6 +53,18 @@ abstract class AbstractRepository
                 'logradouro' => 2
             ]
         ];
+
+        $data['pessoasEmails'] = [
+            [
+                'email' => 1
+            ],
+            [
+                'email' => 2
+            ]
+        ];
+
+        //dd($data);
+
         DB::beginTransaction();
         try
         {
@@ -67,7 +79,7 @@ abstract class AbstractRepository
                             break;*/
                         case $this->relationShip[$i][0] == 'OneToMany':
                             $method = $this->relationShip[$i][1];
-                            $object->$method()->createMany($enderecos);
+                            $object->$method()->createMany($data[$this->relationShip[$i][1]]);
                             break;
                         case $this->relationShip[$i][0] == 'ManToMany':
                             $method = $this->relationShip[$i][1];
