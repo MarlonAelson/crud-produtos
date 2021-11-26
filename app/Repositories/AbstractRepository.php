@@ -43,6 +43,16 @@ abstract class AbstractRepository
     //Método responsável por criar um objeto um objeto
     public function createObject($data)
     {
+        $enderecos = [
+            [
+                'nome' => 1,
+                'logradouro' => 1
+            ],
+            [
+                'nome' => 2,
+                'logradouro' => 2
+            ]
+        ];
         DB::beginTransaction();
         try
         {
@@ -51,13 +61,13 @@ abstract class AbstractRepository
                 
                 for($i = 0; $i < count($this->relationShip); $i++){
                     switch($this->relationShip[$i]){
-                        case $this->relationShip[$i][0] == 'OneToOne':
+                        /*case $this->relationShip[$i][0] == 'OneToOne':
                             $method = $this->relationShip[$i][1];
                             $object->$method()->attach($data[$this->relationShip[$i][1]]);
-                            break;
+                            break;*/
                         case $this->relationShip[$i][0] == 'OneToMany':
                             $method = $this->relationShip[$i][1];
-                            $object->$method()->attach($data[$this->relationShip[$i][1]]);
+                            $object->$method()->createMany($enderecos);
                             break;
                         case $this->relationShip[$i][0] == 'ManToMany':
                             $method = $this->relationShip[$i][1];
@@ -185,19 +195,16 @@ abstract class AbstractRepository
             ** caso id não exista irá cair no catch. se usasse o método find dá 
             ** problema informando que não pode deletar um dado null e não caía no catch
             */
-            $objectNew = $this->model::findOrFail($id)->replicate();
+            $newObject = $this->model::findOrFail($id)->replicate();
             
             //colocado esses campos apenas para ficar como exemplos de possibilidades
-            if(isset($objectNew->nome))
-                $objectNew->nome = $objectNew->nome . ' - COPIA';
+            if(isset($newObject->nome))
+                $newObject->nome = $newObject->nome . ' - COPIA';
 
-            if(isset($objectNew->estoque))
-                $objectNew->estoque = 0;
-            
-            if(isset($objectNew->preco))
-                $objectNew->preco = 0;
+            if(isset($newObject->estoque))
+                $newObject->estoque = 0;
 
-            return $objectNew->save();    
+            return $newObject->save();    
         }
         catch(\Exception $e)
         {

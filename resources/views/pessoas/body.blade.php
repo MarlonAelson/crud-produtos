@@ -132,6 +132,19 @@
                 @endforelse
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="enderecos[]" value="1">
+                        <label class="form-check-label" >1</label>
+                    </div>
+                </div>
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="enderecos[]" value="2">
+                        <label class="form-check-label" >2</label>
+                </div>
+            </div>
             
         </div>
     </div>

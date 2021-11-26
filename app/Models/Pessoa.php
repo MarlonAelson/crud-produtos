@@ -120,7 +120,7 @@ class Pessoa extends Authenticatable
 
     public function enderecos()
     {
-        return $this->hasMany(Endereco::class);
+        return $this->hasMany(Endereco::class, 'pessoa_id');
     }
 
     /*

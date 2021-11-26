@@ -11,6 +11,7 @@ class Endereco extends Model
 
     protected $table = 'enderecos';
     protected $guarded = ['id'];
+    public $timestamps = false;
 
     /**
      * Caso queira mudar o nome dos campos de deleted_at, created_at e updated_at
@@ -23,6 +24,7 @@ class Endereco extends Model
 
     protected $fillable = [
         //'tipo_endereco', //NFE_PRINCIPAL, NFE_ENTREGA, NFE_RETIRADA
+        'pessoa_id',
         'nome',
         'logradouro',
         'numero',
@@ -34,15 +36,16 @@ class Endereco extends Model
     ];
 
     private $rulesValidation = [
+        /* 'pessoa_id'                     => ['required', 'integer', 'min:1', 'max:9223372036854775807'],
         'nome'	                        => ['required', 'string', 'max:45'],
         'logradouro'                    => ['required', 'string', 'min:3', 'max:60'],
         'numero'                        => ['required', 'string', 'max:60'],
         'complemento'                   => ['nullable', 'string', 'max:60'],
 		'bairro'                        => ['required', 'string', 'min:3', 'max:60'],
-        'cidade_id'                     => ['required', 'max:999999999999999999'],
-        'estado_id'                     => ['required', 'max:999999999999999999'],
-        'pais_id'                       => ['required', 'max:999999999999999999'],
-	];
+        'cidade_id'                     => ['required', 'integer', 'min:1', 'max:9223372036854775807'],
+        'estado_id'                     => ['required', 'integer', 'min:1', 'max:9223372036854775807'],
+        'pais_id'                       => ['required', 'integer', 'min:1', 'max:9223372036854775807'],
+ */	];
 
 	public function validator($data = null)
     {
@@ -70,6 +73,6 @@ class Endereco extends Model
 
     public function pessoa()
     {
-        return $this->belongsTo(Pessoa::class);
+        return $this->belongsTo(Pessoa::class, 'pessoa_id');
     }
 }
