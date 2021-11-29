@@ -247,6 +247,10 @@ return [
                     'text' => 'Pessoas',
                     'url'  => '/pessoas/listagem',
                 ],
+                [
+                    'text' => 'Ordens',
+                    'url'  => '/ordens/listagem',
+                ],
             ],
         ],
     ],

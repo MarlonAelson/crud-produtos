@@ -11,18 +11,23 @@ class OrdemRepository extends PedidoRepository
         parent::__construct($model);
     }
 
-    public function labelsCommomFrontEnd()
+    public function labelsCommomFrontEnd($name = null)
     {
         $personalization['informative_search'] = "Pesquise digitando o nome da Ordem desejada";
         $personalization['label_card_form'] = "Cadastrar Ordem";
         $personalization['label_card_edit'] = "Alterar Ordem";
         $personalization['label_card_list'] = "Consultar Ordems";
-        $personalization['route_name_view'] = "Ordems";
+        $personalization['route_name_view'] = "ordens";
         
         return $personalization;
     }
 
     public function all($request = null)
+    {
+        return parent::all($request);
+    }
+
+    /*public function all($request = null)
     {  
         $result;
         $status;               
@@ -39,10 +44,6 @@ class OrdemRepository extends PedidoRepository
             $status = 400;
         }
         
-        /*
-        **analisar se a condição de status vai permanecer
-        **pois nada muda praticamente
-        */
         if(env('FRONTEND_BLADE') && $status == 200)
         {   
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
@@ -63,9 +64,14 @@ class OrdemRepository extends PedidoRepository
         {
             return response()->json($result, $status);
         }
+    }*/
+
+    public function store($request)
+    {
+        return parent::store($request);
     }
     
-    public function store($request)
+    /*public function store($request)
     {
         $result;
         $status;
@@ -117,9 +123,14 @@ class OrdemRepository extends PedidoRepository
         {
             return response()->json(['data'=> null, 'message' => $validation, 'errors'=> true], 201);//$result e $status
         }
-    }
+    }*/
 
     public function show($request)
+    {
+        return parent::show($request);
+    }
+
+    /*public function show($request)
     {
         $result;
         $status;
@@ -151,9 +162,14 @@ class OrdemRepository extends PedidoRepository
         {
             return response()->json($result, $status);
         }
-    }
+    }*/
 
     public function update($request)
+    {
+        return parent::update($request);
+    }
+
+    /*public function update($request)
     {
         $result;
         $status;
@@ -205,9 +221,14 @@ class OrdemRepository extends PedidoRepository
         {
             return response()->json(['data'=> null, 'message' => $validation, 'errors'=> true], 201);//$result e $status
         }
-    }
+    }*/
 
     public function delete($request)
+    {
+        return parent::delete($request);
+    }
+
+    /*public function delete($request)
     {
         $result;
         $status;
@@ -239,9 +260,14 @@ class OrdemRepository extends PedidoRepository
         {
             return response()->json($result, $status);
         }
-    }
+    }*/
 
     public function inactiveOrActive($request)
+    {
+        return parent::inactiveOrActive;
+    }
+    
+    /*public function inactiveOrActive($request)
     {
         $result;
         $status;
@@ -273,9 +299,14 @@ class OrdemRepository extends PedidoRepository
         {
             return response()->json($result, $status);
         }
-    }
+    }*/
 
     public function replicate($request)
+    {
+        return parent::replicate($request);
+    }
+
+    /*public function replicate($request)
     {
         $result;
         $status;
@@ -307,22 +338,38 @@ class OrdemRepository extends PedidoRepository
         {
             return response()->json($result, $status);
         }
-    }
+    }*/
 
     public function pdf()
     {
-        return $this->pdfObjects();
+        return parent::pdf();
     }
+
+    /*public function pdf()
+    {
+        return $this->pdfObjects();
+    }*/
 
     public function email()
     {
-        dd($this->emailsObjects());
+        return parent::email();
     }
+
+    /*public function email()
+    {
+        dd($this->emailsObjects());
+    }*/
 
     /**
      * Os Métodos abaixos: create e edit - são específicos para quando o projeto for com blade
      */
+
     public function create($request)
+    {
+        return parent::create($request);
+    }
+
+    /*public function create($request)
     {
         if(env('FRONTEND_BLADE'))
         {
@@ -330,9 +377,14 @@ class OrdemRepository extends PedidoRepository
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ]);
         }
-    }
+    }*/
 
     public function edit($request)
+    {
+        return parent::edit($request);
+    }
+
+    /*public function edit($request)
     {
         $result;
         $status;
@@ -367,5 +419,5 @@ class OrdemRepository extends PedidoRepository
         {
             return response()->json($result, $status);
         }
-    }
+    }*/
 }

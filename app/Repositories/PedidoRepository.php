@@ -10,13 +10,13 @@ class PedidoRepository extends AbstractRepository
         $this->model = $model;
     }
 
-    public function labelsCommomFrontEnd()
+    public function labelsCommomFrontEnd($name = null)
     {
-        $personalization['informative_search'] = "Pesquise digitando o nome da Pedido desejada";
-        $personalization['label_card_form'] = "Cadastrar Pedido";
-        $personalization['label_card_edit'] = "Alterar Pedido";
-        $personalization['label_card_list'] = "Consultar Pedidos";
-        $personalization['route_name_view'] = "Pedidos";
+        $personalization['informative_search']  = "Pesquise digitando o nome da Pedido desejada";
+        $personalization['label_card_form']     = "Cadastrar Pedido";
+        $personalization['label_card_edit']     = "Alterar Pedido";
+        $personalization['label_card_list']     = "Consultar Pedidos";
+        $personalization['route_name_view']     = "ordens";
         
         return $personalization;
     }
