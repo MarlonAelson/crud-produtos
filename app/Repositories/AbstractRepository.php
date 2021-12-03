@@ -69,14 +69,13 @@ abstract class AbstractRepository
         try
         {
             $object = $this->model::create($data);
-            if(count($this->relationShip)){
+            if(count($this->relationShip))
+            {
                 
-                for($i = 0; $i < count($this->relationShip); $i++){
-                    switch($this->relationShip[$i]){
-                        /*case $this->relationShip[$i][0] == 'OneToOne':
-                            $method = $this->relationShip[$i][1];
-                            $object->$method()->attach($data[$this->relationShip[$i][1]]);
-                            break;*/
+                for($i = 0; $i < count($this->relationShip); $i++)
+                {
+                    switch($this->relationShip[$i])
+                    {
                         case $this->relationShip[$i][0] == 'OneToMany':
                             $method = $this->relationShip[$i][1];
                             $object->$method()->createMany($data[$this->relationShip[$i][1]]);
@@ -89,6 +88,7 @@ abstract class AbstractRepository
                 }   
             }
             DB::commit();
+            //$object->refresh();//caso queria atualizar o objeto com os novos relacionamentos adicionado
             return $object;
         }
         catch(\Exception $e)
@@ -132,8 +132,26 @@ abstract class AbstractRepository
     public function updateObject($id, $data)
     {
         try
-        {
-            return $this->model::findOrFail($id)->update($data);
+        { 
+            $object = $this->model::findOrFail($id)->update($data);
+            
+            if($object && count($this->relationShip))
+            {
+                for($i = 0; $i < count($this->relationShip); $i++)
+                {
+                    switch($this->relationShip[$i])
+                    {
+                        case $this->relationShip[$i][0] == 'OneToMany':
+                            $method = $this->relationShip[$i][1];
+                            $object->$method()->save($data[$this->relationShip[$i][1]]);
+                            break;
+                        case $this->relationShip[$i][0] == 'ManToMany':
+                            $method = $this->relationShip[$i][1];
+                            $object->$method()->sync($data[$this->relationShip[$i][1]]);
+                            break;
+                    }
+                }
+            }
         }
         catch(\Exception $e)
         {
@@ -144,7 +162,7 @@ abstract class AbstractRepository
         {
             \Log::error('Error '.$e->getMessage());
             return false;
-        }   
+        }  
     }
     //Método responsável por ativar ou inativar um objeto
     public function inactiveOrActiveObject($id)
