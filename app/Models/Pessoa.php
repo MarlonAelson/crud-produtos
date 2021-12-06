@@ -108,9 +108,9 @@ class Pessoa extends Authenticatable
         return $this->hasOne(Categoria::class);
     }
 
-    public function pessoasEmails()
+    public function emails()
     {
-        return $this->hasMany(PessoaEmail::class);
+        return $this->hasMany(Email::class);
     }
 
     public function permissoes()
@@ -132,7 +132,7 @@ class Pessoa extends Authenticatable
         return  [
                     ['ManToMany', 'permissoes'],
                     ['OneToMany', 'enderecos'],
-                    ['OneToMany', 'pessoasEmails'],
+                    ['OneToMany', 'emails'],
                 ];
     }
 

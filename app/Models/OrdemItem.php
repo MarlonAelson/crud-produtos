@@ -6,5 +6,10 @@ use App\Models\PedidoItem;
 
 class OrdemItem extends PedidoItem
 {
-    protected $table = 'ordens_itens';    
+    protected $table = 'ordens_itens';   
+    
+    public function pedidos()
+    {
+        return $this->belongsTo(Ordem::class);
+    }
 }

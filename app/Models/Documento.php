@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PessoaEmail extends Model
+class Documento extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'pessoas_emails';
+    protected $table = 'documentos';
     protected $guarded = ['id'];
-    public $timestamps = false;
+    //public $timestamps = false;
     
     /**
      * Caso queira mudar o nome dos campos de deleted_at, created_at e updated_at
@@ -23,15 +23,26 @@ class PessoaEmail extends Model
      * const UPDATED_AT = 'updated_date';
      * 
      */
-
+    /**
+     * TIPO_DOCUMENTO: CPF, CNPJ, PASSAPORTE, CNAE_PRINCIPAL, CNAE_SECUNDARIO
+     * CARTEIRA_TRABALHO, , INSCRICAO_ESTADUAL, INSCRICAO_MUNICIPAL, 
+     * INSCRICAO_ESTADUAL_ST, CARTEIRA_MOTORISTA_CNH, CARTEIRA_IDENTIDADE_RG,
+     * CARTEIRA_ESTUDATE, NUMERO_MATRICULA, CRT, CRC, CRM ETC
+     */
+     
     protected $fillable = [
         'pessoa_id',
-        'email'
+        'tipo_documento', 
+        'documento',
+        'orgao_emissor',
+        'uf_id'
     ];
 
     private $rulesValidation = [
         'pessoa_id'         => ['required', 'integer', 'min:1', 'max:9223372036854775807'],
-        'email'             => ['required', 'string', 'max:60'],
+        'documento'         => ['required', 'string', 'max:60'],
+        'orgao_emissor'     => ['nullale', 'string', 'max:60'],
+        'uf_id'             => ['nullale', 'integer', 'min:1', 'max:9223372036854775807'],
 	];
 
     public function pessoa()

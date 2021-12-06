@@ -22,6 +22,8 @@ class CreateEnderecosTable extends Migration
             $table->string('numero', 60)->nullable();
             $table->string('complemento', 1)->nullable();
             $table->string('bairro')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
             /* $table->unsignedBigInteger('municipio_id')->nullable();
             $table->foreign('municipio_id')->references('id')->on('municipios');
             $table->unsignedBigInteger('uf_id')->nullable();

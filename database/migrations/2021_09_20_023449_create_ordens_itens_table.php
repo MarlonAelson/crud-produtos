@@ -19,6 +19,7 @@ class CreateOrdensItensTable extends Migration
             $table->foreign('pedido_id')->references('id')->on('ordens');
             $table->decimal('quantidade', 18,10)->nullable();
             $table->decimal('valor_unitario', 18,10)->nullable();
+            $table->timestamps();
         });
     }
 

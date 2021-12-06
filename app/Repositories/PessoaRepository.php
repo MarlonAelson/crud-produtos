@@ -7,10 +7,12 @@ use App\Models\Permissao;
 
 class PessoaRepository extends AbstractRepository
 {
+    private $permissoes;
     public function __construct(Pessoa $model)
     {
         $this->model = $model;
         $this->relationShip = $this->model->relationShipsPossibles();
+        $this->permissoes = new Permissao;
     }
 
     public function labelsCommomFrontEnd()
@@ -325,7 +327,10 @@ class PessoaRepository extends AbstractRepository
     public static function getCompanies()
     {
         //model, campos, wheres (condicoes)
-        return Pessoa::select('id', 'nome', 'nome_alternativo',)->where('empresa', 'S')->where('ativo', 'S')->get();
+        return Pessoa::select('id', 'nome', 'nome_alternativo',)
+                        ->where('empresa', 'S')
+                        ->where('ativo', 'S')
+                        ->get();
     }
 
     /**
@@ -333,11 +338,10 @@ class PessoaRepository extends AbstractRepository
      */
     public function create($request)
     {
-        $permissoes = Permissao::all();
         if(env('FRONTEND_BLADE'))
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.form",[
-                'permissoes' => $permissoes,
+                'permissoes' => $this->permissoes->all(),
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ]);
         }
@@ -364,6 +368,7 @@ class PessoaRepository extends AbstractRepository
         {   
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.edit",[
                 'object' => $returnFromFunction,
+                'permissoes' => $this->permissoes->all(),
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ]);
         }

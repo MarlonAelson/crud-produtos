@@ -19,6 +19,7 @@ class CreatePermissoesPessoasTable extends Migration
             $table->foreign('pessoa_id')->references('id')->on('pessoas');
             $table->unsignedBigInteger('permissao_id');
             $table->foreign('permissao_id')->references('id')->on('permissions');
+            $table->timestamps();
         });
     }
 

@@ -68,8 +68,19 @@ class Pedido extends Model
         return $this->hasOne(Pessoa::class, 'destinatario_id');
     }
 
-    public function OrdensItens()
+    public function itens()
     {
-        return $this->hasMany(OrdensItens::class, 'pedido_id');
+        return $this->hasMany(PedidoItem::class, 'pedido_id');
     }    
+
+    /*
+    ** Método responsável por retornar os relacionamentos do model
+    ** contendo o tipo do relacionamento. Ex. OneToOne, OneToMany e ManToMany
+    */
+    public function relationShipsPossibles()
+    {
+        return  [
+                    ['OneToMany', 'itens']
+                ];
+    }
 }

@@ -45,33 +45,42 @@ abstract class AbstractRepository
     {
         $data['enderecos'] = [
             [
-                'nome' => 1,
-                'logradouro' => 1
+                'nome' => 'ENDERECO CRIADO 1',
+                'logradouro' => 'ENDERECO CRIADO 1'
             ],
             [
-                'nome' => 2,
-                'logradouro' => 2
+                'nome' => 'ENDERECO CRIADO 2',
+                'logradouro' => 'ENDERECO CRIADO 2'
             ]
         ];
 
-        $data['pessoasEmails'] = [
+        $data['emails'] = [
             [
-                'email' => 1
+                'email' => 'EMAIL CRIADO 1'
             ],
             [
-                'email' => 2
+                'email' => 'EMAIL CRIADO 2'
+            ]
+        ];
+
+        $data['itens'] = [
+            [
+                'quantidade' => 1,
+                'valor_unitario' => 10
+            ],
+            [
+                'quantidade' => 2,
+                'valor_unitario' => 20
             ]
         ];
 
         //dd($data);
-
         DB::beginTransaction();
         try
         {
             $object = $this->model::create($data);
             if(count($this->relationShip))
             {
-                
                 for($i = 0; $i < count($this->relationShip); $i++)
                 {
                     switch($this->relationShip[$i])
@@ -88,7 +97,6 @@ abstract class AbstractRepository
                 }   
             }
             DB::commit();
-            //$object->refresh();//caso queria atualizar o objeto com os novos relacionamentos adicionado
             return $object;
         }
         catch(\Exception $e)
@@ -131,9 +139,42 @@ abstract class AbstractRepository
     //Método responsável por salvar as alterações de um objeto
     public function updateObject($id, $data)
     {
+        DB::beginTransaction();
         try
         { 
-            $object = $this->model::findOrFail($id)->update($data);
+            $data['enderecos'] = [
+                [
+                    'nome' => 'ENDERECO ALTERADO 1',
+                    'logradouro' => 'ENDERECO ALTERADO 1'
+                ],
+                [
+                    'nome' => 'ENDERECO ALTERADO 2',
+                    'logradouro' => 'ENDERECO ALTERADO 2'
+                ],
+                [
+                    'nome' => 'ENDERECO ALTERADO 3',
+                    'logradouro' => 'ENDERECO ALTERADO 3'
+                ],
+            ];
+    
+            $data['emails'] = [
+                [
+                    'email' => 'EMAIL ALTERADO 1'
+                ]
+            ];
+    
+            $data['itens'] = [
+                [
+                    'quantidade' => 1,
+                    'valor_unitario' => 10
+                ],
+                [
+                    'quantidade' => 2,
+                    'valor_unitario' => 20
+                ]
+            ];
+            $object = $this->model::findOrFail($id);
+            $object->update($data);
             
             if($object && count($this->relationShip))
             {
@@ -143,7 +184,8 @@ abstract class AbstractRepository
                     {
                         case $this->relationShip[$i][0] == 'OneToMany':
                             $method = $this->relationShip[$i][1];
-                            $object->$method()->save($data[$this->relationShip[$i][1]]);
+                            $object->$method()->delete();
+                            $object->$method()->createMany($data[$this->relationShip[$i][1]]);
                             break;
                         case $this->relationShip[$i][0] == 'ManToMany':
                             $method = $this->relationShip[$i][1];
@@ -152,6 +194,9 @@ abstract class AbstractRepository
                     }
                 }
             }
+            DB::commit();
+            //$object->refresh();//caso queria atualizar o objeto com os novos relacionamentos adicionado
+            return $object;
         }
         catch(\Exception $e)
         {

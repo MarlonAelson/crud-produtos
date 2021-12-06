@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePessoasEmailsTable extends Migration
+class CreateEmailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreatePessoasEmailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pessoas_emails', function (Blueprint $table) {
+        Schema::create('emails', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('pessoa_id');
+            $table->unsignedBigInteger('pessoa_id')->nullable();
             $table->foreign('pessoa_id')->references('id')->on('pessoas');
             $table->string('email', 120);
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +30,6 @@ class CreatePessoasEmailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pessoas_emails');
+        Schema::dropIfExists('emails');
     }
 }

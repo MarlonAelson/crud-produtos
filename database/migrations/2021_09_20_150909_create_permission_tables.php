@@ -56,8 +56,9 @@ class CreatePermissionTables extends Migration
 
             $table->string('model_type')->default(config('permission.columns_values_defaults.model_type'));
             $table->unsignedBigInteger($columnNames['model_morph_key']);
+            $table->timestamps();
             $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_permissions_model_id_model_type_index');
-
+            
             $table->foreign(PermissionRegistrar::$pivotPermission)
                 ->references('id')
                 ->on($tableNames['permissions'])
@@ -79,6 +80,7 @@ class CreatePermissionTables extends Migration
             $table->unsignedBigInteger(PermissionRegistrar::$pivotRole);
 
             $table->string('model_type');
+            $table->timestamps();
             $table->unsignedBigInteger($columnNames['model_morph_key']);
             $table->index([$columnNames['model_morph_key'], 'model_type'], 'model_has_roles_model_id_model_type_index');
 
@@ -101,7 +103,7 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {
             $table->unsignedBigInteger(PermissionRegistrar::$pivotPermission);
             $table->unsignedBigInteger(PermissionRegistrar::$pivotRole);
-
+            $table->timestamps();
             $table->foreign(PermissionRegistrar::$pivotPermission)
                 ->references('id')
                 ->on($tableNames['permissions'])

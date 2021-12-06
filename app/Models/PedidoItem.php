@@ -57,9 +57,9 @@ class PedidoItem extends Model
         return $data;
     }
 
-    public function ordens()
+    public function pedidos()
     {
-        return $this->belongsTo(Ordem::class);
+        return $this->belongsTo(Pedido::class);
     }
     
 }

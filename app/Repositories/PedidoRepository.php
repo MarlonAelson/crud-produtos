@@ -8,6 +8,7 @@ class PedidoRepository extends AbstractRepository
     public function __construct($model)
     {
         $this->model = $model;
+        $this->relationShip = $this->model->relationShipsPossibles();
     }
 
     public function labelsCommomFrontEnd($name = null)
