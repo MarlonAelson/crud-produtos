@@ -16,17 +16,55 @@ abstract class AbstractRepository
 {
     protected $model;
     protected $relationShip = [];
+    protected $colunas = [];
 
     public function __construct()
     {
     }
+
+    /*public function getQuery(){
+        return $query = DB::table('nfe')
+                ->select($this->colunas)
+                ->join('pessoa', 'pessoa.id', '=', 'nfe.pessoa_id')
+                ->join('natureza_operacao', 'natureza_operacao.id', '=', 'nfe.natureza_operacao_id')
+                ->join('pessoa as pessoa1', 'pessoa1.id', '=', 'nfe.usuario_cadastro_id')
+                ->join('pessoa as pessoa2', 'pessoa2.id','=', 'nfe.usuario_alteracao_id');
+    }
+
+    public function buscaPaginada($query,$data,$filtro)
+    {
+
+        try{
+            $result = $query->whereRaw("{$filtro}")
+                            ->offset($data['quantidade'])
+                            ->limit($data['pagina'])
+                            ->orderByRaw("{$data['short']} {$data['ordenacao']}")
+                            ->get()->toArray();
+            return $result;
+
+        }catch(\Exception $e){
+            \Log::error('Error '.$e->getMessage());
+            return [];
+        }catch(QueryException $e){
+            \Log::error('Error '.$e->getMessage());
+
+            return false;
+        }
+    }*/
 
     //Método responsável por recuperar todos os objetos
     public function allObject($params = null)
     {
         try
         {
-            return $this->model::all();
+            if($params)
+            {
+
+            }
+            else
+            {
+                return $this->model::all();
+            }
         }
         catch(\Exception $e)
         {

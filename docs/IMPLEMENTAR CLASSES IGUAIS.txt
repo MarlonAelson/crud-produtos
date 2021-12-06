@@ -1,0 +1,3 @@
+pensei em duas formas de fazer....
+primeira é apenas a classe pedido e colocar um if dentro do construtor ou pegar pela url;
+segundo com orientação a objeto mesmo;
