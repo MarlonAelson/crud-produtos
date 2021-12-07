@@ -16,19 +16,47 @@ class TenantMiddleware
      */
     public function handle($request, Closure $next)
     {
-        //se for o domínio principal o cliente não utilizar bancos de dados separados vai se conectar na base configurada no .env
-        if(TenantRepository::domainIsMain())
-            return $next($request);
 
-        $tenant = TenantRepository::getTenant($request->getHost());
-        
-        if(!$tenant && ($request->url() != route('404'))){
-            return redirect()->route('404');
-        }elseif($request->url() != route('404') && !TenantRepository::domainIsMain()) {           
+        /*
+        ** Request()->getHost() - pegar o dominio... ex "www.sispem.com"
+        ** Request()->url() - pega o domínio e o subdomínio "http://www.sispem.com/empresa/cadastro"
+        ** Request()->path() - pega o subdomínio "/empresa/cadastro" ("http://www.sispem.com/empresa/cadastro")
+        ** Request()->session() - cria sessão
+        */
+
+        //se for o domínio principal vai pegar a base configurada no arquivo .env
+        if(TenantRepository::domainIsMain())
+        {
+            return $next($request);
+        }
+        elseif(!TenantRepository::domainIsMain() && $request->path() == '/' && TenantRepository::getTenant($request->getHost()))
+        {
+            $tenant = TenantRepository::getTenant($request->getHost());
             TenantRepository::setConnection($tenant);
-            TenantRepository::setSession($tenant->only(['identification']));
-        }      
+            TenantRepository::setSession($tenant);
+            
+            return $next($request);
+        }   
+        elseif(!TenantRepository::domainIsMain() && !$request->path() == '/')
+        {   
+            \Log::info("URL");
+            \Log::info($path);
     
-        return $next($request);
+            $identification = $request->segment(1);
+
+            $tenant = TenantRepository::getTenant($identification);
+
+            if(!$tenant && ($request->url() != route('404')))
+            {
+                return redirect()->route('404');
+            }
+            elseif($request->url() != route('404') && !TenantRepository::domainIsMain())
+            {           
+                TenantRepository::setConnection($tenant);
+                TenantRepository::setSession($tenant);
+            }      
+        
+            return $next($request);
+        }
     }
 }
