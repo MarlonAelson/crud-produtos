@@ -23,13 +23,21 @@ class TenantRepository extends AbstractRepository
             //'bd_username' => $request->bd_username,
             //'bd_password' => $request->bd_password,
 
-            'identification' => 'projeto.local.com' . rand(5,10000),
-            'type_application_navigator' => 'apu' . rand(5,10000),
+            'identification' => 'tocdearte.teste',
+            'type_application_navigator' => 'apu',
             'bd_create' => 'S',
-            'bd_database' => 'base' . rand(5,10000),
+            'bd_database' => 'tocdearte',
             'bd_hostname' => '127.0.0.1',
             'bd_username' => 'root',
             'bd_password' => '769SUPORTESEGURO',
+
+            /*'identification' => 'postao.teste',
+            'type_application_navigator' => 'apu',
+            'bd_create' => 'S',
+            'bd_database' => 'postao',
+            'bd_hostname' => '127.0.0.1',
+            'bd_username' => 'root',
+            'bd_password' => '769SUPORTESEGURO',*/
         ];
 
         $returnFromFunction = $this->createObject($data);

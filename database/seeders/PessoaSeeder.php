@@ -39,7 +39,7 @@ class PessoaSeeder extends Seeder
             'cliente' => 'N',
             'fornecedor' => 'N',
             'outros' => 'N',
-            'password' => Hash::make('admin123'),
+            'password' => Hash::make('123456'),
             'acessa_sistema' => 'S',
             'ativo'    => 'S'
         ]);
@@ -53,7 +53,7 @@ class PessoaSeeder extends Seeder
             'cliente' => 'N',
             'fornecedor' => 'N',
             'outros' => 'N',            
-            'password' => Hash::make('usuario123'),
+            'password' => Hash::make('123456'),
             'acessa_sistema' => 'S',
             'ativo'    => 'S'
         ]);

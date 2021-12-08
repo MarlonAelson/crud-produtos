@@ -3,13 +3,13 @@ Este projeto servirá para o desenvolvimento de qualquer outro sistema! <br/>
 
 Versão do Laravel: 8.6.2; <br/>
 
-Criado uma pasta Repositories dentro de app para armazenar classes que recebem como dependência no construtor um Model e, com isso, a responsabalidade por gerir os métodos e demais detalhes ficará sempre no Repository daquele Model; <br/>
+Criado uma pasta "Repositories" dentro de "app" para armazenar classes que recebem como dependência no construtor um "Model" e, com isso, a responsabalidade por gerir os métodos e demais detalhes ficará sempre no "Repository" daquele Model ou no "próprio Model"; <br/>
 
-Criado uma classe AbstractRepository para ser extendida (Extends) pelas outras classes Repository e, com isso, disponibilizar de forma padrão (a partir da variável protected $model) todos os métodos comuns (inserir, alterar, deletar os registros no banco de dados). Ela também recebe de forma simples os relacionamentos (a partir da variável protected $relationShip) dos Models para salvar, alterar etc; <br/>
+Criado uma classe "AbstractRepository" "para ser extendida (Extends) pelas outras classes Repository" e, com isso, disponibilizar de forma padrão (a partir da variável protected $model) todos os métodos comuns (inserir, alterar, deletar os registros no banco de dados). Ela também recebe de forma simples os relacionamentos (a partir da variável protected $relationShip) dos Models para salvar, alterar etc; <br/>
 
-Implementado para que os Controllers especificados nas rotas recebam apenas os dados do Request e passe como parâmetros nos métodos das classes Repository na qual recebe como dependência e, com isso, eles apenas retornam o sucesso ou a falha; <br/>
+Implementado para que os "Controllers especificados nas rotas recebam apenas os dados do Request e passe como parâmetros nos métodos das classes Repository na qual recebe como dependência" e, com isso, eles apenas "retornam" o "sucesso" ou a "falha"; <br/>
 
-Adicionado SoftDeletes do próprio Laravel ao projeto (migrations e models); <br/>
+"Adicionado SoftDeletes" do próprio Laravel ao projeto em "alguns models e migrations"; <br/>
 
 Adicionado o pacote dompdf (https://github.com/barryvdh/laravel-dompdf) e implementado na classe AbstractRepository (para que fique centralizado e possa ser utilizado por qualquer Repository que precisar) através da classe <strong>Pdf</strong> dentro das pastas de serviços <strong>(App\Services\...)</strong>; <br/>
 

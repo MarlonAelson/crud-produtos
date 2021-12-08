@@ -15,8 +15,10 @@ class TenantMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
-
+    {    
+        $url = $request->url();
+        $explodeUrl = explode('/', $url);
+        dd($explodeUrl);
         /*
         ** Request()->getHost() - pegar o dominio... ex "www.sispem.com"
         ** Request()->url() - pega o domínio e o subdomínio "http://www.sispem.com/empresa/cadastro"
@@ -25,11 +27,11 @@ class TenantMiddleware
         */
 
         //se for o domínio principal vai passar e olhar para a base configurada no arquivo .env
-        if(TenantRepository::domainIsMain())
+        if($explodeUrl == TenantRepository::domainIsMain())
         {
             return $next($request);
         }
-        elseif(!TenantRepository::domainIsMain() && $request->path() == '/' && TenantRepository::getTenant($request->getHost()))
+        elseif(TenantRepository::getTenant($request->getHost()))
         {
             $tenant = TenantRepository::getTenant($request->getHost());
             TenantRepository::setConnection($tenant);
@@ -37,8 +39,9 @@ class TenantMiddleware
 
             return $next($request);
         }
-        elseif(!TenantRepository::domainIsMain() && !$request->path() == '/')
+        /*elseif(!TenantRepository::domainIsMain() && !$request->path() == '/')
         {
+            //!TenantRepository::domainIsMain() && $request->path() == '/' && 
             \Log::info("URL");
             \Log::info($path);
 
@@ -57,6 +60,6 @@ class TenantMiddleware
             }
 
             return $next($request);
-        }
+        }*/
     }
 }
