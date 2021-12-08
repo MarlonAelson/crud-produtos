@@ -5,11 +5,10 @@ use App\Http\Controllers\{
     LoginController,
     PessoaController,
     TenantController,
-    CategoriaController,
     OrdemController,
 };
 
-/* Adicionado "Route::pattern('id', '[0-9]+')" no método "boot()" 
+/* Adicionado "Route::pattern('id', '[0-9]+')" no método "boot()"
 ** do arquivo "App\Providers\RouteServiceProvider.php" para certi
 ** ficar que todo parametro id passado na url serão números.
 */
@@ -29,7 +28,7 @@ Route::get('/404', function () {
 
 Route::get('/tenant/store', [ TenantController::class, 'store'] )->name('tenant.store');
 
-Route::get('{domain}/teste', function(){
+Route::get('{type_app_nav}/{identification}/teste', function(){
     return 'login';
 });
 
@@ -65,20 +64,6 @@ Route::middleware(['auth'])->group(function () {
             ->middleware(['permission:pessoa_email'])->name('email');
             Route::get('/pessoas/excel' , [ PessoaController::class, 'excel' ])
             ->middleware(['permission:pessoa_excel'])->name('excel');
-    });
-
-    Route::name('categorias.')->group(function(){
-        Route::get('/categorias/listagem' , [ CategoriaController::class, 'index' ])->middleware(['permission:categoria_consultar'])->name('index');
-        Route::get('/categorias/detalhar/{id}' , [ CategoriaController::class, 'show' ])->middleware(['permission:categoria_detalhar'])->name('show');
-        Route::get('/categorias/cadastro' , [ CategoriaController::class, 'create'])->middleware(['permission:categoria_cadastrar'])->name('create');
-        Route::post('/categorias/salvar-cadastro'  , [ CategoriaController::class, 'store' ])->middleware(['permission:categoria_cadastrar'])->name('store');
-        Route::get('/categorias/alteracao/{id}', [ CategoriaController::class, 'edit'])->middleware(['permission:categoria_alterar'])->name('edit');
-        Route::put('/categorias/salvar-alteracao/{id}'  , [ CategoriaController::class, 'update'])->middleware(['permission:categoria_alterar'])->name('update');
-        Route::get('/categorias/excluir/{id}'  , [ CategoriaController::class, 'destroy'])->middleware(['permission:categoria_excluir'])->name('destroy');
-        Route::get('/categorias/inativar-ativar/{id}' , [ CategoriaController::class, 'inactiveOrActive' ])->middleware(['permission:categoria_inativar_ativar'])->name('inactiveOrActive');
-        Route::get('/categorias/clonar/{id}' , [ CategoriaController::class, 'replicate' ])->middleware(['permission:categoria_cadastrar'])->name('replicate');
-        Route::get('/categorias/pdf/{id?}' , [ CategoriaController::class, 'pdf' ])->middleware(['permission:categoria_cadastrar'])->name('pdf');
-        Route::get('/categorias/email' , [ CategoriaController::class, 'email' ])->middleware(['permission:categoria_cadastrar'])->name('email');
     });
 
     Route::name('ordens.')

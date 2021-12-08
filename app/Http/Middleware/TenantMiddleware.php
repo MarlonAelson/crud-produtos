@@ -24,7 +24,7 @@ class TenantMiddleware
         ** Request()->session() - cria sessão
         */
 
-        //se for o domínio principal vai pegar a base configurada no arquivo .env
+        //se for o domínio principal vai passar e olhar para a base configurada no arquivo .env
         if(TenantRepository::domainIsMain())
         {
             return $next($request);
@@ -34,14 +34,14 @@ class TenantMiddleware
             $tenant = TenantRepository::getTenant($request->getHost());
             TenantRepository::setConnection($tenant);
             TenantRepository::setSession($tenant);
-            
+
             return $next($request);
-        }   
+        }
         elseif(!TenantRepository::domainIsMain() && !$request->path() == '/')
-        {   
+        {
             \Log::info("URL");
             \Log::info($path);
-    
+
             $identification = $request->segment(1);
 
             $tenant = TenantRepository::getTenant($identification);
@@ -51,11 +51,11 @@ class TenantMiddleware
                 return redirect()->route('404');
             }
             elseif($request->url() != route('404') && !TenantRepository::domainIsMain())
-            {           
+            {
                 TenantRepository::setConnection($tenant);
                 TenantRepository::setSession($tenant);
-            }      
-        
+            }
+
             return $next($request);
         }
     }

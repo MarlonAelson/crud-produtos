@@ -22,18 +22,19 @@ class TenantRepository extends AbstractRepository
             //'bd_hostname' => $request->bd_hostname,
             //'bd_username' => $request->bd_username,
             //'bd_password' => $request->bd_password,
-            
+
             'identification' => 'projeto.local.com' . rand(5,10000),
+            'type_application_navigator' => 'apu' . rand(5,10000),
             'bd_create' => 'S',
             'bd_database' => 'base' . rand(5,10000),
             'bd_hostname' => '127.0.0.1',
             'bd_username' => 'root',
             'bd_password' => '769SUPORTESEGURO',
         ];
-        
-        $returnFromFunction = $this->createObject($data);      
-    
-        //verifica se é para criar o banco de dados;        
+
+        $returnFromFunction = $this->createObject($data);
+
+        //verifica se é para criar o banco de dados;
         if($returnFromFunction && $data['bd_create']){
             //evento que cria o banco de dados do nosso cliente.
             event(new TenantCreated($returnFromFunction));
@@ -72,7 +73,7 @@ class TenantRepository extends AbstractRepository
         config()->set('database.connections.tenant.password', $tenant->bd_password);
 
         //conecta no banco de dados dinamicamente com a configuracao passada;
-        DB::reconnect('tenant');    
+        DB::reconnect('tenant');
     }
 
     //método responsável por verificar se é o domínio principal (sispem)
