@@ -59,7 +59,7 @@ abstract class AbstractRepository
         {
             if($params)
             {
-
+                return $this->model->searchPaginate();
             }
             else
             {

@@ -15,8 +15,8 @@ class TenantMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {    
-        $url = $request->url();
+    {
+        /*$url = $request->url();
         $explodeUrl = explode('/', $url);
         dd($explodeUrl);
         /*
@@ -27,7 +27,7 @@ class TenantMiddleware
         */
 
         //se for o domínio principal vai passar e olhar para a base configurada no arquivo .env
-        if($explodeUrl == TenantRepository::domainIsMain())
+        if(TenantRepository::domainIsMain())
         {
             return $next($request);
         }
@@ -41,7 +41,7 @@ class TenantMiddleware
         }
         /*elseif(!TenantRepository::domainIsMain() && !$request->path() == '/')
         {
-            //!TenantRepository::domainIsMain() && $request->path() == '/' && 
+            //!TenantRepository::domainIsMain() && $request->path() == '/' &&
             \Log::info("URL");
             \Log::info($path);
 

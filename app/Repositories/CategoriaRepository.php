@@ -18,15 +18,15 @@ class CategoriaRepository extends AbstractRepository
         $personalization['label_card_edit'] = "Alterar Categoria";
         $personalization['label_card_list'] = "Consultar Categorias";
         $personalization['route_name_view'] = "categorias";
-        
+
         return $personalization;
     }
 
     public function all($request = null)
-    {  
+    {
         $result;
-        $status;               
-        $returnFromFunction = $this->allObject();
+        $status;
+        $returnFromFunction = $this->allObject($request);
 
         if($returnFromFunction)
         {
@@ -38,15 +38,15 @@ class CategoriaRepository extends AbstractRepository
             $result = ['data'=> null, 'message' =>'Não foi possível carregar os registros do banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
             $status = 400;
         }
-        
+
         /*
         **analisar se a condição de status vai permanecer
         **pois nada muda praticamente
         */
         if(env('FRONTEND_BLADE') && $status == 200)
-        {   
+        {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
-                'objects' => $result, 
+                'objects' => $result,
                 'qtdRegisters' => 10,
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ]);
@@ -54,7 +54,7 @@ class CategoriaRepository extends AbstractRepository
         elseif(env('FRONTEND_BLADE') && $status == 400)
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
-                'objects' => $result, 
+                'objects' => $result,
                 'qtdRegisters' => 0,
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ])->withErrors($result['message']);
@@ -64,7 +64,7 @@ class CategoriaRepository extends AbstractRepository
             return response()->json($result, $status);
         }
     }
-    
+
     public function store($request)
     {
         $result;
@@ -107,7 +107,7 @@ class CategoriaRepository extends AbstractRepository
                 return redirect()
                        ->back()
                        ->withErrors($result['message']);
-            } 
+            }
             elseif(!env('FRONTEND_BLADE'))
             {
                 return response()->json($result, $status);
@@ -124,7 +124,7 @@ class CategoriaRepository extends AbstractRepository
         $result;
         $status;
         $returnFromFunction = $this->findObject($request->id);
-        
+
         if($returnFromFunction)
         {
             $result = ['data'=> $returnFromFunction, 'message' =>'Registro detalhado com sucesso.', 'errors'=> null];
@@ -134,10 +134,10 @@ class CategoriaRepository extends AbstractRepository
         {
             $result = ['data'=> null, 'message' =>'Não foi possível carregar os detalhes do registro. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
             $status = 400;
-        }          
+        }
 
         if(env('FRONTEND_BLADE') && $status == 200)
-        {   
+        {
             return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
         }
         elseif(env('FRONTEND_BLADE') && $status == 400)
@@ -173,7 +173,7 @@ class CategoriaRepository extends AbstractRepository
         {
             $dataTrated = $this->model->tratament($request->all());
             $returnFromFunction = $this->updateObject($request->id, $dataTrated);
-      
+
             if($returnFromFunction)
             {
                 $result = ['data'=> $returnFromFunction, 'message' =>'Registro alterado com sucesso.', 'errors'=> null];
@@ -195,7 +195,7 @@ class CategoriaRepository extends AbstractRepository
                 return redirect()
                        ->back()
                        ->withErrors($result['message']);
-            } 
+            }
             elseif(!env('FRONTEND_BLADE'))
             {
                 return response()->json($result, $status);
@@ -212,7 +212,7 @@ class CategoriaRepository extends AbstractRepository
         $result;
         $status;
         $returnFromFunction = $this->deleteObject($request->id);
-        
+
         if($returnFromFunction)
         {
             $result = ['data'=> $returnFromFunction, 'message' =>'Registro excluído com sucesso.', 'errors'=> null];
@@ -222,10 +222,10 @@ class CategoriaRepository extends AbstractRepository
         {
             $result = ['data'=> null, 'message' =>'Não foi possível excluir o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
             $status = 400;
-        }          
+        }
 
         if(env('FRONTEND_BLADE') && $status == 200)
-        {   
+        {
             return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
         }
         elseif(env('FRONTEND_BLADE') && $status == 400)
@@ -246,7 +246,7 @@ class CategoriaRepository extends AbstractRepository
         $result;
         $status;
         $returnFromFunction = $this->inactiveOrActiveObject($request->id);
-        
+
         if($returnFromFunction)
         {
             $result = ['data'=> $returnFromFunction, 'message' =>'Registro inativado ou ativado com sucesso.', 'errors'=> null];
@@ -256,12 +256,12 @@ class CategoriaRepository extends AbstractRepository
         {
             $result = ['data'=> null, 'message' =>'Não foi possível inativar ou ativar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
             $status = 400;
-        }          
+        }
 
         if(env('FRONTEND_BLADE') && $status == 200)
-        {   
+        {
             return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
-        }   
+        }
         elseif(env('FRONTEND_BLADE') && $status == 400)
         {
             return redirect()
@@ -280,7 +280,7 @@ class CategoriaRepository extends AbstractRepository
         $result;
         $status;
         $returnFromFunction = $this->replicateObject($request->id);
-        
+
         if($returnFromFunction)
         {
             $result = ['data'=> $returnFromFunction, 'message' =>'Registro clonado com sucesso.', 'errors'=> null];
@@ -290,10 +290,10 @@ class CategoriaRepository extends AbstractRepository
         {
             $result = ['data'=> null, 'message' =>'Não foi possível clonar o registro no banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
             $status = 400;
-        }          
+        }
 
         if(env('FRONTEND_BLADE') && $status == 200)
-        {   
+        {
             return redirect()->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index");
         }
         elseif(env('FRONTEND_BLADE') && $status == 400)
@@ -350,7 +350,7 @@ class CategoriaRepository extends AbstractRepository
         }
 
         if(env('FRONTEND_BLADE') && $status == 200)
-        {   
+        {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.edit",[
                 'object' => $returnFromFunction,
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
