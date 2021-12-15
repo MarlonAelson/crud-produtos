@@ -49,6 +49,12 @@ class Pessoa extends Authenticatable
         'remember_token'
     ];
 
+    protected $with = [
+        'emails',
+        'enderecos',
+        'permissoes'        
+    ];
+
     /**
      * The attributes that should be cast.
      *
@@ -134,6 +140,11 @@ class Pessoa extends Authenticatable
                     ['OneToMany', 'enderecos'],
                     ['OneToMany', 'emails'],
                 ];
+    }
+
+    public function searchPaginate($conditions = null)
+    {
+        return Pessoa::selectRaw('select nome from pessoa where id = 1')->get();
     }
 
     /*public function complementAfterRegisteredInDatabase()

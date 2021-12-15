@@ -177,7 +177,7 @@ class PessoaRepository extends AbstractRepository
         {
             $dataTrated = $this->model->tratament($request->all());
             $returnFromFunction = $this->updateObject($request->id, $dataTrated);
-      
+            
             if($returnFromFunction)
             {
                 $result = ['data'=> $returnFromFunction, 'message' =>'Registro alterado com sucesso.', 'errors'=> null];
@@ -383,5 +383,9 @@ class PessoaRepository extends AbstractRepository
         {
             return response()->json($result, $status);
         }
+    }
+
+    public function teste(){
+        return $this->testeobj();
     }
 }

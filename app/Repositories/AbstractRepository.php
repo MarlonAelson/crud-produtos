@@ -375,13 +375,20 @@ abstract class AbstractRepository
     }
 
     //Método responsável por recuperar o ID da empresa selecionada para se trabalhar
-    public function getCompanyId(){
+    public function getCompanyId()
+    {
         return session()->get('empresa_id');
     }
 
     //Método responsável por recuperar o ID do usuário logado.
-    public function getUserId(){
+    public function getUserId()
+    {
         $user = Auth::guard()->user();
         return $user->id ? : 0;
+    }
+
+    public function testeobj()
+    {
+        return response()->json($this->model->searchPaginate());
     }
 }

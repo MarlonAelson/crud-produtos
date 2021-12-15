@@ -21,6 +21,8 @@ Route::get('/', function () {
     return view('site');
 })->name('site');
 
+Route::get('/teste', [ PessoaController::class, 'teste' ]);
+
 Route::redirect('/categorias', '/categorias/listagem');
 
 Route::get('/404', function () {

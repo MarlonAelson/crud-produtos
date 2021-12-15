@@ -112,4 +112,9 @@ class PessoaController extends Controller
     {       
         return $this->repository->email($request);
     }
+    
+    public function teste(Request $request)
+    {   
+        return $this->repository->teste($request);      
+    }
 }
