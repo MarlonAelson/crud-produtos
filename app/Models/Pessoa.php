@@ -144,7 +144,10 @@ class Pessoa extends Authenticatable
 
     public function searchPaginate($conditions = null)
     {
-        return Pessoa::selectRaw('select nome from pessoa where id = 1')->get();
+        return Pessoa::select('pessoas.id', 'pessoas.nome','emails.id')
+                        ->join('emails', 'pessoas.id', '=', 'emails.pessoa_id')
+                        ->join('enderecos', 'pessoas.id','=', 'enderecos.pessoa_id')
+                        ->get();
     }
 
     /*public function complementAfterRegisteredInDatabase()
