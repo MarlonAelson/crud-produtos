@@ -1,0 +1,8 @@
+SELECT pessoas.id,
+		pessoas.nome,
+		group_concat(distinct emails.email,' ') as emails,
+        group_concat(distinct enderecos.logradouro, ' ' , enderecos.numero,' ') as enderecos
+FROM pessoas
+JOIN emails on emails.pessoa_id = pessoas.id
+JOIN enderecos on enderecos.pessoa_id = pessoas.id
+WHERE pessoas.id = 1;
