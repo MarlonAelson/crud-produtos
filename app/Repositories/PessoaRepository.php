@@ -28,9 +28,23 @@ class PessoaRepository extends AbstractRepository
 
     public function all($request = null)
     {  
+        /*$objTotal = $query->whereRaw("{$filtro}")->count();
+
+        $result = $query->whereRaw("{$filtro}")
+                            ->offset($data['quantidade'])
+                            ->limit($data['pagina'])
+                            ->orderByRaw("{$data['short']} {$data['ordenacao']}")
+                            ->get()->toArray();
+            return $result;
+
+            $objAll = $this->buscaPaginada($query, $data, $filtro);
+
+            return ['label_pesquisa'=>$this->labelPesquisa,'total'=> $objTotal, 'data'=> $objAll];*/
+
+
         $result;
         $status;               
-        $returnFromFunction = $this->allObject();
+        $returnFromFunction = $this->allObject($request->all());
 
         if($returnFromFunction)
         {
@@ -383,9 +397,5 @@ class PessoaRepository extends AbstractRepository
         {
             return response()->json($result, $status);
         }
-    }
-
-    public function teste(){
-        return $this->testeobj();
     }
 }

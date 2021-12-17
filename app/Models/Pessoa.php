@@ -109,6 +109,33 @@ class Pessoa extends Authenticatable
         return $data;
     }
 
+    public function tratamentSearch($paramsSearch)
+    {
+        if($paramsSearch['form'] == 'simple')
+        {
+            $condition = $paramsSearch['filters']["textoBusca"] 
+                        || $paramsSearch['filters']["textoBusca"] == 0 
+                        ? $paramsSearch['filters']["textoBusca"] : '%' ;
+
+            $query = "(
+                {$this->table}.nome like '{$condition}%'
+                OR tpoperacao_fiscal.operacao_es like '{$textBusca}%'
+            )";
+
+            if(count($filtroAvancado) == 1 && isset($filtroAvancado['ativo'])){
+            $filtro .= isset($filtroAvancado['ativo']) && !empty($filtroAvancado['ativo']) ?
+            "AND tpoperacao_fiscal.ativo = '{$filtroAvancado["ativo"]}' " : "";
+            }
+        }
+        
+        /*return Pessoa::with('pessoas.id', 'pessoas.nome','emails.id')
+            ->join('emails', 'pessoas.id', '=', 'emails.pessoa_id')
+            ->join('enderecos', 'pessoas.id','=', 'enderecos.pessoa_id')
+            ->get();*/
+           
+        return $data;
+    }
+
     public function categoria()
     {
         return $this->hasOne(Categoria::class);
@@ -140,14 +167,6 @@ class Pessoa extends Authenticatable
                     ['OneToMany', 'enderecos'],
                     ['OneToMany', 'emails'],
                 ];
-    }
-
-    public function searchPaginate($conditions = null)
-    {
-        return Pessoa::with('pessoas.id', 'pessoas.nome','emails.id')
-                        ->join('emails', 'pessoas.id', '=', 'emails.pessoa_id')
-                        ->join('enderecos', 'pessoas.id','=', 'enderecos.pessoa_id')
-                        ->get();
     }
 
     /*public function complementAfterRegisteredInDatabase()

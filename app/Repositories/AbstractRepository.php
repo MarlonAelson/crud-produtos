@@ -57,13 +57,22 @@ abstract class AbstractRepository
     {
         try
         {
-            if($params)
+            if($params['form'] == 'advanced')
             {
+                dd('caiu no if');
                 return $this->model->searchPaginate();
+            }
+            elseif($params['form'] == 'simple')
+            {   //return $params['filters']['ativo'];
+                return $this->model::whereRaw($params['filters'])
+                                    ->offset($params['quantity'])
+                                    ->limit($params['paginate'])
+                                    ->orderByRaw("{$params['orderByColunm']} {$params['orderByType']}")
+                                    ->paginate();
             }
             else
             {
-                return $this->model::all();
+                return false;
             }
         }
         catch(\Exception $e)
@@ -385,10 +394,5 @@ abstract class AbstractRepository
     {
         $user = Auth::guard()->user();
         return $user->id ? : 0;
-    }
-
-    public function testeobj()
-    {
-        return response()->json($this->model->searchPaginate());
     }
 }

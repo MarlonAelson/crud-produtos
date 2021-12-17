@@ -1,0 +1,22 @@
+@host = http://localhost:8000
+
+###
+GET {{host}}/index.php/pessoas/listagem
+Content-Type: application/json
+
+{
+"form": "simple",  
+"orderByColunm":"pessoas.id",
+"orderByType":"asc",
+"quantity":"0",
+"paginate":"10",
+"filters":
+    {
+        "textoBusca":"",        
+        "ativo":"S"
+    }
+}
+
+### 
+GET  {{host}}/index.php/pessoas/listagem
+###

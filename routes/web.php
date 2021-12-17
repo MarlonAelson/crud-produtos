@@ -21,8 +21,6 @@ Route::get('/', function () {
     return view('site');
 })->name('site');
 
-Route::get('/teste', [ PessoaController::class, 'teste' ]);
-
 Route::redirect('/categorias', '/categorias/listagem');
 
 Route::get('/404', function () {
@@ -37,6 +35,7 @@ Route::get('{type_app_nav}/{identification}/teste', function(){
 
 Route::get('/login',  [ LoginController::class, 'login' ])->name('login');
 Route::post('/login', [ LoginController::class, 'autenticarUsuario' ])->name('autenticarUsuario');
+Route::get('/loginn', [ LoginController::class, 'autenticarUsuario' ])->name('autenticarUsuario');//usado para teste json
 Route::get('/logout', [ LoginController::class, 'logout' ])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
@@ -68,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::name('pessoas.')
         ->group(function(){
-            Route::get('/pessoas/listagem' , [ PessoaController::class, 'index' ])
+            Route::match(['get', 'post'], '/pessoas/listagem' , [ PessoaController::class, 'index' ])
             ->middleware(['permission:pessoa_consultar'])->name('index');
             Route::get('/pessoas/detalhar/{id}' , [ PessoaController::class, 'show' ])
             ->middleware(['permission:pessoa_detalhar'])->name('show');

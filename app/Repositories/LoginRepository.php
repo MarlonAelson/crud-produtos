@@ -50,7 +50,19 @@ class LoginRepository extends AbstractRepository
         }
         else
         {
-            return response()->json(["data" => "", "message" => "Não há padronização para esse método sem utilizar o blade do Laravel.", "errors" => true], 400);
+            if (Auth::attempt([ 'nome_alternativo' => $request->nome_alternativo, 'password' => $request->password, 'acessa_sistema' => 'S', 'ativo' => 'S' ]))
+            {
+                
+                $request->session()->regenerate();
+                $request->session()->put('empresa_id', $request->empresa_id);
+                return response()->json(["data" => true, "message" => "Logado com sucesso.", "errors" => null], 200);
+                
+                /*Utilizado para testes
+                return view('home', [
+                    "teste_empresa" => $this->getCompanyId(),
+                    "teste_usuario" => $this->getUserId()
+                ]);*/
+            }
         }
     }
 
