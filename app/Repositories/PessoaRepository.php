@@ -26,25 +26,11 @@ class PessoaRepository extends AbstractRepository
         return $personalization;
     }
 
-    public function all($request = null)
+    public function all()
     {  
-        /*$objTotal = $query->whereRaw("{$filtro}")->count();
-
-        $result = $query->whereRaw("{$filtro}")
-                            ->offset($data['quantidade'])
-                            ->limit($data['pagina'])
-                            ->orderByRaw("{$data['short']} {$data['ordenacao']}")
-                            ->get()->toArray();
-            return $result;
-
-            $objAll = $this->buscaPaginada($query, $data, $filtro);
-
-            return ['label_pesquisa'=>$this->labelPesquisa,'total'=> $objTotal, 'data'=> $objAll];*/
-
-
         $result;
         $status;               
-        $returnFromFunction = $this->allObject($request->all());
+        $returnFromFunction = $this->allObject();
 
         if($returnFromFunction)
         {
@@ -286,6 +272,49 @@ class PessoaRepository extends AbstractRepository
                     ->route("{$this->labelsCommomFrontEnd()['route_name_view']}.index")
                     ->withErrors($result['message']);
             //return redirect()->to('/categorias/listagem')->withErrors(['message'=>'this is first message']);
+        }
+        elseif(!env('FRONTEND_BLADE'))
+        {
+            return response()->json($result, $status);
+        }
+    }
+
+    public function search($request)
+    {  
+        $result;
+        $status;               
+        $returnFromFunction = $this->searchObject($request->all());
+
+        if($returnFromFunction)
+        {
+            $result = ['data'=> $returnFromFunction, 'message' =>'Registros carregados com sucesso.', 'errors'=> null];
+            $status = 200;
+        }
+        else
+        {
+            $result = ['data'=> null, 'message' =>'Não foi possível carregar os registros do banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $status = 400;
+        }
+        
+        /*
+        **analisar se a condição de status vai permanecer
+        **pois nada muda praticamente
+        */
+        if(env('FRONTEND_BLADE') && $status == 200)
+        {   
+            return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
+                'objects' => $result, 
+                'qtdRegisters' => 10,
+                'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
+            ]);
+        }
+        elseif(env('FRONTEND_BLADE') && $status == 400)
+        {
+            return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
+                'objects' => $result, 
+                'qtdRegisters' => 0,
+                'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
+            ])->withErrors($result['message']);
         }
         elseif(!env('FRONTEND_BLADE'))
         {

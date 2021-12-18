@@ -2,7 +2,7 @@
 
 ###
 #login 
-POST  {{host}}/index.php/loginn
+GET  {{host}}/index.php/loginn
 Content-Type: application/json
 
 {

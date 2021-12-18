@@ -109,31 +109,44 @@ class Pessoa extends Authenticatable
         return $data;
     }
 
-    public function tratamentSearch($paramsSearch)
+    public function search($paramsSearch)
     {
-        if($paramsSearch['form'] == 'simple')
+        $where = '';
+        $dataComplet  = '';
+
+        if($paramsSearch['search'] == 'simple')
         {
             $condition = $paramsSearch['filters']["textoBusca"] 
                         || $paramsSearch['filters']["textoBusca"] == 0 
                         ? $paramsSearch['filters']["textoBusca"] : '%' ;
 
-            $query = "(
+            $where = "
+            (
                 {$this->table}.nome like '{$condition}%'
-                OR tpoperacao_fiscal.operacao_es like '{$textBusca}%'
-            )";
+                OR {$this->table}.nome like '{$condition}%'
+            )   AND {$this->table}.ativo IN ('{$paramsSearch['filters']['ativo']}')";
 
-            if(count($filtroAvancado) == 1 && isset($filtroAvancado['ativo'])){
-            $filtro .= isset($filtroAvancado['ativo']) && !empty($filtroAvancado['ativo']) ?
-            "AND tpoperacao_fiscal.ativo = '{$filtroAvancado["ativo"]}' " : "";
-            }
         }
-        
-        /*return Pessoa::with('pessoas.id', 'pessoas.nome','emails.id')
-            ->join('emails', 'pessoas.id', '=', 'emails.pessoa_id')
-            ->join('enderecos', 'pessoas.id','=', 'enderecos.pessoa_id')
-            ->get();*/
-           
-        return $data;
+        elseif($paramsSearch['search'] == 'advanced')
+        {
+            $where  = isset($paramsSearch['filters']['nomes']) && (!empty($paramsSearch['filters']['nomes']) || $paramsSearch['filters']['nomes'] == 0) 
+            ? " ({$this->table}.nome like '{$paramsSearch['filters']['nomes']}%' OR {$this->table}.nome_alternativo like '{$paramsSearch['filters']['nomes']}%')" 
+            : " {$this->table}.nome like '%' ";
+
+            $where .= " AND {$this->table}.ativo IN ('{$paramsSearch['filters']['ativo']}')";
+        }
+
+        if($where)
+        {
+            $dataComplet = Pessoa::whereRaw($where)
+                                    //->join()
+                                    ->offset($paramsSearch['quantity'])
+                                    ->limit($paramsSearch['paginate'])
+                                    ->orderByRaw("{$paramsSearch['orderByColunm']} {$paramsSearch['orderByType']}")
+                                    ->paginate();
+        }
+                  
+        return $dataComplet;
     }
 
     public function categoria()

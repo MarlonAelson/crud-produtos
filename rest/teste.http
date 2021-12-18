@@ -5,7 +5,7 @@ GET {{host}}/index.php/pessoas/listagem
 Content-Type: application/json
 
 {
-"form": "simple",  
+"search": "simple",  
 "orderByColunm":"pessoas.id",
 "orderByType":"asc",
 "quantity":"0",

@@ -67,7 +67,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::name('pessoas.')
         ->group(function(){
-            Route::match(['get', 'post'], '/pessoas/listagem' , [ PessoaController::class, 'index' ])
+            /*Route::match(['get', 'post'], '/pessoas/listagem' , [ PessoaController::class, 'index' ])
+            ->middleware(['permission:pessoa_consultar'])->name('index');*/
+            Route::match(['get', 'post'], '/pessoas/listagem' , [ PessoaController::class, 'search' ])
             ->middleware(['permission:pessoa_consultar'])->name('index');
             Route::get('/pessoas/detalhar/{id}' , [ PessoaController::class, 'show' ])
             ->middleware(['permission:pessoa_detalhar'])->name('show');

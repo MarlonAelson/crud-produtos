@@ -1,0 +1,3 @@
+uma view centralizada de pdf onde importa a view do model (pasta pessoa por exemplo).nessa view padrão o cabecalho e roda serao padrao e irá a view pdf de do que vem na url porque estará montada.
+
+a view importada (pessoa por exemplo) irá receber os parametros conforme o objeto do model;

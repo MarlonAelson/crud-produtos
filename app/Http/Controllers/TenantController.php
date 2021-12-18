@@ -20,9 +20,9 @@ class TenantController extends Controller
     ** de objetos. Também será utilizado para rea-
     ** lizar buscas.
     */
-    public function index(Request $request)
+    public function index()
     {   
-        return $this->repository->all($request);      
+        return $this->repository->all();      
     }
 
     /* 
@@ -85,6 +85,15 @@ class TenantController extends Controller
     public function inactiveOrActive(Request $request)
     {       
         return $this->repository->inactiveOrActive($request);
+    }
+
+    /**
+    * Método responsável por pesquisar (de forma simples ou avançada) 
+    * objeto(s) no BD.
+    */
+    public function search(Request $request)
+    {       
+        return $this->repository->search($request);
     }
 
     /**
