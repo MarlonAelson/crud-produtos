@@ -110,7 +110,7 @@ class PessoaController extends Controller
     */
     public function pdf(Request $request)
     {       
-        return $this->repository->pdfObjects($request);
+        return $this->repository->pdf($request);
     }
 
     /**

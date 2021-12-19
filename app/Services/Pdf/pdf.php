@@ -3,11 +3,12 @@ namespace App\Services\Pdf;
 
 class Pdf 
 {
-    public static function generatePDF()
+    public static function generatePDF($view, $data)
     {
-        $teste = [];
-        return \PDF::loadView('categorias.pdf', $teste)
+        //$data = [];
+        return \PDF::loadView($view, ['data' => $data])
                 // Se quiser que fique no formato a4 retrato: ->setPaper('a4', 'landscape')
-                ->download('nome-arquivo-pdf-gerado.pdf');
+                //->download('nome-arquivo-pdf-gerado.pdf');
+                ->stream('nome-arquivo-pdf-gerado.pdf');
     }    
 }

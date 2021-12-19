@@ -14,7 +14,7 @@ class PessoaRepository extends AbstractRepository
         $this->relationShip = $this->model->relationShipsPossibles();
         $this->permissoes = new Permissao;
     }
-
+    
     public function labelsCommomFrontEnd()
     {
         $personalization['informative_search'] = "Pesquise digitando o ... desejada";
@@ -284,16 +284,22 @@ class PessoaRepository extends AbstractRepository
         $result;
         $status;               
         $returnFromFunction = $this->searchObject($request->all());
-
+    
         if($returnFromFunction)
         {
-            $result = ['data'=> $returnFromFunction, 'message' =>'Registros carregados com sucesso.', 'errors'=> null];
+            $result = $returnFromFunction;
+            $result['message'] = 'Registros carregados com sucesso.';
+            $result['errors']  = null;
             $status = 200;
+            $returnFromFunction = null;
         }
         else
         {
-            $result = ['data'=> null, 'message' =>'Não foi possível carregar os registros do banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.', 'errors'=> true];
+            $result['data'] = null;
+            $result['message'] = 'Não foi possível carregar os registros do banco de dados. Saia da tela e entre nela novamente para tentar mais uma vez. Caso o problema continue entre em contato com o suporte do sistema.';
+            $result['errors']  = true;
             $status = 400;
+            $returnFromFunction = null;
         }
         
         /*
@@ -316,7 +322,11 @@ class PessoaRepository extends AbstractRepository
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ])->withErrors($result['message']);
         }
-        elseif(!env('FRONTEND_BLADE'))
+        elseif(!env('FRONTEND_BLADE') && $status == 200)
+        {
+            return $result;
+        }
+        elseif(!env('FRONTEND_BLADE') && $status == 400)
         {
             return response()->json($result, $status);
         }
@@ -356,9 +366,19 @@ class PessoaRepository extends AbstractRepository
         }
     }
 
-    public function pdf()
+    public function pdf($request)
     {
-        return $this->pdfObjects();
+        $data['data'] = $request->all(); 
+        if($request->path() == 'pessoas/pdf')
+        {
+            $data['view'] = "{$this->labelsCommomFrontEnd()['route_name_view']}.pdf";
+        }
+        elseif($request->path() == '/impressoes/relatorios/pessoa/pdf')
+        {
+            $data['view'] = "{$this->labelsCommomFrontEnd()['route_name_view']}_relatorio.pdf";
+        }
+
+        return $this->pdfObjects('pdf', $data);
     }
 
     public function email()
@@ -373,6 +393,16 @@ class PessoaRepository extends AbstractRepository
         return Pessoa::select('id', 'nome', 'nome_alternativo',)
                         ->where('empresa', 'S')
                         ->where('ativo', 'S')
+                        ->get();
+    }
+
+    public static function getCompanySession()
+    {
+        //model, campos, wheres (condicoes)
+        return Pessoa::select('id', 'nome', 'nome_alternativo',)
+                        ->where('empresa', 'S')
+                        ->where('ativo', 'S')
+                        ->where('id', $this->getCompanyId())
                         ->get();
     }
 

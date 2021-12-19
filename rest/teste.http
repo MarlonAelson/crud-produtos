@@ -17,6 +17,24 @@ Content-Type: application/json
     }
 }
 
+###
+
+GET {{host}}/index.php/pessoas/pdf
+Content-Type: application/json
+
+{
+"search": "simple",  
+"orderByColunm":"pessoas.id",
+"orderByType":"asc",
+"quantity":"0",
+"paginate":"10",
+"filters":
+    {
+        "textoBusca":"",        
+        "ativo":"S"
+    }
+}
+
 ### 
-GET  {{host}}/index.php/pessoas/listagem
+GET  {{host}}/index.php/categorias/listagem
 ###

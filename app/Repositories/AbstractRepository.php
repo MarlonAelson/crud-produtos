@@ -316,11 +316,12 @@ abstract class AbstractRepository
     }
 
     //Método responsável por gerar o pdf dos objetos
-    public function pdfObjects()
+    //Passando como parâmetro a view e os dados dela
+    public function pdfObjects($view, $data)
     {
         try
         {
-            return Pdf::generatePDF();    
+            return Pdf::generatePDF($view, $data);    
         }
         catch(\Exception $e)
         {
@@ -362,6 +363,13 @@ abstract class AbstractRepository
     public function getCompanyId()
     {
         return session()->get('empresa_id');
+    }
+
+    //Método responsável por recuperar o ID da empresa selecionada para se trabalhar
+    public function getCompany()
+    {
+        //return session()->get('empresa_id');
+        return session()->get('tenant_all');
     }
 
     //Método responsável por recuperar o ID do usuário logado.
