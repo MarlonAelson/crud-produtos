@@ -85,7 +85,7 @@ class PessoaController extends Controller
     {       
         return $this->repository->inactiveOrActive($request);
     }
-
+    
     /**
     * Método responsável por pesquisar (de forma simples ou avançada) 
     * objeto(s) no BD.
