@@ -26,14 +26,14 @@ class TenantMiddleware
         ** Request()->session() - cria sessão
         */
 
-        //se for o domínio principal vai passar e olhar para a base configurada no arquivo .env
-        if(TenantRepository::domainIsMain())
+        //se for um dos domínios principais e tiver na url raiz (/) vai passar e olhar para a base configurada no arquivo .env
+        if(TenantRepository::domainIsMain() && $request->path() == '/')
         {
             return $next($request);
         }
-        elseif(TenantRepository::getTenant($request->getHost()))
+        elseif($tenant = TenantRepository::isTenant($request->path()))
         {
-            $tenant = TenantRepository::getTenant($request->getHost());
+            $domain = $tenant['identification'];
             TenantRepository::setConnection($tenant);
             TenantRepository::setSession($tenant);
 

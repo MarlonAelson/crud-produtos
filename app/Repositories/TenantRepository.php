@@ -84,10 +84,17 @@ class TenantRepository extends AbstractRepository
         DB::reconnect('tenant');
     }
 
-    //método responsável por verificar se é o domínio principal (sispem)
+    //método responsável por verificar se o domínio que está vindo é um dos principais
     public static function domainIsMain()
     {
-        return request()->getHost() == config('tenant.domain_main');
+        return in_array(request()->getHost(), config('tenant'));
+    }
+
+    public static function isTenant($path)
+    {
+        $explode = explode('/', $path);
+
+        return self::getTenant($explode[0]);
     }
 
     public static function setSession($tenant)

@@ -1,6 +1,8 @@
 <?php
 
-//arquivo criado para definir o domínio principal
+//arquivo criado para definir os domínios que são principais: www.sispem.com.br
 return [
-    'domain_main' => 'localhost', //www.sispem.com.br
+            'localhost', 
+            'postao.teste',
+            'tocdearte.teste'
 ];
