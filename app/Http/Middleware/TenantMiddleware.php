@@ -16,9 +16,6 @@ class TenantMiddleware
      */
     public function handle($request, Closure $next)
     {
-        /*$url = $request->url();
-        $explodeUrl = explode('/', $url);
-        dd($explodeUrl);
         /*
         ** Request()->getHost() - pegar o dominio... ex "www.sispem.com"
         ** Request()->url() - pega o domínio e o subdomínio "http://www.sispem.com/empresa/cadastro"
@@ -39,27 +36,9 @@ class TenantMiddleware
 
             return $next($request);
         }
-        /*elseif(!TenantRepository::domainIsMain() && !$request->path() == '/')
-        {
-            //!TenantRepository::domainIsMain() && $request->path() == '/' &&
-            \Log::info("URL");
-            \Log::info($path);
-
-            $identification = $request->segment(1);
-
-            $tenant = TenantRepository::getTenant($identification);
-
-            if(!$tenant && ($request->url() != route('404')))
-            {
-                return redirect()->route('404');
-            }
-            elseif($request->url() != route('404') && !TenantRepository::domainIsMain())
-            {
-                TenantRepository::setConnection($tenant);
-                TenantRepository::setSession($tenant);
-            }
-
-            return $next($request);
-        }*/
+        elseif(!TenantRepository::domainIsMain() && !TenantRepository::isTenant($request->path()) && ($request->url() != route('404')))
+        { 
+            return redirect()->route('404');
+        }
     }
 }

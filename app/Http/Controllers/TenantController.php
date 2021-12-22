@@ -11,7 +11,8 @@ class TenantController extends Controller
     //
     private $repository;
     
-    public function __construct(TenantRepository $repository){
+    public function __construct(TenantRepository $repository)
+    {
         $this->repository = $repository;
     }
     
