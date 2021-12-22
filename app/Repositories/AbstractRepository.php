@@ -147,15 +147,7 @@ abstract class AbstractRepository
                 [
                     'nome' => 'ENDERECO ALTERADO 1',
                     'logradouro' => 'ENDERECO ALTERADO 1'
-                ],
-                [
-                    'nome' => 'ENDERECO ALTERADO 2',
-                    'logradouro' => 'ENDERECO ALTERADO 2'
-                ],
-                [
-                    'nome' => 'ENDERECO ALTERADO 3',
-                    'logradouro' => 'ENDERECO ALTERADO 3'
-                ],
+                ]
             ];
     
             $data['emails'] = [

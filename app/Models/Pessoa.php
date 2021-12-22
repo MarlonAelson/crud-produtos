@@ -156,7 +156,7 @@ class Pessoa extends Authenticatable
 
     public function emails()
     {
-        return $this->hasMany(Email::class);
+        return $this->hasMany(Email::class, 'pessoa_id');
     }
 
     public function permissoes()

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 ** ficar que todo parametro id passado na url serão números.
 */
 
-CONST PROJECT_ROUTES_FOLDER = 'project';
+const PROJECT_ROUTES_FOLDER = 'project';
 
 require __DIR__."/" . PROJECT_ROUTES_FOLDER . "/categoria.php";
 require __DIR__."/" . PROJECT_ROUTES_FOLDER . "/pessoa.php";

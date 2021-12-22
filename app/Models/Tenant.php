@@ -10,7 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tenant extends Model
 {
-	use HasFactory, SoftDeletes;
+	use HasFactory;
+	use SoftDeletes;
 
 	protected $table = 'tenants';
 	protected $guarded = ['id'];

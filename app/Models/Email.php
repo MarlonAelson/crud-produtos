@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Database\Eloquent\SoftDeletes;
+//use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Email extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    //use SoftDeletes;
 
     protected $table = 'emails';
     protected $guarded = ['id'];
@@ -36,7 +37,7 @@ class Email extends Model
 
     public function pessoa()
     {
-        return $this->belongsTo(Pessoa::class);
+        return $this->belongsTo(Pessoa::class, 'pessoa_id');
     }
 
 	public function validator($data = null)
