@@ -30,10 +30,10 @@ class LoginRepository extends AbstractRepository
         {
             if (Auth::attempt([ 'nome_alternativo' => $request->nome_alternativo, 'password' => $request->password, 'acessa_sistema' => 'S', 'ativo' => 'S' ]))
             {
-                
                 $request->session()->regenerate();
                 $request->session()->put('empresa_id', $request->empresa_id);
-                return redirect()->intended('home');
+                return redirect()->route('home', array('domain' => '22222'));
+                //return redirect()->intended('home');
                 
                 /*Utilizado para testes
                 return view('home', [

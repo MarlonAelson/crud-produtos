@@ -5,14 +5,6 @@ use App\Http\Controllers\{
     LoginControlle
 };
 
-Route::get('/', function () {
-    return view('site');
-})->name('site');
-
-Route::get('/404', function () {
-    return view('404');
-})->name('404');
-
 Route::get('{type_app_nav}/{identification}/teste', function(){
     return 'login';
 });

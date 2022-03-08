@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class Endereco extends Model
 {
     use HasFactory;
-    use SoftDeletes;
+    //use SoftDeletes;
 
     protected $table = 'enderecos';
     protected $guarded = ['id'];

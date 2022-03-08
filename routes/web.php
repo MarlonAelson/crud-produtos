@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Route;
 
 const PROJECT_ROUTES_FOLDER = 'project';
 
+//ROTAS QUE NÃO PRECISAM DE AUTENTICAÇÃO
+require __DIR__."/" . PROJECT_ROUTES_FOLDER . "/site.php";
+
+//ROTAS QUE PRECISAM DE AUTENTICAÇÃO
 require __DIR__."/" . PROJECT_ROUTES_FOLDER . "/categoria.php";
 require __DIR__."/" . PROJECT_ROUTES_FOLDER . "/pessoa.php";
 require __DIR__."/" . PROJECT_ROUTES_FOLDER . "/ordem.php";
@@ -17,4 +21,4 @@ require __DIR__."/" . PROJECT_ROUTES_FOLDER . "/login.php";
 require __DIR__."/" . PROJECT_ROUTES_FOLDER . "/testes.php";
 
 //Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/{domain}/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
