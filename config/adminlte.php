@@ -241,15 +241,15 @@ return [
             'submenu' => [
                 [
                     'text' => 'Categorias',
-                    'url'  => '/sispem/categorias/listagem',
+                    'url'  => '/categorias/listagem',
                 ],
                 [
                     'text' => 'Pessoas',
-                    'url'  => '/sispem/pessoas/listagem',
+                    'url'  => '/pessoas/listagem',
                 ],
                 [
                     'text' => 'Ordens',
-                    'url'  => '/sispem/ordens/listagem',
+                    'url'  => '/ordens/listagem',
                 ],
             ],
         ],
