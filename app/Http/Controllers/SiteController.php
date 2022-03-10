@@ -33,6 +33,6 @@ class SiteController extends Controller
 
     public function verifyTenant(Request $request)
     {
-        return TenantRepository::verifyTenant($request);
+        return TenantRepository::isTenant($request->identificacao);
     }
 }

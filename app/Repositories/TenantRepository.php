@@ -90,30 +90,38 @@ class TenantRepository extends AbstractRepository
         return in_array(request()->getHost(), config('tenant'));
     }
 
-    public static function isTenant($path)
+    public static function isTenantOld($path)
     {
         $explode = explode('/', $path);
         return self::getTenant($explode[0]);
     }
 
-    public static function verifyTenant($param)
+    public static function isTenant($identification)
     {
-        if(self::getTenant($param->identificador))
+        if($tenant = self::getTenant($identification))
         {
-            dd(redirect()->route('login', array('domain' => $param->identificador)));
+            self::setSession($tenant);
+            return redirect()->route('login');
         }
         else
         {
+            self::destroySession();
             return redirect()->route('404');
         }
     }
 
     public static function setSession($tenant)
     {
-        session()->put('domain', $tenant['identification']);
         session()->put('tenant', $tenant['identification']);
         session()->put('tenant_type_app_nav', $tenant['type_application_navigator']);
-        session()->put('tenant_all', $tenant);
+        session()->put('tenant_complet', $tenant);
+    }
+
+    public static function destroySession()
+    {
+        session()->forget('tenant');
+        session()->forget('tenant_type_app_nav');
+        session()->forget('tenant_complet');
     }
 
     public static function getTenant($host)

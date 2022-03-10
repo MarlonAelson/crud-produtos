@@ -21,4 +21,4 @@ require __DIR__."/" . PROJECT_ROUTES_FOLDER . "/login.php";
 require __DIR__."/" . PROJECT_ROUTES_FOLDER . "/testes.php";
 
 //Auth::routes();
-Route::get('/{domain}/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/{domain}/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware(['connection_tenant']);

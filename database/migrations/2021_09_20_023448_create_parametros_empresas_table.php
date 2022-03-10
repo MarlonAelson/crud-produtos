@@ -16,7 +16,7 @@ class CreateParametrosEmpresasTable extends Migration
         Schema::create('parametros_empresas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pessoa_id')->nullable();
-            $table->foreign('pessoa')->references('id')->on('pessoas');
+            $table->foreign('pessoa_id')->references('id')->on('pessoas');
             $table->string('forma_envio_email', 120)->nullable();
             $table->timestamps();
             $table->softDeletes();
