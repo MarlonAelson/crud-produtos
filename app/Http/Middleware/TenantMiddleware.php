@@ -30,7 +30,6 @@ class TenantMiddleware
         }
         elseif($tenant = TenantRepository::isTenant($request->path()))
         {
-            dd($next($request));
             TenantRepository::setConnection($tenant);
             TenantRepository::setSession($tenant);
             $request->domain = $tenant['identification'];

@@ -3,36 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\TenantRepository;
-
-//use App\Repositories\SiteRepository;
+use App\Repositories\SiteRepository;
 
 class SiteController extends Controller
 {
-    //
-    //private $repository;
+    private $repository;
+
+    public function __construct(SiteRepository $repository)
+    {
+       $this->repository = $repository; 
+    }
     
-    /*
-    ** Método responsável por retornar a listagem
-    ** de objetos. Também será utilizado para rea-
-    ** lizar buscas.
-    */
     public function index()
     {   
-        return view('site');     
+        return $this->repository->index();     
     }
 
-    /* 
-    ** 
-    ** 
-    */
     public function error404()
     {
-        return view('404');
+        return $this->repository->error404();
     }
 
     public function verifyTenant(Request $request)
     {
-        return TenantRepository::isTenant($request->identificacao);
+        return $this->repository->verifyTenant($request);
     }
 }
