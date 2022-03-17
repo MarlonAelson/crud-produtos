@@ -28,13 +28,28 @@ class TenantMiddleware
         {
             return $next($request);
         }
-        elseif($tenant = TenantRepository::isTenant($request->path()))
+        elseif($tenant = TenantRepository::isTenantPath($request->path()))
         {
             TenantRepository::setConnection($tenant);
-            TenantRepository::setSession($tenant);
-            $request->domain = $tenant['identification'];
             dd($next($request));
             return $next($request);
+            /**
+             * $callback = function ($value) {
+    return is_numeric($value) ? $value * 2 : 0;
+};
+ 
+$result = with(5, $callback);
+ 
+// 10
+ 
+$result = with(null, $callback);
+ 
+// 0
+ 
+$result = with(5, null);
+             * 
+             * 
+             */
         }
         elseif(!TenantRepository::domainIsMain() && !TenantRepository::isTenant($request->path()) && ($request->url() != route('404')))
         { 

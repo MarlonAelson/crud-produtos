@@ -17,6 +17,14 @@ class SiteRepository
 
     public function verifyTenant($request)
     {
-        return TenantRepository::isTenant($request->identificacao);
+        if($tenat = TenantRepository::isTenanIdentification($request->identificacao))
+        {
+            TenantRepository::setSession($tenant);
+            return redirect()->route('login')->with('domain', $request->identificacao);
+        }
+        else
+        {
+            return redirect()->rout('404');
+        }
     }
 }

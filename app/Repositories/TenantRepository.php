@@ -103,16 +103,16 @@ class TenantRepository extends AbstractRepository
 
     public static function setSession($tenant)
     {
-        session()->put('tenant', $tenant['identification']);
+        session()->put('identification', $tenant['identification']);
         session()->put('tenant_type_app_nav', $tenant['type_application_navigator']);
-        session()->put('tenant_complet', $tenant);
+        session()->put('tenant', $tenant);
     }
 
     public static function destroySession()
     {
-        session()->forget('tenant');
+        session()->forget('identification');
         session()->forget('tenant_type_app_nav');
-        session()->forget('tenant_complet');
+        session()->forget('tenant');
     }
 
     public static function getTenant($host)
