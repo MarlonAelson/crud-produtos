@@ -8,23 +8,16 @@ class SiteRepository
     public function index()
     {
         return view('site');
+        /*$databaseApplication = env('DB_SERVER', 'web'); 
+        if($databaseApplication == 'local'){
+            return route('login');
+        }else{
+            return view('site');
+        }*/
     }
 
     public function error404()
     {
         return view('404');
-    }
-
-    public function verifyTenant($request)
-    {
-        if($tenat = TenantRepository::isTenanIdentification($request->identificacao))
-        {
-            TenantRepository::setSession($tenant);
-            return redirect()->route('login')->with('domain', $request->identificacao);
-        }
-        else
-        {
-            return redirect()->rout('404');
-        }
     }
 }

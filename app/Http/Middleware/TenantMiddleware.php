@@ -21,42 +21,36 @@ class TenantMiddleware
         ** Request()->url() - pega o domínio e o subdomínio "http://www.sispem.com/empresa/cadastro"
         ** Request()->path() - pega o subdomínio "/empresa/cadastro" ("http://www.sispem.com/empresa/cadastro")
         ** Request()->session() - cria sessão
+        ** $response->setContent();
+        ** $response->getTargetUrl()
+        ** $request->segment(0);
         */
-
+        
         //se for um dos domínios principais e tiver na url raiz (/) vai passar e olhar para a base configurada no arquivo .env
-        if(TenantRepository::domainIsMain() && ($request->path() == '/' || $request->path() == 'verifyTenant'))
+        if(TenantRepository::domainIsMain() && $request->path() == '/')
         {
             return $next($request);
         }
-        elseif($tenant = TenantRepository::isTenantPath($request->path()))
+        elseif(TenantRepository::domainIsMain() && $tenant = TenantRepository::isTenant($request))
         {
             TenantRepository::setConnection($tenant);
-            dd($next($request));
-            return $next($request);
-            /**
-             * $callback = function ($value) {
-    return is_numeric($value) ? $value * 2 : 0;
-};
- 
-$result = with(5, $callback);
- 
-// 10
- 
-$result = with(null, $callback);
- 
-// 0
- 
-$result = with(5, null);
-             * 
-             * 
-             */
+            TenantRepository::setSession($tenant);
+            return $next($request);            
         }
-        elseif(!TenantRepository::domainIsMain() && !TenantRepository::isTenant($request->path()) && ($request->url() != route('404')))
+        /*elseif(TenantRepository::domainIsMain() && $tenant = TenantRepository::isTenant($request))
+        {
+            TenantRepository::setConnection($tenant);
+            TenantRepository::setSession($tenant);
+            return $next($request);            
+        }*/
+        elseif(!TenantRepository::domainIsMain() && !TenantRepository::isTenant($request) && ($request->url() != route('404')))
         { 
             return redirect()->route('404');
         }
         else
         {
+            //return TenantRepository::isTenant($request);
+            //return $next($request);
             return response()->json('CAIU NO ELSE DO MIDDLEWARE', 400);
         }
     }

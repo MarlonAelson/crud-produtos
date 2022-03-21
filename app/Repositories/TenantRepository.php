@@ -7,12 +7,13 @@ use App\Events\TenantCreated;
 
 class TenantRepository extends AbstractRepository
 {
-
-    public function __construct(Tenant $model){
+    public function __construct(Tenant $model)
+    {
         $this->model = $model;
     }
 
-    public function store($data){
+    public function store($data)
+    {
         $data = null;
         $data = [
             //'id' => $request->id,
@@ -90,18 +91,25 @@ class TenantRepository extends AbstractRepository
         return in_array(request()->getHost(), config('tenant'));
     }
 
-    public static function isTenantPath($path)
+    public static function isTenant($request)
     {
-        $explode = explode('/', $path);
-        return self::getTenant($explode[0]);
+        $explode = explode('/', $request->path());
+        if($explode[0] == 'verify-identification')
+        {
+            return self::getTenant($request->identification);
+        }
+        else
+        {
+            return self::getTenant($explode[0]);
+        }
     }
 
-    public static function isTenanIdentification($identification)
+    /*public static function isTenantIdentification($identification)
     {
         return self::getTenant($identification);
-    }
+    }*/
 
-    public static function setSession($tenant)
+    public static function setSession(Tenant $tenant)
     {
         session()->put('identification', $tenant['identification']);
         session()->put('tenant_type_app_nav', $tenant['type_application_navigator']);
@@ -118,14 +126,5 @@ class TenantRepository extends AbstractRepository
     public static function getTenant($host)
     {
         return Tenant::where('identification', $host)->first();
-    }
-
-    public function teste()
-    {
-        self::setSession($tenant);
-        return redirect()->route('login')->with('domain', $identification);
-
-        self::destroySession();
-        return redirect()->route('404');
     }
 }

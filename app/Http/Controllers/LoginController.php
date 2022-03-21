@@ -28,4 +28,9 @@ class LoginController extends Controller
     {
         return $this->repository->logout($request);
     }
+
+    public function verifyIdentification()
+    {
+        return $this->repository->verifyIdentification();
+    }
 }

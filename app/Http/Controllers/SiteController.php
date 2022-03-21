@@ -23,9 +23,4 @@ class SiteController extends Controller
     {
         return $this->repository->error404();
     }
-
-    public function verifyTenant(Request $request)
-    {
-        return $this->repository->verifyTenant($request);
-    }
 }

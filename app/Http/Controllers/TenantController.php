@@ -124,4 +124,9 @@ class TenantController extends Controller
         return $this->repository->email($request);
     }
 
+    public function verifyTenant(Request $request)
+    {     
+        return $this->repository->verifyTenant($request);
+    }
+
 }
