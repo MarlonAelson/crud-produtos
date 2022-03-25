@@ -10,3 +10,7 @@ Route::get('/{domain}/logout', [ LoginController::class, 'logout' ])->name('logo
 
 Route::post('/verify-identification', [ LoginController::class, 'verifyIdentification' ])->name('verifyIdentification');
 
+//Auth::routes();
+Route::middleware(['auth'])->group(function () {
+    Route::get('/{domain}/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});

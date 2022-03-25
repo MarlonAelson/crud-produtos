@@ -37,12 +37,6 @@ class TenantMiddleware
             TenantRepository::setSession($tenant);
             return $next($request);            
         }
-        /*elseif(TenantRepository::domainIsMain() && $tenant = TenantRepository::isTenant($request))
-        {
-            TenantRepository::setConnection($tenant);
-            TenantRepository::setSession($tenant);
-            return $next($request);            
-        }*/
         elseif(!TenantRepository::domainIsMain() && !TenantRepository::isTenant($request) && ($request->url() != route('404')))
         { 
             return redirect()->route('404');

@@ -23,11 +23,18 @@ abstract class AbstractRepository
     }
 
     //Método responsável por recuperar todos os objetos
-    public function allObject()
+    public function allObject($request = null)
     {
         try
         {
-            return $this->model::all();
+            if($request)
+            {
+                
+            }
+            else
+            {
+                return $this->model::all();
+            }
         }
         catch(\Exception $e)
         {
