@@ -20,11 +20,11 @@ Traduzido a aplicação do laravel colocando manualmente uma pasta pt-BR dentro 
 Configurado para utilizar o controle de permissões pelo Spatie (pasta docs tem o passo a passo de como realizar a configuração). Site Oficial: https://spatie.be/docs/laravel-permission/v5/introduction ; <br/>
 
 ### PRECISA MELHORAR AQUI AINDA
-Criado uma seeder para inserir algumas permissões para ficar de modelo e exemplo; <br/>
-### PRECISA MELHORAR AQUI AINDA
-Criado uma seeder para inserir dois usuários para que seja testado as permissões: usuario: admin123, senha: admin123, email: admin@sistema.com | usuário: usuario123, senha: usuario123, usuario@sistema.com; <br/>
-### PRECISA MELHORAR AQUI AINDA
-Criado uma seeder para inserir categorias (que serão centralizadas numa única tabela e model) de pessoas, objetos de manutenção e/ou produtos e serviços; <br/>
+- Criado uma seeder para inserir algumas permissões para ficar de modelo e exemplo; <br/>
+
+- Criado uma seeder para inserir dois usuários para que seja testado as permissões: usuario: admin123, senha: admin123, email: admin@sistema.com | usuário: usuario123, senha: usuario123, usuario@sistema.com; <br/>
+
+- Criado uma seeder para inserir categorias (que serão centralizadas numa única tabela e model) de pessoas, objetos de manutenção e/ou produtos e serviços; <br/>
 
 Adicionado "Route::pattern('id', '[0-9]+')" no método "boot()" do arquivo "App\Providers\RouteServiceProvider.php" para certificar que todo id passado serão números inteiros; <br/>
 
