@@ -43,9 +43,7 @@ class TenantMiddleware
         }
         else
         {
-            //return TenantRepository::isTenant($request);
-            //return $next($request);
-            return response()->json('CAIU NO ELSE DO MIDDLEWARE', 400);
+           return response()->json('CAIU NO ELSE DO MIDDLEWARE', 400);
         }
     }
 }
