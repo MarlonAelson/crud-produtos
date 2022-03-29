@@ -18,7 +18,7 @@
 @section('auth_header', __('adminlte::adminlte.login_message'))
 
 @section('auth_body')
-    <form action="{{ $login_url }}" method="post">
+    <form action="{{ route('autenticarUsuario', ['identification' => @session('identification')]) }}" method="post">
         {{ csrf_field() }}
 
         {{-- nome_alternativo field --}}
@@ -52,7 +52,7 @@
                 </div>
             @endif
         </div>
-        {{ @session('identification') }}
+
         <div class="row">
             <div class="col-12">
                 <div class="form-group">

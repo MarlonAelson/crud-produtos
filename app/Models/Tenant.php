@@ -25,6 +25,7 @@ class Tenant extends Model
 	protected $fillable = [
 		'pessoa_id',
 		'identification',
+		'frontend',
 		'type_application_navigator',
 		'bd_database',
 		'bd_hostname',

@@ -112,6 +112,7 @@ class TenantRepository extends AbstractRepository
     public static function setSession(Tenant $tenant)
     {
         session()->put('identification', $tenant['identification']);
+        session()->put('frontend', $tenant['frontend']);
         session()->put('tenant_type_app_nav', $tenant['type_application_navigator']);
         session()->put('tenant', $tenant);
     }

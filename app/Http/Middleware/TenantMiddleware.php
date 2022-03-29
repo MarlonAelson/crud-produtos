@@ -16,10 +16,26 @@ class TenantMiddleware
      */
     public function handle($request, Closure $next)
     {
-        //se for um dos domínios principais e tiver na url raiz (/) vai passar e olhar para a base configurada no arquivo .env
-        if(TenantRepository::domainIsMain() && $request->path() == '/')
+        /* 
+        ** IF
+        ** se for um dos domínios principais, precisar de pagina de identicação do cliente (tenant) e tiver na url raiz (/)
+        ** vai passar e olhar para os dados configurado no arquivo .env
+        
+        ** 1º ELSEIF
+        ** não precisando da página de identificação direciona para a rota de login com a configuração que tá no arquivo .env.
+        ** isso significa que a base é local
+        
+        ** 2º ELSEIF 
+        ** vai passar request para, sendo um tenant, vai definir a conexão do banco de quem está vindo
+        */
+
+        if(TenantRepository::domainIsMain() && env('USE_SITE_PRELOAD') && $request->path() == '/')
         {
             return $next($request);
+        }
+        elseif(TenantRepository::domainIsMain() && !env('USE_SITE_PRELOAD') && $request->path() == '/')
+        {
+            return redirect()->route('login', ['identification' => env('IDENTIFICATION') ]);
         }
         elseif(TenantRepository::domainIsMain() && $tenant = TenantRepository::isTenant($request))
         {
