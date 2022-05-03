@@ -18,7 +18,7 @@
 @section('auth_header', __('adminlte::adminlte.login_message'))
 
 @section('auth_body')
-    <form action="{{ route('autenticarUsuario', ['identification' => @session('identification')]) }}" method="post">
+    <form action="{{ route('autenticarUsuario')}}" method="post">
         {{ csrf_field() }}
 
         {{-- nome_alternativo field --}}
@@ -51,19 +51,6 @@
                     <strong>{{ $errors->first('password') }}</strong>
                 </div>
             @endif
-        </div>
-
-        <div class="row">
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="">Seleciona a Empresa:</label>
-                    <select name="empresa_id" id="empresa" class="form-control">
-                        @foreach($companies as $company)
-                            <option value="{{ $company->id }}">{{ $company->nome_alternativo }}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
         </div>
 
         {{-- Login field --}}

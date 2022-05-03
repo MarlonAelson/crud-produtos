@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\CategoriaRepository;
+use App\Repositories\ProdutoRepository;
+use App\Exports\ProdutoExport;
+use Maatwebsite\Excel\Facades\Excel;
 
-class CategoriaController extends Controller
+class ProdutoController extends Controller
 {
     private $repository;
 
-    public function __construct(CategoriaRepository $repository)
+    public function __construct(ProdutoRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -21,16 +23,6 @@ class CategoriaController extends Controller
     public function index()
     {   
         return $this->repository->all();      
-    }
-
-    /*
-    ** Método responsável por retornar a listagem
-    ** de objetos. Também será utilizado para rea-
-    ** lizar buscas.
-    */
-    public function search(Request $request)
-    {   
-        return $this->repository->search($request);      
     }
 
     /* 
@@ -100,7 +92,7 @@ class CategoriaController extends Controller
     * objeto(s) no BD.
     */
     public function search(Request $request)
-    {       
+    {   
         return $this->repository->search($request);
     }
 
@@ -114,12 +106,11 @@ class CategoriaController extends Controller
     }
 
     /**
-    * Método responsável por clonar e salvar um objeto
-    * no BD.
+    * Método responsável por gerar pdf dos objeto
     */
     public function pdf(Request $request)
     {       
-        return $this->repository->pdfObjects($request);
+        return $this->repository->pdf($request);
     }
 
     /**
@@ -129,5 +120,16 @@ class CategoriaController extends Controller
     public function email(Request $request)
     {       
         return $this->repository->email($request);
+    }
+
+    /**
+    * Método responsável por gerar o excel dos objetos
+    */
+    public function excel(Request $request)
+    {   
+        return new ProdutoExport();
+        //return (new ProdutoExport)->download('invoices.xlsx', \Maatwebsite\Excel\Facades\Excel::XLSX);
+        //return Excel::download(new ProdutoExport, 'produto1.XLSX');
+        //return $this->repository->email($request);
     }
 }

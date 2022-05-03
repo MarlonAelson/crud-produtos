@@ -240,16 +240,8 @@ return [
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'Categorias',
-                    'url'  => '/categorias/listagem',
-                ],
-                [
-                    'text' => 'Pessoas',
-                    'url'  => '/pessoas/listagem',
-                ],
-                [
-                    'text' => 'Ordens',
-                    'url'  => '/ordens/listagem',
+                    'text' => 'Produtos',
+                    'url'  => '/produtos/listagem',
                 ],
             ],
         ],

@@ -1,9 +1,9 @@
 <?php
 namespace App\Services\Pdf;
 
-class Pdf 
+class Excel 
 {
-    public static function generatePDF($view, $data)
+    public static function generateExcel($view, $data)
     {
         return \PDF::loadView($view, ['objects' => $data])
                     // Se quiser que fique no formato a4 retrato: 

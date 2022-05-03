@@ -1,18 +1,16 @@
-# PROJETO MODELO
-Este projeto servirá para o desenvolvimento de qualquer outro sistema! <br/>
+# PROJETO CRUD
+Este projeto é só para demonstrar um simples crud feito no Laravel. Porém, com alguns detalhes a mais adicionados ao projeto para servir de conhecimento! <br/>
 
 # DETATLHES PROJETO
 
 ## VERSÃO
-Versão do Laravel: 8.6.2; <br/>
+Versão do Laravel: 8.6.2; 
+
+## BANCO DE DADOS
+Adicionado o banco de dados SQLite dentro da pasta database do próprio projeto<br/>
 
 ## INTEGRAÇÕES
 Integrado o AdminLte 3.7: https://github.com/jeroennoten/Laravel-AdminLTE - ao projeto. Mas será possível retornar os dados (data) para um <strong>Frontend</strong> via <strong>blade</strong> ou só <strong>JSON</strong> para os casos de ser uma pasta separada com tecnologia vue, angular etc. A configuração necessária para o projeto realizar a verificação e, com isso, retornar os dados da forma desejada está no "banco de dados > tabela tenant > campo frontend" e também no arquivo .env e .env.example. Ela é utilizada e verificada nos repositories já que as <strong>classes Controllers</strong> servem apenas para retornar o que vier de lá. Assim, tanto faz a forma que usa <strong>Frontend</strong> na aplicação; <br/>
-
-## CONFIGURAÇÕES PARA CONEXÃO MULTI BANCO (TENANTS)
-Criado o arquivo "config\tentant.php" contendo um array com possíveis domínios principais liberados na aplicação; <br/>
-
-Criado um middleware "App\Http\Middlewares\TenantMiddleware" para verificar a url e definir a conexão do banco do tenant que está vindo; <br/>
 
 ## CONFIGURAÇÕES DE AUTOMATIZAÇÃO E OUTROS DETALHES
 Criado uma pasta "project" dentro de "route" para separar as rotas da aplicação dentro dela e importar no arquivo "web.php"; <br/>
@@ -43,8 +41,9 @@ Adicionado o pacote de permissões "Spatie" (https://spatie.be/docs/laravel-perm
 
 Adicionado o pacote de pdf "dompdf" (https://github.com/barryvdh/laravel-dompdf) e implementado na classe AbstractRepository (para que fique centralizado e possa ser utilizado por qualquer Repository que precisar) através da classe <strong>Pdf</strong> dentro das pastas de serviços <strong>(App\Services\...)</strong>; <br/>
 
+Adicionado o pacote de excel "laravel excel" (https://laravel-excel.com) e implementado na classe AbstractRepository (para que fique centralizado e possa ser utilizado por qualquer Repository que precisar) através da classe <strong>Excel</strong> dentro das pastas de serviços <strong>(App\Services\...)</strong>; <br/>
+
 Adicionado o pacote de código de barras "milon/barcode" (https://github.com/milon/barcode). Porém, ainda não implementado na classe AbstractRepository (para que fique centralizado e possa ser utilizado por qualquer Repository que precisar) como acontece com os outros pacotes.
-Observação: O Adianti Framework usa o "picqer". Só para ter noção de outro pacote.
 
 Adicionado o pacote de impressão térmica "mike42/escpos" (https://github.com/mike42/escpos-php). Porém, ainda não implementado na classe AbstractRepository (para que fique centralizado e possa ser utilizado por qualquer Repository que precisar) como acontece com os outros pacotes.
 

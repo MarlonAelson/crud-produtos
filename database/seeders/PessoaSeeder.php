@@ -18,43 +18,17 @@ class PessoaSeeder extends Seeder
     {
         Pessoa::create([
             'id'       => 1, 
-            'nome'     => 'Marlon',
-            'nome_alternativo'    => 'MARLON',
-            'colaborador' => 'S',
-            'empresa' => 'N',
-            'cliente' => 'N',
-            'fornecedor' => 'N',
-            'outros' => 'N',
+            'nome'     => 'admin',
+            'nome_alternativo'    => 'admin',
             'password' => Hash::make('123456'),
-            'acessa_sistema' => 'S',
             'ativo'    => 'S'
         ]);
 
         Pessoa::create([
             'id'       => 2, 
-            'nome'     => 'SISPEM LTDA',
-            'nome_alternativo'    => 'SISPEM',
-            'colaborador' => 'N',
-            'empresa' => 'S',
-            'cliente' => 'N',
-            'fornecedor' => 'N',
-            'outros' => 'N',
+            'nome'     => 'usuario',
+            'nome_alternativo'    => 'usuario',
             'password' => Hash::make('123456'),
-            'acessa_sistema' => 'S',
-            'ativo'    => 'S'
-        ]);
-
-        Pessoa::create([
-            'id'       => 3,
-            'nome'     => 'TOC DE ARTE LTDA',
-            'nome_alternativo'    => 'TOC DE ARTE',
-            'colaborador' => 'N',
-            'empresa' => 'S',
-            'cliente' => 'N',
-            'fornecedor' => 'N',
-            'outros' => 'N',            
-            'password' => Hash::make('123456'),
-            'acessa_sistema' => 'S',
             'ativo'    => 'S'
         ]);
     }

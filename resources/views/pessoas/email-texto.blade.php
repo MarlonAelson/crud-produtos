@@ -1,1 +1,0 @@
-aqui tem um texto puro de teste.

@@ -1,14 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Página Inicial')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <h1>Página Inicial</h1>
 @stop
 
 @section('content')
-Usuario ID: - Empresa ID:
-    <p>Welcome to this beautiful admin panel.</p>
+    <p>Bem Vindo ao Crud Produtos.</p>
 @stop
 
 @section('css')

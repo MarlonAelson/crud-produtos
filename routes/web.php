@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Route;
 
 const PROJECT_ROUTES_FOLDER = 'project';
 
-require __DIR__ . "/" . PROJECT_ROUTES_FOLDER . "/site.php";
 require __DIR__ . "/" . PROJECT_ROUTES_FOLDER . "/login.php";
 require __DIR__ . "/" . PROJECT_ROUTES_FOLDER . "/categoria.php";
-require __DIR__ . "/" . PROJECT_ROUTES_FOLDER . "/pessoa.php";
-require __DIR__ . "/" . PROJECT_ROUTES_FOLDER . "/ordem.php";
-require __DIR__ . "/" . PROJECT_ROUTES_FOLDER . "/tenant.php";
+require __DIR__ . "/" . PROJECT_ROUTES_FOLDER . "/produto.php";

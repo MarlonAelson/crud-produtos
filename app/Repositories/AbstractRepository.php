@@ -23,18 +23,11 @@ abstract class AbstractRepository
     }
 
     //Método responsável por recuperar todos os objetos
-    public function allObject($request = null)
+    public function allObject()
     {
         try
         {
-            if($request)
-            {
-                
-            }
-            else
-            {
-                return $this->model::all();
-            }
+            return $this->model::all();
         }
         catch(\Exception $e)
         {
@@ -321,6 +314,26 @@ abstract class AbstractRepository
         try
         {
             return Pdf::generatePDF($view, $data);    
+        }
+        catch(\Exception $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+        catch(QueryException $e)
+        {
+            \Log::error('Error '.$e->getMessage());
+            return false;
+        }
+    }
+
+    //Método responsável por gerar o pdf dos objetos
+    //Passando como parâmetro a view e os dados dela
+    public function excelObjects($data)
+    {
+        try
+        {
+            return Pdf::generateExcel($view, $data);    
         }
         catch(\Exception $e)
         {

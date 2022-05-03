@@ -7,16 +7,16 @@ use App\Repositories\PessoaRepository;
 class LoginRepository extends AbstractRepository
 {
 
-    // caso queira trocar o campo de autenticacao
+    // Método responsável por trocar o campo de autenticacão
     public function username(){
         return "nome_alternativo";
     }
 
     public function login()
     {   
-        if(session('frontend') == 'blade')
+        if(env('frontend') == 'blade')
         {
-            return view('login.login', ['companies' => PessoaRepository::getCompanies()]);
+            return view('login.login');
         }
         else
         {
@@ -26,13 +26,12 @@ class LoginRepository extends AbstractRepository
 
     public function authenticate($request)
     {   
-        if(session('frontend') == 'blade')
+        if(env('frontend') == 'blade')
         {
-            if (Auth::attempt([ 'nome_alternativo' => $request->nome_alternativo, 'password' => $request->password, 'acessa_sistema' => 'S', 'ativo' => 'S' ]))
+            if (Auth::attempt([ 'nome_alternativo' => $request->nome_alternativo, 'password' => $request->password, 'ativo' => 'S' ]))
             {
                 $request->session()->regenerate();
-                $request->session()->put('empresa_id', $request->empresa_id);
-                return redirect()->route('home', ['identification' => session('identification')]);
+                return redirect()->route('home');
             }
             else
             {
@@ -43,17 +42,10 @@ class LoginRepository extends AbstractRepository
         }
         else
         {
-            if (Auth::attempt([ 'nome_alternativo' => $request->nome_alternativo, 'password' => $request->password, 'acessa_sistema' => 'S', 'ativo' => 'S' ]))
+            if (Auth::attempt([ 'nome_alternativo' => $request->nome_alternativo, 'password' => $request->password, 'ativo' => 'S' ]))
             {
-                $request->session()->regenerate();
-                $request->session()->put('empresa_id', $request->empresa_id);
+                $request->env()->regenerate();
                 return response()->json(["data" => true, "message" => "Logado com sucesso.", "errors" => null], 200);
-                
-                /*Utilizado para testes
-                return view('home', [
-                    "teste_empresa" => $this->getCompanyId(),
-                    "teste_usuario" => $this->getUserId()
-                ]);*/
             }
         }
     }
@@ -66,11 +58,6 @@ class LoginRepository extends AbstractRepository
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('login');
     }   
-
-    public function verifyIdentification()
-    {
-        return redirect()->route('login', ['identification' => session('identification')]);
-    }
 }

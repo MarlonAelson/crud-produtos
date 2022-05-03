@@ -28,14 +28,7 @@ class Pessoa extends Authenticatable
     protected $fillable = [
         'nome',
         'nome_alternativo',
-        'empresa',
-        'cliente',
-        'fornecedor',
-        'colaborador',
-        'outros',
         'password',
-        'acessa_sistema',
-        'categoria_id',
         'ativo'
     ];
 
@@ -50,8 +43,6 @@ class Pessoa extends Authenticatable
     ];
 
     protected $with = [
-        'emails',
-        'enderecos',
         'permissoes'        
     ];
 
@@ -149,25 +140,10 @@ class Pessoa extends Authenticatable
         return $dataComplet;
     }
 
-    public function categoria()
-    {
-        return $this->hasOne(Categoria::class);
-    }
-
-    public function emails()
-    {
-        return $this->hasMany(Email::class, 'pessoa_id');
-    }
-
     public function permissoes()
 	{
 		return $this->belongsToMany(Permissao::class, 'model_has_permissions', 'model_id', 'permission_id')->withPivot('model_type');
 	}
-
-    public function enderecos()
-    {
-        return $this->hasMany(Endereco::class, 'pessoa_id');
-    }
 
     /*
     ** Método responsável por retornar os relacionamentos do model
