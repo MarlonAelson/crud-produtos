@@ -14,7 +14,7 @@ class ProdutoRepository extends AbstractRepository
 
     public function labelsCommomFrontEnd()
     {
-        $personalization['informative_search'] = "Pesquise digitando o nome do produto desejada";
+        $personalization['informative_search'] = "Pesquise digitando o nome do produto desejado";
         $personalization['label_card_form'] = "Cadastrar Produto";
         $personalization['label_card_edit'] = "Alterar Produto";
         $personalization['label_card_list'] = "Consultar Produtos";
@@ -360,18 +360,7 @@ class ProdutoRepository extends AbstractRepository
         $objects = session()->get('result_pdf');
         return $this->pdfObjects($view, $objects);
     }
-
-    public function excel()
-    {
-        $objects = session()->get('result_pdf');
-        return $this->excelObjects($view, $objects);
-    }
-
-    public function email()
-    {
-        dd($this->emailsObjects());
-    }
-
+    
     /**
      * Os Métodos abaixos: create e edit - são específicos para quando o projeto for com blade
      */

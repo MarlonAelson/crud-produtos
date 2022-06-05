@@ -29,11 +29,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/produtos/clonar/{id}' , [ ProdutoController::class, 'replicate' ])
         ->middleware(['permission:produto_cadastrar'])->name('replicate');
         Route::get('/produtos/pdf' , [ ProdutoController::class, 'pdf' ])
-        ->middleware(['permission:produto_consultar'])->name('pdf');
-        Route::get('/produtos/email' , [ ProdutoController::class, 'email' ])
-        ->middleware(['permission:produto_consultar'])->name('email');
-        Route::get('/produtos/excel' , [ ProdutoController::class, 'excel' ])
-        ->middleware(['permission:produto_consultar'])->name('excel');
+        ->middleware(['permission:produto_pdf'])->name('pdf');
     });
 
 });

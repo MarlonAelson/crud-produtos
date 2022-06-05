@@ -6,17 +6,12 @@ use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Support\Facades\Mail;
 use App\Services\Pdf\Pdf;
-use App\Services\Mail\Email;
-
-use App\Models\Pessoa;
 
 abstract class AbstractRepository
 {
     protected $model;
     protected $relationShip = [];
-    protected $colunas = [];
 
     public function __construct()
     {
@@ -44,38 +39,6 @@ abstract class AbstractRepository
     //Método responsável por criar um objeto um objeto
     public function createObject($data)
     {
-        $data['enderecos'] = [
-            [
-                'nome' => 'ENDERECO CRIADO 1',
-                'logradouro' => 'ENDERECO CRIADO 1'
-            ],
-            [
-                'nome' => 'ENDERECO CRIADO 2',
-                'logradouro' => 'ENDERECO CRIADO 2'
-            ]
-        ];
-
-        $data['emails'] = [
-            [
-                'email' => 'EMAIL CRIADO 1'
-            ],
-            [
-                'email' => 'EMAIL CRIADO 2'
-            ]
-        ];
-
-        $data['itens'] = [
-            [
-                'quantidade' => 1,
-                'valor_unitario' => 10
-            ],
-            [
-                'quantidade' => 2,
-                'valor_unitario' => 20
-            ]
-        ];
-
-        //dd($data);
         DB::beginTransaction();
         try
         {
@@ -143,29 +106,6 @@ abstract class AbstractRepository
         DB::beginTransaction();
         try
         { 
-            $data['enderecos'] = [
-                [
-                    'nome' => 'ENDERECO ALTERADO 1',
-                    'logradouro' => 'ENDERECO ALTERADO 1'
-                ]
-            ];
-    
-            $data['emails'] = [
-                [
-                    'email' => 'EMAIL ALTERADO 1'
-                ]
-            ];
-    
-            $data['itens'] = [
-                [
-                    'quantidade' => 1,
-                    'valor_unitario' => 10
-                ],
-                [
-                    'quantidade' => 2,
-                    'valor_unitario' => 20
-                ]
-            ];
             $object = $this->model::findOrFail($id);
             $object->update($data);
             
@@ -325,69 +265,5 @@ abstract class AbstractRepository
             \Log::error('Error '.$e->getMessage());
             return false;
         }
-    }
-
-    //Método responsável por gerar o pdf dos objetos
-    //Passando como parâmetro a view e os dados dela
-    public function excelObjects($data)
-    {
-        try
-        {
-            return Pdf::generateExcel($view, $data);    
-        }
-        catch(\Exception $e)
-        {
-            \Log::error('Error '.$e->getMessage());
-            return false;
-        }
-        catch(QueryException $e)
-        {
-            \Log::error('Error '.$e->getMessage());
-            return false;
-        }
-    }
-
-    //Método responsável por enviar os objetos do sistema por e-mail
-    public function emailsObjects()
-    {
-        $id = 1;
-        $pessoa = Pessoa::where('id', $id)->first();
-        try
-        {
-            return Mail::to('marlon@ar-consultoria.com')
-                  //->cc('') //email para receber a cópia
-                  //->bcc()  //email para receber a cópia oculta
-                  ->send(new Email($pessoa)); 
-        }
-        catch(\Exception $e)
-        {
-            \Log::error('Error '.$e->getMessage());
-            return false;
-        }
-        catch(QueryException $e)
-        {
-            \Log::error('Error '.$e->getMessage());
-            return false;
-        }
-    }
-
-    //Método responsável por recuperar o ID da empresa selecionada para se trabalhar
-    public function getCompanyId()
-    {
-        return session()->get('empresa_id');
-    }
-
-    //Método responsável por recuperar o ID da empresa selecionada para se trabalhar
-    public function getCompany()
-    {
-        //return session()->get('empresa_id');
-        return session()->get('tenant_all');
-    }
-
-    //Método responsável por recuperar o ID do usuário logado.
-    public function getUserId()
-    {
-        $user = Auth::guard()->user();
-        return $user->id ? : 0;
     }
 }

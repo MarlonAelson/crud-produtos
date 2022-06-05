@@ -109,8 +109,6 @@
                             <div class="card-footer">
                                 <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.create') }}" class="btn btn-secondary"><i class="fas fa-file"></i> Novo</a>
                                 <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.pdf') }}" class="btn btn-secondary" target="_blank"><i class="fas fa-file-pdf"></i> PDF</a>
-                                <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.email') }}" class="btn btn-secondary"><i class="fas fa-envelope"></i> Email</a>
-                                <a href="{{ route($informationsCommonFrontEnd['route_name_view'].'.excel') }}" class="btn btn-secondary"><i class="fas fa-file-excel"></i> Excel</a>
                             </div>
                         </form>
                     </div>
@@ -186,9 +184,6 @@
                                             <div class="dropdown-menu" role="menu">
                                                 <a class="btn btn-app bg-primary" href="{{ route($informationsCommonFrontEnd['route_name_view'].'.edit', $object->id) }}">
                                                     <i class="fas fa-edit"></i> Alterar
-                                                </a>
-                                                <a class="btn btn-app bg-info" href="{{ route($informationsCommonFrontEnd['route_name_view'].'.edit', $object->id) }}">
-                                                    <i class="fas fa-search-plus"></i> Detalhar
                                                 </a>
                                                 <a class="btn btn-app bg-warning" href="{{ route($informationsCommonFrontEnd['route_name_view'].'.replicate', $object->id) }}">
                                                     <i class="far fa-copy"></i> Clonar
