@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\Produto;
+use App\Models\Unidade;
 
 class ProdutoRepository extends AbstractRepository
 {
@@ -376,10 +377,13 @@ class ProdutoRepository extends AbstractRepository
      */
     public function create($request)
     {
+        $unidades = Unidade::all();
+
         if(env('FRONTEND') == 'blade')
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.form",[
-                'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
+                'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd(),
+                'unidades' => $unidades
             ]);
         }
     }

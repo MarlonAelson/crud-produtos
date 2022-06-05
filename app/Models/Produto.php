@@ -84,7 +84,7 @@ class Produto extends Model
     }
 
     // Relacionamentos
-    public function unidades()
+    public function unidade()
     {
         return $this->belongsTo(Unidade::class);
     }

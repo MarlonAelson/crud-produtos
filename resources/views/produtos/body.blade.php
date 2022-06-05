@@ -54,10 +54,11 @@
                     <div class="form-group">
                     <label>Unidade:*</label>
                         <select class="form-control" name="unidade_id">
-                            <option value="1">option 1</option>
-                            <option value="2">option 2</option>
-                            <option value="3">option 3</option>
-                            <option value="4">option 4</option>
+                            @forelse($unidades as $unidade)
+                            <option value="{{$unidade->id}}">{{ $unidade->nome }}</option>
+                            @empty
+                            <option value="">Sem Informação</option>
+                            @endforelse
                         </select>
                     </div>
                 </div>

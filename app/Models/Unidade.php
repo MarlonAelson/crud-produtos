@@ -19,6 +19,6 @@ class Unidade extends Model
 
     public function produtos()
     {
-        return $this->hasOne(Unidade::class);
+        return $this->hasOne(Produto::class, 'unidade_id');
     }
 }

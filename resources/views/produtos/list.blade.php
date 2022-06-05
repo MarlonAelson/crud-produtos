@@ -168,7 +168,7 @@
                                         {{$object->nome}}
                                     </td>
                                     <td>
-                                        {{$object->unidade_id}}
+                                        {{$object->unidade->nome}}
                                     </td>
                                     <td>
                                         {{$object->preco}}
