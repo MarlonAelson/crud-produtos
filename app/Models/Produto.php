@@ -106,9 +106,9 @@ class Produto extends Model
         {
             $where = "
             (
-                    {$this->table}.nome LIKE '{$textSearch}%'
-                 OR {$this->table}.codigo_barras LIKE '{$textSearch}%'
-                 OR {$this->table}.preco LIKE '{$textSearch}%'
+                    {$this->table}.nome LIKE '%{$textSearch}%'
+                 OR {$this->table}.codigo_barras LIKE '%{$textSearch}%'
+                 OR {$this->table}.preco LIKE '%{$textSearch}%'
             )   AND {$this->table}.ativo IN ('{$active}')";
 
         }

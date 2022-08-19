@@ -35,15 +35,9 @@
 
                                 <div class="form-group row">
                                     
-                                    <div class="col-sm-2">
-                                        <label>Busca</label>
-                                        <input type="text" class="form-control" name="search" value="simple" readonly>
-                                    </div>
+                                    <input type="hidden" class="form-control" name="search" value="simple">
 
-                                    <div class="col-sm-2">
-                                        <label>Quantidade</label>
-                                        <input type="text" class="form-control" name="offset" value="0" readonly>
-                                    </div>
+                                    <input type="hidden" class="form-control" name="offset" value="0">
 
                                     <div class="col-sm-2">
                                         <label>Ordenação Por</label>
@@ -60,12 +54,12 @@
                                         </label>
                                         <div class="form-group">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="orderByType" id="sim" value="asc" checked @isset($object->ativo) {{ $object->ativo == 'S' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'S' ? 'checked' : '' }} @endempty>
-                                                <label class="form-check-label" for="sim">Crescente</label>
+                                                <input class="form-check-input" type="radio" name="orderByType" id="ordenacao_crescente" value="asc" checked @isset($object->ativo) {{ $object->ativo == 'S' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'S' ? 'checked' : '' }} @endempty>
+                                                <label class="form-check-label" for="ordenacao_crescente">Crescente</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="orderByType" id="nao" value="desc" @isset($object->ativo) {{ $object->ativo == 'N' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'N' ? 'checked' : '' }} @endempty>
-                                                <label class="form-check-label" for="nao">Decrescente</label>        
+                                                <input class="form-check-input" type="radio" name="orderByType" id="ordenacao_decrescente" value="desc" @isset($object->ativo) {{ $object->ativo == 'N' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'N' ? 'checked' : '' }} @endempty>
+                                                <label class="form-check-label" for="ordenacao_decrescente">Decrescente</label>        
                                             </div>
                                         </div>
                                     </div>
@@ -87,16 +81,16 @@
                                         </label>
                                         <div class="form-group">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="filters[ativo]" id="sim" value="S" checked @isset($object->ativo) {{ $object->ativo == 'S' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'S' ? 'checked' : '' }} @endempty>
-                                                <label class="form-check-label" for="sim">Sim</label>
+                                                <input class="form-check-input" type="radio" name="filters[ativo]" id="ativo_sim" value="S" checked @isset($object->ativo) {{ $object->ativo == 'S' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'S' ? 'checked' : '' }} @endempty>
+                                                <label class="form-check-label" for="ativo_sim">Sim</label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="filters[ativo]" id="nao" value="N" @isset($object->ativo) {{ $object->ativo == 'N' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'N' ? 'checked' : '' }} @endempty>
-                                                <label class="form-check-label" for="nao">Não</label>        
+                                                <input class="form-check-input" type="radio" name="filters[ativo]" id="ativo_nao" value="N" @isset($object->ativo) {{ $object->ativo == 'N' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'N' ? 'checked' : '' }} @endempty>
+                                                <label class="form-check-label" for="ativo_nao">Não</label>        
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="filters[ativo]" id="todos" value="S','N" @isset($object->ativo) {{ $object->ativo == 'N' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'N' ? 'checked' : '' }} @endempty>
-                                                <label class="form-check-label" for="todos">Todos</label>        
+                                                <input class="form-check-input" type="radio" name="filters[ativo]" id="ativo_todos" value="S','N" @isset($object->ativo) {{ $object->ativo == 'N' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'N' ? 'checked' : '' }} @endempty>
+                                                <label class="form-check-label" for="ativo_todos">Todos</label>        
                                             </div>
                                         </div>
                                     </div>
@@ -156,9 +150,9 @@
                             @if($objects['data'] && !$objects['errors'])
                                 @forelse ($objects['data'] as $object)
                                 <tr>
-                                    <td>
+                                    <th>
                                         {{$object->id}}
-                                    </td>
+                                    </th>
                                     <td>
                                         {{$object->codigo_barras}}
                                     </td>
@@ -222,6 +216,3 @@
     </div> 
 </section>        
 @endsection
-
-
-

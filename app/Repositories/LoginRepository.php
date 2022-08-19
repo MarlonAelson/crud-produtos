@@ -36,7 +36,7 @@ class LoginRepository extends AbstractRepository
             else
             {
                 return back()->withErrors([
-                    'login' => 'The provided credentials do not match our records.',
+                    'nome_alternativo' => 'Usuário ou senha não encontrado para as credenciais informadas! Por favor tente novamente.',
                 ]);
             }
         }

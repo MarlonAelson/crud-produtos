@@ -7,14 +7,17 @@ use App\Models\Unidade;
 
 class ProdutoRepository extends AbstractRepository
 {
-    public function __construct(Produto $model)
+    private $unidades; 
+    
+    public function __construct(Produto $model, Unidade $unidades)
     {
         $this->model = $model;
+        $this->unidades = $unidades;
     }
 
     public function labelsCommomFrontEnd()
     {
-        $personalization['informative_search'] = "Pesquise digitando o nome do produto desejado";
+        $personalization['informative_search'] = "Pesquise digitando o nome, o preço, ou código de barras do produto desejado";
         $personalization['label_card_form'] = "Cadastrar Produto";
         $personalization['label_card_edit'] = "Alterar Produto";
         $personalization['label_card_list'] = "Consultar Produtos";
@@ -366,13 +369,12 @@ class ProdutoRepository extends AbstractRepository
      */
     public function create($request)
     {
-        $unidades = Unidade::all();
 
         if(env('FRONTEND') == 'blade')
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.form",[
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd(),
-                'unidades' => $unidades
+                'unidades' => $this->unidades::all()
             ]);
         }
     }
@@ -398,7 +400,8 @@ class ProdutoRepository extends AbstractRepository
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.edit",[
                 'object' => $returnFromFunction,
-                'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
+                'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd(),
+                'unidades' => $this->unidades::all()
             ]);
         }
         elseif(env('FRONTEND') == 'blade' && $status == 400)

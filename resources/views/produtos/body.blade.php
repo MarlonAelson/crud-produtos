@@ -31,7 +31,7 @@
                     </label>
                     <div class="form-group">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="ativo" id="sim" value="S" @isset($object->ativo) {{ $object->ativo == 'S' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'S' ? 'checked' : '' }} @endempty>
+                            <input class="form-check-input" type="radio" name="ativo" id="sim" value="S" @isset($object->ativo) {{ $object->ativo == 'S' ? 'checked' : ''}} @endisset @empty($object->ativo) {{ old('ativo') == 'S' ? 'checked' : (old('ativo') == '' ? 'checked' : '') }} @endempty>
                             <label class="form-check-label" for="sim">Sim</label>
                         </div>
                         <div class="form-check">
@@ -55,7 +55,7 @@
                     <label>Unidade:*</label>
                         <select class="form-control" name="unidade_id">
                             @forelse($unidades as $unidade)
-                            <option value="{{$unidade->id}}">{{ $unidade->nome }}</option>
+                            <option value="{{$unidade->id}}" @isset($object->unidade->id) {{ $object->unidade->id == $unidade->id ? 'selected' : '' }} @endisset> {{ $unidade->nome }}</option>
                             @empty
                             <option value="">Sem Informação</option>
                             @endforelse
@@ -76,3 +76,27 @@
     </div>
 
 </div>
+
+
+<script>
+
+const input = document.getElementById("preco");
+
+input.addEventListener("keyup", formatarMoeda); 
+
+function formatarMoeda(e) {
+
+    var v = e.target.value.replace(/\D/g,"");
+
+    v = (v/100).toFixed(2) + "";
+
+    v = v.replace(".", ",");
+
+    v = v.replace(/(\d{3})(\d{3})(\d{3}),/g, "$1.$2.$3,");
+
+    v = v.replace(/(\d{3})(\d{3}),/g, "$1.$2,");
+
+    e.target.value = v;
+
+}
+</script>
