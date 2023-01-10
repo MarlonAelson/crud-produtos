@@ -44,7 +44,6 @@
                                         <select class="form-control" name="orderByColunm">
                                             <option value="id">Código</option>
                                             <option value="nome" selected>Nome</option>
-                                            <option value="preco">Preço</option>
                                         </select>
                                     </div>
                                     
