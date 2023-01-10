@@ -5,9 +5,10 @@ Este projeto é só para demonstrar um simples crud feito no Laravel. Porém, co
 
 Para utilizá-lo (após clonar) será necessário ter o Composer e Node instalado no seu computador e seguir os passos abaixo:
 - Habilitar no PHP.INI a extensão gd;
-- Dentro da pasta do projeto pelo prompt de comando (CMD), instalar os pacotes do PHP e NODE com os comandos: "composer install" e "npm install && npm run dev";
+- Dentro da pasta do projeto pelo prompt de comando (CMD), instalar os pacotes do PHP com o comando: "composer install";
 - Renomear o arquivo ".env.example" para ".env";
 - Dentro da pasta do projeto pelo prompt de comando (CMD), gerar chave do Laravel com o comando: "php artisan key:generate";
+- Dentro da pasta do projeto pelo prompt de comando (CMD), instalar os pacotes do NODE com os comandos: "npm install && npm run dev";
 - Dentro da pasta do projeto pelo prompt de comando (CMD), iniciar o servidor com o comando: "php artisan serve". Caso deseje evitar está iniciando o servidor sempre pelo Laravel, realize uma configuração de servidor no próprio do xampp, wampp, lampp, etc;
 - Abrir o navegador de sua preferência, digitar o endereco: localhost:8000 ou 127.0.0.1:8000, e logar na aplicação com os dados => usuario: admin | Senha: admin ou usuario: usuario | Senha: usuario (esse não tem permissão);
 
