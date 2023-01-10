@@ -21,7 +21,8 @@
                         <label for="codigo_barras">
                             Código de Barras:
                         </label>
-                        <input type="text" class="form-control" id="codigo_barras" name="codigo_barras" value="{{ $object->codigo_barras ?? old('codigo_barras') }}" maxlength="45">
+                        <input type="text" class="form-control" id="codigo_barras" name="codigo_barras" value="{{ $object->codigo_barras ?? old('codigo_barras') }}" maxlength="14"
+                        onkeypress="return onlynumber();">
                     </div>
                 </div>
 
@@ -50,7 +51,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-3">
+                <div class="col-sm-6">
                     <div class="form-group">
                     <label>Unidade:*</label>
                         <select class="form-control" name="unidade_id">
@@ -62,16 +63,6 @@
                         </select>
                     </div>
                 </div>
-
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="preco">
-                            Preço:*
-                        </label>
-                        <input type="text" class="form-control" id="preco" name="preco" value="{{ $object->preco ?? old('preco') }}" maxlength="45">
-                    </div>
-                </div>
-
         </div>
     </div>
 
@@ -80,23 +71,17 @@
 
 <script>
 
-const input = document.getElementById("preco");
-
-input.addEventListener("keyup", formatarMoeda); 
-
-function formatarMoeda(e) {
-
-    var v = e.target.value.replace(/\D/g,"");
-
-    v = (v/100).toFixed(2) + "";
-
-    v = v.replace(".", ",");
-
-    v = v.replace(/(\d{3})(\d{3})(\d{3}),/g, "$1.$2.$3,");
-
-    v = v.replace(/(\d{3})(\d{3}),/g, "$1.$2,");
-
-    e.target.value = v;
-
+function onlynumber(evt) {
+    var theEvent = evt || window.event;
+    var key = theEvent.keyCode || theEvent.which;
+    
+    key = String.fromCharCode( key );
+    //var regex = /^[0-9.,]+$/;
+    var regex = /^[0-9.]+$/;
+    if( !regex.test(key) ) {
+        theEvent.returnValue = false;
+        if(theEvent.preventDefault) theEvent.preventDefault();
+    }
 }
+
 </script>

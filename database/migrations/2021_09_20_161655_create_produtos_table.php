@@ -19,7 +19,6 @@ class CreateProdutosTable extends Migration
             $table->string('nome', 120);
             $table->unsignedBigInteger('unidade_id');
             $table->foreign('unidade_id')->references('id')->on('unidades');
-            $table->decimal('preco', 18,2);
             $table->char('ativo', 1);
             $table->timestamps();
             $table->softDeletes();

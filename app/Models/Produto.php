@@ -37,7 +37,6 @@ class Produto extends Model
         'codigo_barras',
         'nome',
         'unidade_id',
-        'preco',
         'ativo'
     ];
 
@@ -45,7 +44,6 @@ class Produto extends Model
         'codigo_barra'	                => ['nullable', 'string',  'max:14'],
         'nome'	                        => ['required', 'string',  'max:45'],
         'unidade_id'                    => ['required', 'integer', 'max:999999999'],
-        'preco'                         => ['required', 'numeric', 'max:999999999'],
 		'ativo'                         => ['required', 'string',  'max:1'],
 	];
 
@@ -108,7 +106,6 @@ class Produto extends Model
             (
                     {$this->table}.nome LIKE '%{$textSearch}%'
                  OR {$this->table}.codigo_barras LIKE '%{$textSearch}%'
-                 OR {$this->table}.preco LIKE '%{$textSearch}%'
             )   AND {$this->table}.ativo IN ('{$active}')";
 
         }

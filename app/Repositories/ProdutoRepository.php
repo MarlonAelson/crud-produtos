@@ -17,7 +17,7 @@ class ProdutoRepository extends AbstractRepository
 
     public function labelsCommomFrontEnd()
     {
-        $personalization['informative_search'] = "Pesquise digitando o nome, o preço, ou código de barras do produto desejado";
+        $personalization['informative_search'] = "Pesquise digitando o nome ou código de barras do produto desejado";
         $personalization['label_card_form'] = "Cadastrar Produto";
         $personalization['label_card_edit'] = "Alterar Produto";
         $personalization['label_card_list'] = "Consultar Produtos";

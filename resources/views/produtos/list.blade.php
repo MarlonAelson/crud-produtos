@@ -135,9 +135,6 @@
                                         Unidade
                                     </th>
                                     <th>
-                                        Preço
-                                    </th>
-                                    <th>
                                         Ativo
                                     </th>
                                     <th>
@@ -161,9 +158,6 @@
                                     </td>
                                     <td>
                                         {{$object->unidade->nome}}
-                                    </td>
-                                    <td>
-                                        {{$object->preco}}
                                     </td>
                                     <td>
                                         {{$object->ativo}}
