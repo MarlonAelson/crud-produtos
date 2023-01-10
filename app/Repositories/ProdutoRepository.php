@@ -51,7 +51,7 @@ class ProdutoRepository extends AbstractRepository
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
                 'objects' => $result,
-                'qtdRegisters' => 10,
+                'qtdRegisters' => $returnFromFunction->count(),
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ]);
         }
@@ -95,7 +95,7 @@ class ProdutoRepository extends AbstractRepository
         {
             return view("{$this->labelsCommomFrontEnd()['route_name_view']}.list",[
                 'objects' => $result,
-                'qtdRegisters' => 10,
+                'qtdRegisters' => $returnFromFunction->count(),
                 'informationsCommonFrontEnd' => $this->labelsCommomFrontEnd()
             ]);
         }
